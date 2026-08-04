@@ -1,0 +1,2 @@
+# eurs
+Euro Stable Income
