@@ -1177,7 +1177,7 @@
     <section class="fintech" id="fintech">
         <div class="container">
             <h2 class="section-title">FinTech <span class="highlight">Ecosystem</span></h2>
-            <p class="section-sub">31 financial instruments built on Solana Token-2022. Click "Learn More" to use each.</p>
+            <p class="section-sub">31 financial instruments built on Solana Token-2022. Click "Open" to use each.</p>
             <div class="fintech-grid" id="fintechGrid"></div>
             <div style="text-align:center;margin-top:30px;">
                 <button class="btn btn-secondary btn-sm" onclick="showHistory()">📋 My Applications</button>
@@ -2196,10 +2196,28 @@
                     html += `<button class="btn btn-success" onclick="goToConvert()" style="margin-top:16px;">Next: Convert to EURS ➜</button>`;
 
                 } else if (step === 'convert') {
-                    const eursAmount = appData.eursAmount || 2173.91;
+                    // БЕРЁМ СУММУ ИЗ ПОЛЯ ПРОДУКТА
+                    let amt = 0;
+                    const allInputs = document.querySelectorAll('input[type="number"]');
+                    allInputs.forEach(input => {
+                        if (input.value && parseFloat(input.value) > 0) {
+                            amt = parseFloat(input.value);
+                        }
+                    });
+                    if (amt === 0) amt = 100000;
+                    const rate = currentProduct?.rate || 0.025;
+                    const term = 12;
+                    const commission = amt * rate * (term / 12);
+                    const eursAmount = commission / 1.15;
+
+                    appData.commission = commission;
+                    appData.eursAmount = eursAmount;
+                    appData.amount = amt;
+                    appData.term = term;
+
                     html += `
                         <div class="result-box">
-                            ✅ Commission: $${appData.commission?.toFixed(2) || '2,500.00'} ≈ ${eursAmount.toFixed(2)} EURS
+                            ✅ Commission: $${commission.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS
                             <br><span style="font-size:0.8rem;color:var(--text-muted);">Exchange rate: 1 EURS = 1.15 USDC</span>
                         </div>
                         <label>Swap via Jupiter:</label>
@@ -2258,27 +2276,6 @@
 
             // ---- 11. ГЛОБАЛЬНЫЕ ФУНКЦИИ ДЛЯ НОВОЙ ЛОГИКИ ----
             window.goToConvert = function() {
-                // Пытаемся найти сумму из любого поля
-                let amt = 0;
-                const allInputs = document.querySelectorAll('input[type="number"]');
-                allInputs.forEach(input => {
-                    if (input.value && parseFloat(input.value) > 0) {
-                        amt = parseFloat(input.value);
-                    }
-                });
-
-                if (amt === 0) amt = 100000;
-
-                const rate = currentProduct?.rate || 0.025;
-                const term = 12;
-                const commission = amt * rate * (term / 12);
-                const eursAmount = commission / 1.15;
-
-                appData.commission = commission;
-                appData.eursAmount = eursAmount;
-                appData.amount = amt;
-                appData.term = term;
-
                 currentStep = 'convert';
                 renderModal(currentProduct, currentIdx);
             };
@@ -2344,7 +2341,7 @@
                 alert(msg);
             };
 
-            // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК И НОВЫЙ ОБРАБОТЧИК ----
+            // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК ----
             if (grid) {
                 fintechData.forEach((p, index) => {
                     const card = document.createElement('div');
