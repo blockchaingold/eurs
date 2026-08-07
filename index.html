@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EURS — Euro Stable Income</title>
-    <meta name="description" content="EURS — золото, усиленное химией и финтехом. Пассивный доход каждые 24 часа на Solana Token-2022." />
+    <meta name="description" content="EURS — gold, chemicals & FinTech. Daily passive income on Solana Token-2022." />
     <link rel="icon" href="eurs_logo.png" type="image/png" />
-    <!-- Open Graph для соцсетей -->
+
+    <!-- Open Graph -->
     <meta property="og:title" content="EURS — Euro Stable Income" />
-    <meta property="og:description" content="Золото, химия, FinTech. Доход каждые 24 часа." />
+    <meta property="og:description" content="Gold, chemicals & FinTech. Daily yield." />
     <meta property="og:image" content="https://raw.githubusercontent.com/blockchaingold/eurs/main/eurs_logo.png" />
     <meta property="og:url" content="https://blockchaingold.github.io/eurs" />
     <meta property="og:type" content="website" />
 
     <style>
-        /* ===== БАЗОВЫЕ СТИЛИ ===== */
+        /* ============================================================
+           БАЗА
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -23,14 +26,13 @@
 
         :root {
             --primary: #0b1a2e;
-            --primary-light: #132a44;
             --gold: #d4a843;
             --gold-light: #f0d080;
             --text: #e8e8e8;
             --text-muted: #aaa;
             --bg-dark: #0a0e17;
             --card-bg: rgba(255, 255, 255, 0.05);
-            --border: rgba(212, 168, 67, 0.2);
+            --border: rgba(212, 168, 67, 0.25);
             --radius: 16px;
             --transition: 0.3s ease;
         }
@@ -44,6 +46,7 @@
             background: var(--bg-dark);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
@@ -57,11 +60,6 @@
             text-decoration: none;
         }
 
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
         .section-title {
             font-size: 2.4rem;
             text-align: center;
@@ -69,7 +67,6 @@
             font-weight: 700;
             letter-spacing: -0.02em;
         }
-
         .section-sub {
             text-align: center;
             font-size: 1.1rem;
@@ -79,12 +76,93 @@
             margin-left: auto;
             margin-right: auto;
         }
-
         .highlight {
             color: var(--gold);
         }
 
-        /* ===== КНОПКИ ===== */
+        /* ============================================================
+           АНИМИРОВАННЫЙ ФОН — ЗОЛОТЫЕ ЧАСТИЦЫ
+           ============================================================ */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ============================================================
+           БЕГУЩАЯ СТРОКА
+           ============================================================ */
+        .ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(212, 168, 67, 0.12);
+            border-top: 1px solid var(--border);
+            padding: 8px 0;
+            z-index: 999;
+            overflow: hidden;
+            backdrop-filter: blur(6px);
+        }
+        .ticker-track {
+            display: flex;
+            gap: 60px;
+            white-space: nowrap;
+            animation: ticker-scroll 28s linear infinite;
+            font-size: 0.95rem;
+            color: var(--gold-light);
+            letter-spacing: 1px;
+        }
+        .ticker-track span {
+            display: inline-block;
+        }
+        @keyframes ticker-scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* ============================================================
+           ПАРЯЩИЕ ТОКЕНЫ
+           ============================================================ */
+        .floating-tokens {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .float-token {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.12;
+            animation: floatUp linear infinite;
+            user-select: none;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.6);
+                opacity: 0.08;
+            }
+            50% {
+                opacity: 0.18;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(720deg) scale(1.2);
+                opacity: 0.04;
+            }
+        }
+
+        /* ============================================================
+           КНОПКИ
+           ============================================================ */
         .btn {
             display: inline-block;
             padding: 12px 30px;
@@ -96,39 +174,36 @@
             border: none;
             text-align: center;
         }
-
         .btn-primary {
             background: var(--gold);
             color: var(--primary);
         }
-
         .btn-primary:hover {
             background: var(--gold-light);
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(212, 168, 67, 0.3);
         }
-
         .btn-secondary {
             background: transparent;
             color: var(--text);
             border: 1.5px solid var(--gold);
         }
-
         .btn-secondary:hover {
             background: var(--gold);
             color: var(--primary);
         }
-
         .btn-buy {
             padding: 8px 20px;
             font-size: 0.9rem;
         }
 
-        /* ===== ШАПКА ===== */
+        /* ============================================================
+           ШАПКА
+           ============================================================ */
         .header {
-            background: rgba(10, 14, 23, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 12px 0;
+            background: rgba(10, 14, 23, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 10px 0;
             position: fixed;
             top: 0;
             left: 0;
@@ -136,13 +211,13 @@
             z-index: 1000;
             border-bottom: 1px solid var(--border);
         }
-
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-
         .logo {
             display: flex;
             align-items: center;
@@ -151,30 +226,51 @@
             font-weight: 700;
             color: var(--text);
         }
-
         .logo-img {
-            height: 36px;
+            height: 40px;
             width: auto;
         }
-
         .logo-text {
             color: var(--gold);
         }
 
         .nav-list {
             display: flex;
-            gap: 28px;
+            gap: 24px;
             list-style: none;
+            flex-wrap: wrap;
         }
-
         .nav-list a {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: var(--transition);
         }
-
         .nav-list a:hover {
             color: var(--gold);
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--gold);
+            color: var(--primary);
+            border-color: var(--gold);
         }
 
         .burger {
@@ -186,156 +282,131 @@
             cursor: pointer;
             padding: 4px;
         }
-
         .burger span {
             display: block;
             width: 26px;
             height: 2.5px;
             background: var(--text);
             border-radius: 2px;
-            transition: var(--transition);
         }
 
-        /* ===== ГЕРОЙ ===== */
+        /* ============================================================
+           ГЕРОЙ
+           ============================================================ */
         .hero {
             padding: 140px 0 80px;
-            background: linear-gradient(135deg, #0a0e17 0%, #1a2a3a 100%);
             position: relative;
+            z-index: 2;
             min-height: 100vh;
             display: flex;
             align-items: center;
         }
-
         .hero-content {
             max-width: 720px;
         }
-
         .hero-title {
-            font-size: 3.2rem;
+            font-size: 3.4rem;
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1rem;
         }
-
         .hero-desc {
             font-size: 1.4rem;
             color: var(--gold);
             font-weight: 600;
             margin-bottom: 1rem;
         }
-
         .hero-sub {
             font-size: 1.05rem;
             color: var(--text-muted);
             margin-bottom: 2rem;
             max-width: 600px;
         }
-
         .hero-buttons {
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
             margin-bottom: 2.5rem;
         }
-
         .hero-stats {
             display: flex;
             gap: 40px;
         }
-
-        .stat {
-            display: flex;
-            flex-direction: column;
-        }
-
         .stat-number {
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--gold);
         }
-
         .stat-label {
             font-size: 0.85rem;
             color: var(--text-muted);
         }
 
-        /* ===== СТРУКТУРА ===== */
-        .structure {
+        /* ============================================================
+           БЛОКИ
+           ============================================================ */
+        section {
+            position: relative;
+            z-index: 2;
             padding: 80px 0;
+        }
+        .structure {
             background: var(--primary);
         }
-
         .structure-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin-bottom: 40px;
         }
-
         .structure-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 30px;
         }
-
         .structure-card-title {
             font-size: 1.3rem;
             margin-bottom: 1rem;
             color: var(--gold);
         }
-
         .structure-list {
             list-style: none;
         }
-
         .structure-list li {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-
         .structure-list li:last-child {
             border-bottom: none;
         }
-
         .perc {
             font-weight: 700;
             color: var(--gold);
         }
-
         .structure-note {
             margin-top: 1rem;
             font-size: 0.9rem;
             color: var(--text-muted);
         }
-
-        .structure-diagram {
-            text-align: center;
-            margin-top: 20px;
-        }
-
         .structure-img {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 20px auto 0;
             border-radius: var(--radius);
         }
 
-        /* ===== ТОКЕНОМИКА ===== */
         .tokenomics {
-            padding: 80px 0;
             background: var(--bg-dark);
         }
-
         .tokenomics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 20px;
             max-width: 800px;
             margin: 0 auto;
         }
-
         .tokenomics-item {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -343,38 +414,31 @@
             padding: 24px 16px;
             text-align: center;
         }
-
         .tokenomics-perc {
             font-size: 2rem;
             font-weight: 800;
             color: var(--gold);
             display: block;
         }
-
         .tokenomics-label {
             font-weight: 600;
             margin: 8px 0 4px;
             display: block;
         }
-
         .tokenomics-desc {
             font-size: 0.85rem;
             color: var(--text-muted);
         }
 
-        /* ===== ДОХОДНОСТЬ ===== */
         .yield {
-            padding: 80px 0;
             background: var(--primary);
         }
-
         .yield-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
         }
-
         .yield-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -382,18 +446,15 @@
             padding: 30px;
             text-align: center;
         }
-
         .yield-icon {
             font-size: 2.6rem;
             margin-bottom: 12px;
         }
-
         .yield-card-title {
             font-size: 1.2rem;
             margin-bottom: 8px;
             color: var(--gold);
         }
-
         .yield-card p {
             color: var(--text-muted);
             font-size: 0.95rem;
@@ -405,33 +466,36 @@
             border-radius: var(--radius);
             padding: 30px;
             text-align: center;
-        }
-
-        .yield-calc-title {
-            font-size: 1.3rem;
-            color: var(--gold);
-            margin-bottom: 8px;
-        }
-
-        .yield-flow-img {
             max-width: 500px;
-            margin: 20px auto 0;
-            border-radius: var(--radius);
+            margin: 0 auto;
+        }
+        .yield-calc input {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-size: 1.2rem;
+            width: 200px;
+            text-align: center;
+            margin: 12px 0;
+        }
+        .yield-calc .result {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-top: 8px;
         }
 
-        /* ===== ТЕХНОЛОГИЯ ===== */
         .tech {
-            padding: 80px 0;
             background: var(--bg-dark);
         }
-
         .tech-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 24px;
             margin-bottom: 40px;
         }
-
         .tech-item {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -439,24 +503,20 @@
             padding: 24px;
             text-align: center;
         }
-
         .tech-icon {
             font-size: 2rem;
             display: block;
             margin-bottom: 8px;
         }
-
         .tech-name {
             font-size: 1rem;
             color: var(--gold);
             margin-bottom: 4px;
         }
-
         .tech-item p {
             font-size: 0.9rem;
             color: var(--text-muted);
         }
-
         .tech-address {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -464,7 +524,6 @@
             padding: 24px;
             text-align: center;
         }
-
         .tech-address code {
             background: rgba(255, 255, 255, 0.08);
             padding: 4px 10px;
@@ -474,21 +533,13 @@
             word-break: break-all;
         }
 
-        .tech-address .btn {
-            margin-top: 16px;
-        }
-
-        /* ===== ДОРОЖНАЯ КАРТА ===== */
         .roadmap {
-            padding: 80px 0;
             background: var(--primary);
         }
-
         .roadmap-timeline {
             max-width: 700px;
             margin: 0 auto;
         }
-
         .roadmap-item {
             display: flex;
             align-items: baseline;
@@ -496,47 +547,33 @@
             padding: 14px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
-
         .roadmap-item:last-child {
             border-bottom: none;
         }
-
         .roadmap-phase {
             font-weight: 700;
             min-width: 90px;
             color: var(--gold);
         }
-
         .roadmap-status {
             font-size: 0.85rem;
             color: var(--text-muted);
             min-width: 100px;
         }
-
         .roadmap-status.done {
             color: #4caf50;
         }
 
-        .roadmap-item p {
-            flex: 1;
-            margin: 0;
-        }
-
-        /* ===== FAQ ===== */
         .faq {
-            padding: 80px 0;
             background: var(--bg-dark);
         }
-
         .faq-list {
             max-width: 750px;
             margin: 0 auto;
         }
-
         .faq-item {
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
-
         .faq-question {
             width: 100%;
             background: none;
@@ -552,43 +589,34 @@
             align-items: center;
             transition: var(--transition);
         }
-
         .faq-question::after {
             content: '+';
             font-size: 1.5rem;
             color: var(--gold);
         }
-
         .faq-item.active .faq-question::after {
             content: '−';
         }
-
         .faq-answer {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease, padding 0.3s ease;
-            padding: 0 0 0 0;
             color: var(--text-muted);
         }
-
         .faq-item.active .faq-answer {
             max-height: 300px;
             padding: 0 0 20px 0;
         }
 
-        /* ===== КОМЬЮНИТИ ===== */
         .community {
-            padding: 60px 0;
             background: var(--primary);
         }
-
         .community-links {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 16px;
         }
-
         .community-link {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -597,33 +625,122 @@
             color: var(--text);
             transition: var(--transition);
         }
-
         .community-link:hover {
             background: var(--gold);
             color: var(--primary);
             border-color: var(--gold);
         }
 
-        /* ===== ФУТЕР ===== */
         .footer {
             padding: 30px 0;
             background: var(--bg-dark);
             border-top: 1px solid var(--border);
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
-
         .footer p {
             color: var(--text-muted);
             font-size: 0.9rem;
         }
-
         .footer-disclaimer {
             font-size: 0.75rem;
             margin-top: 8px;
             opacity: 0.6;
         }
 
-        /* ===== АДАПТИВ ===== */
+        /* ============================================================
+           ИИ-АГЕНТ (плавающий поп-ап)
+           ============================================================ */
+        .ai-agent {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            z-index: 10000;
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--gold);
+            border-radius: 20px;
+            padding: 20px 24px;
+            max-width: 320px;
+            color: var(--text);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+            animation: aiPulse 3s ease-in-out infinite;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .ai-agent.hidden {
+            transform: translateY(30px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        @keyframes aiPulse {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 168, 67, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 0 12px rgba(212, 168, 67, 0);
+            }
+        }
+        .ai-agent .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .ai-agent .ai-header .ai-dot {
+            width: 10px;
+            height: 10px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: inline-block;
+            animation: dotBlink 1.2s infinite;
+        }
+        @keyframes dotBlink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+        }
+        .ai-agent .ai-msg {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .ai-agent .ai-btn {
+            background: var(--gold);
+            color: var(--primary);
+            border: none;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+        .ai-agent .ai-btn:hover {
+            transform: scale(1.04);
+            background: var(--gold-light);
+        }
+        .ai-agent .ai-close {
+            position: absolute;
+            top: 8px;
+            right: 14px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* ============================================================
+           АДАПТИВ
+           ============================================================ */
         @media (max-width: 992px) {
             .structure-grid {
                 grid-template-columns: 1fr;
@@ -667,273 +784,253 @@
             .section-title {
                 font-size: 1.8rem;
             }
-            .roadmap-item {
-                flex-wrap: wrap;
-                gap: 6px;
+            .lang-switch {
+                gap: 4px;
             }
-            .roadmap-phase {
-                min-width: 70px;
+            .lang-btn {
+                font-size: 0.6rem;
+                padding: 2px 8px;
             }
-            .roadmap-status {
-                min-width: 80px;
+            .ai-agent {
+                right: 12px;
+                bottom: 80px;
+                max-width: 280px;
+                padding: 16px 18px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ==================== ШАПКА ==================== -->
+    <!-- ============================================================
+    АНИМИРОВАННЫЙ ФОН (canvas)
+    ============================================================ -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ============================================================
+    ПАРЯЩИЕ ТОКЕНЫ
+    ============================================================ -->
+    <div class="floating-tokens" id="floatingTokens"></div>
+
+    <!-- ============================================================
+    БЕГУЩАЯ СТРОКА
+    ============================================================ -->
+    <div class="ticker" id="ticker">
+        <div class="ticker-track" id="tickerTrack">
+            <span>🚀 EURS — Gold + Chemicals + FinTech &nbsp;|&nbsp; Daily Yield ~15-25% APY &nbsp;|&nbsp; Built on Solana Token-2022 &nbsp;|&nbsp; 67% Real Assets + 33% Yield &nbsp;|&nbsp; Buy on Meteora &nbsp;|&nbsp; 🚀</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    ИИ-АГЕНТ
+    ============================================================ -->
+    <div class="ai-agent" id="aiAgent">
+        <button class="ai-close" id="aiClose">✕</button>
+        <div class="ai-header">
+            <span class="ai-dot"></span>
+            <span>🤖 AI Assistant</span>
+        </div>
+        <div class="ai-msg" id="aiMessage">💡 EURS gives you daily yield from gold, chemicals &amp; FinTech. No staking — just hold!</div>
+        <button class="ai-btn" id="aiBtn">🚀 Buy EURS</button>
+    </div>
+
+    <!-- ============================================================
+    ШАПКА
+    ============================================================ -->
     <header class="header">
         <div class="container header-container">
             <a href="#" class="logo">
-                <img src="eurs_logo.png" alt="EURS Logo" class="logo-img" />
+                <img src="eurs_logo.png" alt="EURS Logo" class="logo-img" onerror="this.style.display='none'" />
                 <span class="logo-text">EURS</span>
             </a>
+
             <nav class="nav" id="nav">
                 <ul class="nav-list">
-                    <li><a href="#about">О токене</a></li>
-                    <li><a href="#structure">Структура</a></li>
-                    <li><a href="#tokenomics">Токеномика</a></li>
-                    <li><a href="#yield">Доходность</a></li>
-                    <li><a href="#tech">Технология</a></li>
-                    <li><a href="#roadmap">Дорожная карта</a></li>
+                    <li><a href="#about" data-i18n="nav_about">About</a></li>
+                    <li><a href="#structure" data-i18n="nav_structure">Structure</a></li>
+                    <li><a href="#tokenomics" data-i18n="nav_tokenomics">Tokenomics</a></li>
+                    <li><a href="#yield" data-i18n="nav_yield">Yield</a></li>
+                    <li><a href="#tech" data-i18n="nav_tech">Tech</a></li>
+                    <li><a href="#roadmap" data-i18n="nav_roadmap">Roadmap</a></li>
                 </ul>
             </nav>
-            <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary btn-buy">Купить EURS</a>
-            <button class="burger" id="burger" aria-label="Меню">
+
+            <div class="lang-switch" id="langSwitch">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+                <button class="lang-btn" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="zh">ZH</button>
+                <button class="lang-btn" data-lang="ja">JA</button>
+                <button class="lang-btn" data-lang="ar">AR</button>
+            </div>
+
+            <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary btn-buy" data-i18n="buy_btn">Buy EURS</a>
+
+            <button class="burger" id="burger" aria-label="Menu">
                 <span></span><span></span><span></span>
             </button>
         </div>
     </header>
 
-    <!-- ==================== ГЕРОЙ ==================== -->
+    <!-- ============================================================
+    ГЕРОЙ
+    ============================================================ -->
     <section class="hero" id="about">
         <div class="container hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">EURS — Золото, <br /><span class="highlight">усиленное химией</span> и финтехом</h1>
-                <p class="hero-desc">Европейская стабильность. Ежедневный доход. Реальные активы.</p>
-                <p class="hero-sub">EURS — токен на Solana Token-2022, объединяющий физическое золото, химическое сырьё для ювелирной промышленности и доход от FinTech-платформ. Просто держи в кошельке — получай пассивный доход каждые 24 часа.</p>
+                <h1 class="hero-title" data-i18n="hero_title">EURS — Gold, <span class="highlight">enhanced by Chemicals</span> &amp; FinTech</h1>
+                <p class="hero-desc" data-i18n="hero_desc">European stability. Daily income. Real assets.</p>
+                <p class="hero-sub" data-i18n="hero_sub">EURS is a Solana Token-2022 token combining physical gold, chemical raw materials for jewelry, and FinTech yield. Just hold — earn passive income every 24 hours.</p>
                 <div class="hero-buttons">
-                    <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary">Купить EURS</a>
-                    <a href="#yield" class="btn btn-secondary">Как это работает</a>
+                    <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary" data-i18n="buy_btn">Buy EURS</a>
+                    <a href="#yield" class="btn btn-secondary" data-i18n="how_btn">How it works</a>
                 </div>
                 <div class="hero-stats">
-                    <div class="stat"><span class="stat-number">1.15</span><span class="stat-label">USDC</span></div>
-                    <div class="stat"><span class="stat-number">~25%</span><span class="stat-label">APY</span></div>
-                    <div class="stat"><span class="stat-number">24ч</span><span class="stat-label">Выплаты</span></div>
+                    <div><span class="stat-number">1.15</span><span class="stat-label"> USDC</span></div>
+                    <div><span class="stat-number">~25%</span><span class="stat-label"> APY</span></div>
+                    <div><span class="stat-number">24h</span><span class="stat-label"> Payouts</span></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== СТРУКТУРА 67/33 ==================== -->
+    <!-- ============================================================
+    СТРУКТУРА 67/33
+    ============================================================ -->
     <section class="structure" id="structure">
         <div class="container">
-            <h2 class="section-title">67% реальных активов <span class="highlight">+ 33% доходности</span></h2>
-            <p class="section-sub">EURS обеспечен реальными активами: золотом в хранилищах, сертифицированными алмазами и химическим сырьём для ювелирной промышленности.</p>
+            <h2 class="section-title" data-i18n="structure_title">67% Real Assets <span class="highlight">+ 33% Yield</span></h2>
+            <p class="section-sub" data-i18n="structure_sub">EURS is backed by physical gold, certified diamonds, and chemical raw materials used in jewelry production.</p>
             <div class="structure-grid">
                 <div class="structure-card">
-                    <h3 class="structure-card-title">67% — Реальные активы</h3>
+                    <h3 class="structure-card-title" data-i18n="structure_card1">67% — Real Assets</h3>
                     <ul class="structure-list">
-                        <li><span class="perc">35%</span> Золото (XAU)</li>
-                        <li><span class="perc">12%</span> Серебро (XAG)</li>
-                        <li><span class="perc">10%</span> Алмазы</li>
-                        <li><span class="perc">10%</span> Химсырьё (цианиды, кислоты)</li>
+                        <li><span class="perc">35%</span> Gold (XAU)</li>
+                        <li><span class="perc">12%</span> Silver (XAG)</li>
+                        <li><span class="perc">10%</span> Diamonds</li>
+                        <li><span class="perc">10%</span> Chemicals (cyanides, acids)</li>
                     </ul>
-                    <p class="structure-note">Оракулы: Pyth (XAU/USD, XAG/USD) + Switchboard (химия)</p>
+                    <p class="structure-note">Oracles: Pyth (XAU/USD, XAG/USD) + Switchboard (chemicals)</p>
                 </div>
                 <div class="structure-card">
-                    <h3 class="structure-card-title">33% — Доходность</h3>
+                    <h3 class="structure-card-title" data-i18n="structure_card2">33% — Yield</h3>
                     <ul class="structure-list">
-                        <li><span class="perc">18%</span> FinTech (комиссии платежей)</li>
-                        <li><span class="perc">15%</span> DeFi-стейкинг</li>
+                        <li><span class="perc">18%</span> FinTech (payment fees)</li>
+                        <li><span class="perc">15%</span> DeFi staking</li>
                     </ul>
-                    <p class="structure-note">Доход распределяется автоматически через Permanent Delegate</p>
+                    <p class="structure-note">Income distributed automatically via Permanent Delegate</p>
                 </div>
             </div>
-            <div class="structure-diagram">
-                <img src="structure-diagram.png" alt="Структура EURS 67/33" class="structure-img" onerror="this.style.display='none'" />
+            <div style="text-align:center;">
+                <img src="structure-diagram.png" alt="EURS Structure 67/33" style="max-width:500px; width:100%; border-radius:var(--radius); margin-top:10px;" onerror="this.style.display='none'" />
             </div>
         </div>
     </section>
 
-    <!-- ==================== ТОКЕНОМИКА ==================== -->
+    <!-- ============================================================
+    ТОКЕНОМИКА
+    ============================================================ -->
     <section class="tokenomics" id="tokenomics">
         <div class="container">
-            <h2 class="section-title">Прозрачное <span class="highlight">распределение</span></h2>
-            <p class="section-sub">Общий запас: 1,000,000,000 EURS. Mint Authority и Freeze Authority отозваны.</p>
+            <h2 class="section-title" data-i18n="tokenomics_title">Transparent <span class="highlight">Distribution</span></h2>
+            <p class="section-sub" data-i18n="tokenomics_sub">Total supply: 1,000,000,000 EURS. Mint &amp; Freeze authorities revoked.</p>
             <div class="tokenomics-grid">
-                <div class="tokenomics-item">
-                    <span class="tokenomics-perc">40%</span>
-                    <span class="tokenomics-label">Пресейл</span>
-                    <span class="tokenomics-desc">Первичное привлечение капитала</span>
-                </div>
-                <div class="tokenomics-item">
-                    <span class="tokenomics-perc">30%</span>
-                    <span class="tokenomics-label">Ликвидность</span>
-                    <span class="tokenomics-desc">Блокировка на 12 месяцев (Meteora)</span>
-                </div>
-                <div class="tokenomics-item">
-                    <span class="tokenomics-perc">15%</span>
-                    <span class="tokenomics-label">Команда</span>
-                    <span class="tokenomics-desc">Лок на 24 месяца (вестинг)</span>
-                </div>
-                <div class="tokenomics-item">
-                    <span class="tokenomics-perc">10%</span>
-                    <span class="tokenomics-label">Маркетинг</span>
-                    <span class="tokenomics-desc">Партнёрства, листинги, реклама</span>
-                </div>
-                <div class="tokenomics-item">
-                    <span class="tokenomics-perc">5%</span>
-                    <span class="tokenomics-label">Резерв</span>
-                    <span class="tokenomics-desc">Непредвиденные расходы</span>
-                </div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">40%</span><span class="tokenomics-label" data-i18n="t_label1">Presale</span><span class="tokenomics-desc" data-i18n="t_desc1">Initial capital raise</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">30%</span><span class="tokenomics-label" data-i18n="t_label2">Liquidity</span><span class="tokenomics-desc" data-i18n="t_desc2">Locked 12 months (Meteora)</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">15%</span><span class="tokenomics-label" data-i18n="t_label3">Team</span><span class="tokenomics-desc" data-i18n="t_desc3">Locked 24 months (vesting)</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">10%</span><span class="tokenomics-label" data-i18n="t_label4">Marketing</span><span class="tokenomics-desc" data-i18n="t_desc4">Partnerships, listings, ads</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">5%</span><span class="tokenomics-label" data-i18n="t_label5">Reserve</span><span class="tokenomics-desc" data-i18n="t_desc5">Contingency</span></div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== ДОХОДНОСТЬ ==================== -->
+    <!-- ============================================================
+    ДОХОДНОСТЬ + КАЛЬКУЛЯТОР
+    ============================================================ -->
     <section class="yield" id="yield">
         <div class="container">
-            <h2 class="section-title">Твой доход — <span class="highlight">каждые 24 часа</span></h2>
-            <p class="section-sub">Без стейкинга, без локов. Просто держи EURS в кошельке.</p>
+            <h2 class="section-title" data-i18n="yield_title">Your income — <span class="highlight">every 24 hours</span></h2>
+            <p class="section-sub" data-i18n="yield_sub">No staking, no locks. Just hold EURS in your wallet.</p>
             <div class="yield-grid">
-                <div class="yield-card">
-                    <div class="yield-icon">💰</div>
-                    <h3 class="yield-card-title">Transfer Fee 2%</h3>
-                    <p>С каждой покупки/продажи EURS 2% уходит в общий наградной пул.</p>
-                </div>
-                <div class="yield-card">
-                    <div class="yield-icon">🤖</div>
-                    <h3 class="yield-card-title">Permanent Delegate</h3>
-                    <p>Раз в сутки программа автоматически распределяет пул между всеми держателями.</p>
-                </div>
-                <div class="yield-card">
-                    <div class="yield-icon">📊</div>
-                    <h3 class="yield-card-title">~15-25% APY</h3>
-                    <p>Доход от роста цен на золото, химию, FinTech-комиссий и DeFi-стейкинга.</p>
-                </div>
+                <div class="yield-card"><div class="yield-icon">💰</div><h3 class="yield-card-title">Transfer Fee 2%</h3><p data-i18n="yield_card1">2% from every buy/sell goes to the reward pool.</p></div>
+                <div class="yield-card"><div class="yield-icon">🤖</div><h3 class="yield-card-title">Permanent Delegate</h3><p data-i18n="yield_card2">Automatically distributes the pool to all holders daily.</p></div>
+                <div class="yield-card"><div class="yield-icon">📊</div><h3 class="yield-card-title">~15-25% APY</h3><p data-i18n="yield_card3">From gold, chemicals, FinTech &amp; DeFi.</p></div>
             </div>
+
             <div class="yield-calc">
-                <h3 class="yield-calc-title">Калькулятор дохода</h3>
-                <p>Вложи $100 → через месяц ~$102.50. Через год ~$130.</p>
-                <div class="yield-flow">
-                    <img src="reward-flow.png" alt="Схема распределения дохода" class="yield-flow-img" onerror="this.style.display='none'" />
-                </div>
+                <h3 style="color:var(--gold); margin-bottom:6px;" data-i18n="calc_title">💵 Yield Calculator</h3>
+                <p data-i18n="calc_sub">Enter amount in USD:</p>
+                <input type="number" id="calcInput" value="100" min="1" step="10" />
+                <div class="result" id="calcResult">≈ $130.00 after 1 year</div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== ТЕХНОЛОГИЯ ==================== -->
+    <!-- ============================================================
+    ТЕХНОЛОГИЯ
+    ============================================================ -->
     <section class="tech" id="tech">
         <div class="container">
-            <h2 class="section-title">Построен на <span class="highlight">Solana Token-2022</span></h2>
-            <p class="section-sub">Самые современные расширения для RWA-токенов.</p>
+            <h2 class="section-title" data-i18n="tech_title">Built on <span class="highlight">Solana Token-2022</span></h2>
+            <p class="section-sub" data-i18n="tech_sub">Modern extensions for RWA tokens.</p>
             <div class="tech-grid">
-                <div class="tech-item">
-                    <span class="tech-icon">⚡</span>
-                    <h4 class="tech-name">Transfer Fee (2%)</h4>
-                    <p>Автоматический сбор комиссий в наградной пул</p>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-icon">🔗</span>
-                    <h4 class="tech-name">Transfer Hook</h4>
-                    <p>Проверка цен через оракулы (Pyth, Switchboard)</p>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-icon">🤖</span>
-                    <h4 class="tech-name">Permanent Delegate</h4>
-                    <p>Автоматическое распределение дохода</p>
-                </div>
-                <div class="tech-item">
-                    <span class="tech-icon">📝</span>
-                    <h4 class="tech-name">Metadata</h4>
-                    <p>Ссылка на RWA-документацию</p>
-                </div>
+                <div class="tech-item"><span class="tech-icon">⚡</span><h4 class="tech-name">Transfer Fee (2%)</h4><p>Auto-collect fees to reward pool</p></div>
+                <div class="tech-item"><span class="tech-icon">🔗</span><h4 class="tech-name">Transfer Hook</h4><p>Oracle price checks (Pyth, Switchboard)</p></div>
+                <div class="tech-item"><span class="tech-icon">🤖</span><h4 class="tech-name">Permanent Delegate</h4><p>Auto-distribute income</p></div>
+                <div class="tech-item"><span class="tech-icon">📝</span><h4 class="tech-name">Metadata</h4><p>RWA documentation link</p></div>
             </div>
             <div class="tech-address">
-                <p><strong>Контракт:</strong> <code>ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq</code></p>
-                <p><strong>Пул:</strong> <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p>
-                <a href="https://solscan.io/token/ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq" target="_blank" class="btn btn-secondary">Смотреть в Solana Explorer</a>
+                <p><strong>Contract:</strong> <code>ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq</code></p>
+                <p><strong>Pool:</strong> <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p>
+                <a href="https://solscan.io/token/ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq" target="_blank" class="btn btn-secondary" style="margin-top:12px;">View on Solana Explorer</a>
             </div>
         </div>
     </section>
 
-    <!-- ==================== ДОРОЖНАЯ КАРТА ==================== -->
+    <!-- ============================================================
+    ДОРОЖНАЯ КАРТА
+    ============================================================ -->
     <section class="roadmap" id="roadmap">
         <div class="container">
-            <h2 class="section-title">Дорожная <span class="highlight">карта</span></h2>
-            <p class="section-sub">Что дальше?</p>
+            <h2 class="section-title" data-i18n="roadmap_title">Roadmap</h2>
+            <p class="section-sub" data-i18n="roadmap_sub">What's next?</p>
             <div class="roadmap-timeline">
-                <div class="roadmap-item">
-                    <span class="roadmap-phase">Phase 1</span>
-                    <span class="roadmap-status done">✅ Завершён</span>
-                    <p>Создание токена, пресейл, ликвидность на Meteora</p>
-                </div>
-                <div class="roadmap-item">
-                    <span class="roadmap-phase">Phase 2</span>
-                    <span class="roadmap-status">Июль 2026</span>
-                    <p>Активация ежедневных выплат (Permanent Delegate)</p>
-                </div>
-                <div class="roadmap-item">
-                    <span class="roadmap-phase">Phase 3</span>
-                    <span class="roadmap-status">Август 2026</span>
-                    <p>Интеграция с Solana Pay (платежи)</p>
-                </div>
-                <div class="roadmap-item">
-                    <span class="roadmap-phase">Phase 4</span>
-                    <span class="roadmap-status">Сентябрь 2026</span>
-                    <p>Партнёрство с ювелирными платформами</p>
-                </div>
-                <div class="roadmap-item">
-                    <span class="roadmap-phase">Phase 5</span>
-                    <span class="roadmap-status">Октябрь 2026</span>
-                    <p>Листинг на MEXC / Gate.io</p>
-                </div>
-                <div class="roadmap-item">
-                    <span class="roadmap-phase">Phase 6</span>
-                    <span class="roadmap-status">Декабрь 2026</span>
-                    <p>Запуск кросс-конвертации с USDS и EUSD</p>
-                </div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 1</span><span class="roadmap-status done">✅ Done</span><p>Token creation, presale, liquidity on Meteora</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 2</span><span class="roadmap-status">Jul 2026</span><p>Daily payouts activation (Permanent Delegate)</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 3</span><span class="roadmap-status">Aug 2026</span><p>Solana Pay integration</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 4</span><span class="roadmap-status">Sep 2026</span><p>Partnership with jewelry platforms</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 5</span><span class="roadmap-status">Oct 2026</span><p>CEX listing (MEXC / Gate.io)</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 6</span><span class="roadmap-status">Dec 2026</span><p>Cross-conversion with USDS &amp; EUSD</p></div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== FAQ ==================== -->
-    <section class="faq">
+    <!-- ============================================================
+    FAQ
+    ============================================================ -->
+    <section class="faq" id="faq">
         <div class="container">
-            <h2 class="section-title">Часто задаваемые <span class="highlight">вопросы</span></h2>
+            <h2 class="section-title" data-i18n="faq_title">FAQ</h2>
             <div class="faq-list">
-                <div class="faq-item">
-                    <button class="faq-question">Нужно ли стейкать токены?</button>
-                    <div class="faq-answer"><p>Нет. Просто держи EURS в своём кошельке (Phantom, Solflare, Backpack). Выплаты приходят автоматически.</p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">Как часто приходят выплаты?</button>
-                    <div class="faq-answer"><p>Каждые 24 часа. Permanent Delegate распределяет пул комиссий между всеми держателями.</p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">Что такое химическое сырьё в структуре токена?</button>
-                    <div class="faq-answer"><p>Это цианиды, кислоты и флюсы, которые используются в ювелирной промышленности для добычи и обработки золота и серебра. Их цена привязана к спросу на драгметаллы.</p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">Где купить EURS?</button>
-                    <div class="faq-answer"><p>На Meteora DAMM V2 по адресу пула: <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">Есть ли риск потери капитала?</button>
-                    <div class="faq-answer"><p>Как и любой крипто-актив, EURS подвержен волатильности. Однако 67% токена обеспечено реальными активами (золото, химия), что снижает риски.</p></div>
-                </div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q1">Do I need to stake?</button><div class="faq-answer"><p data-i18n="faq_a1">No. Just hold EURS in Phantom, Solflare, or Backpack. Rewards come automatically.</p></div></div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q2">How often are payouts?</button><div class="faq-answer"><p data-i18n="faq_a2">Every 24 hours via Permanent Delegate.</p></div></div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q3">What are "chemicals" in the structure?</button><div class="faq-answer"><p data-i18n="faq_a3">Cyanides, acids, and fluxes used in jewelry refining and processing.</p></div></div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q4">Where to buy EURS?</button><div class="faq-answer"><p>Meteora DAMM V2 pool: <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p></div></div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q5">Is there risk?</button><div class="faq-answer"><p data-i18n="faq_a5">Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.</p></div></div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== КОМЬЮНИТИ ==================== -->
+    <!-- ============================================================
+    КОМЬЮНИТИ
+    ============================================================ -->
     <section class="community">
         <div class="container">
-            <h2 class="section-title">Присоединяйся к <span class="highlight">сообществу</span></h2>
+            <h2 class="section-title" data-i18n="community_title">Join the <span class="highlight">Community</span></h2>
             <div class="community-links">
-                <a href="#" target="_blank" class="community-link">🐦 Twitter (X)</a>
+                <a href="#" target="_blank" class="community-link">🐦 X (Twitter)</a>
                 <a href="#" target="_blank" class="community-link">💬 Telegram</a>
                 <a href="https://github.com/blockchaingold/eurs" target="_blank" class="community-link">🐙 GitHub</a>
                 <a href="https://solscan.io/token/ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq" target="_blank" class="community-link">🔍 Solana Explorer</a>
@@ -942,62 +1039,592 @@
         </div>
     </section>
 
-    <!-- ==================== ФУТЕР ==================== -->
+    <!-- ============================================================
+    ФУТЕР
+    ============================================================ -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 EURS. Built on <a href="https://solana.com/" target="_blank">Solana Token-2022</a>.</p>
-            <p class="footer-disclaimer">Токен не является ценной бумагой. Всегда проводите собственное исследование (DYOR) перед инвестированием.</p>
+            <p class="footer-disclaimer">Not financial advice. Always DYOR.</p>
         </div>
     </footer>
 
-    <!-- ==================== СКРИПТЫ ==================== -->
+    <!-- ============================================================
+    СКРИПТЫ
+    ============================================================ -->
     <script>
-        // ===== БУРГЕР-МЕНЮ =====
-        const burger = document.getElementById('burger');
-        const nav = document.getElementById('nav');
+        (function() {
+            'use strict';
 
-        burger.addEventListener('click', () => {
-            nav.classList.toggle('open');
-        });
+            // ---- 1. АНИМИРОВАННЫЙ ФОН (canvas) ----
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h, particles = [];
 
-        document.querySelectorAll('.nav-list a').forEach(link => {
-            link.addEventListener('click', () => {
-                nav.classList.remove('open');
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            for (let i = 0; i < 90; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 2.5 + 0.5,
+                    dx: (Math.random() - 0.5) * 0.5,
+                    dy: (Math.random() - 0.5) * 0.5,
+                    alpha: Math.random() * 0.5 + 0.2
+                });
+            }
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach(p => {
+                    p.x += p.dx;
+                    p.y += p.dy;
+                    if (p.x < 0 || p.x > w) p.dx *= -1;
+                    if (p.y < 0 || p.y > h) p.dy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212, 168, 67, ${p.alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(drawParticles);
+            }
+            drawParticles();
+
+            // ---- 2. ПАРЯЩИЕ ТОКЕНЫ ----
+            const symbols = ['✦', '♦', '◈', '✧', '⛁', '💰', '💎', '✦'];
+            const container = document.getElementById('floatingTokens');
+            for (let i = 0; i < 18; i++) {
+                const el = document.createElement('span');
+                el.className = 'float-token';
+                el.textContent = symbols[i % symbols.length];
+                el.style.left = Math.random() * 95 + '%';
+                el.style.fontSize = (Math.random() * 2.4 + 1.2) + 'rem';
+                el.style.animationDuration = (Math.random() * 30 + 20) + 's';
+                el.style.animationDelay = (Math.random() * 25) + 's';
+                el.style.opacity = 0.06;
+                container.appendChild(el);
+            }
+
+            // ---- 3. БУРГЕР ----
+            const burger = document.getElementById('burger');
+            const nav = document.getElementById('nav');
+            burger.addEventListener('click', () => nav.classList.toggle('open'));
+            document.querySelectorAll('.nav-list a').forEach(link => {
+                link.addEventListener('click', () => nav.classList.remove('open'));
             });
-        });
 
-        // ===== FAQ АККОРДЕОН =====
-        document.querySelectorAll('.faq-question').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const item = btn.parentElement;
-                const isActive = item.classList.contains('active');
+            // ---- 4. FAQ ----
+            document.querySelectorAll('.faq-question').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const item = btn.parentElement;
+                    const isActive = item.classList.contains('active');
+                    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+                    if (!isActive) item.classList.add('active');
+                });
+            });
 
-                document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            // ---- 5. КАЛЬКУЛЯТОР ДОХОДА ----
+            const calcInput = document.getElementById('calcInput');
+            const calcResult = document.getElementById('calcResult');
+            function updateCalc() {
+                const val = parseFloat(calcInput.value) || 0;
+                const year = val * 1.30;
+                const month = val * 1.025;
+                calcResult.textContent = `≈ $${year.toFixed(2)} after 1 year (≈ $${month.toFixed(2)} after 1 month)`;
+            }
+            calcInput.addEventListener('input', updateCalc);
+            updateCalc();
 
-                if (!isActive) {
-                    item.classList.add('active');
+            // ---- 6. ИИ-АГЕНТ ----
+            const aiAgent = document.getElementById('aiAgent');
+            const aiClose = document.getElementById('aiClose');
+            const aiBtn = document.getElementById('aiBtn');
+
+            // Показываем с задержкой 4 секунды
+            setTimeout(() => {
+                aiAgent.classList.remove('hidden');
+            }, 4000);
+
+            aiClose.addEventListener('click', () => {
+                aiAgent.classList.add('hidden');
+            });
+
+            aiBtn.addEventListener('click', () => {
+                window.open('https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z', '_blank');
+            });
+
+            // Смена сообщений агента (реклама)
+            const messages = [
+                '💡 EURS gives you daily yield from gold, chemicals & FinTech. No staking — just hold!',
+                '🚀 67% real assets + 33% yield. ~25% APY — check the calculator!',
+                '📈 Gold + chemicals + FinTech = diversified income. Buy now on Meteora.',
+                '🔥 Permanent Delegate distributes rewards every 24h. Passive income!',
+            ];
+            let msgIndex = 0;
+            setInterval(() => {
+                const msgEl = document.getElementById('aiMessage');
+                if (msgEl) {
+                    msgIndex = (msgIndex + 1) % messages.length;
+                    msgEl.textContent = messages[msgIndex];
                 }
-            });
-        });
+            }, 9000);
 
-        // ===== ПЛАВНЫЙ СКРОЛЛ =====
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const target = document.querySelector(targetId);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // ---- 7. ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ ----
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const translations = {
+                en: {
+                    nav_about: 'About',
+                    nav_structure: 'Structure',
+                    nav_tokenomics: 'Tokenomics',
+                    nav_yield: 'Yield',
+                    nav_tech: 'Tech',
+                    nav_roadmap: 'Roadmap',
+                    buy_btn: 'Buy EURS',
+                    how_btn: 'How it works',
+                    hero_title: 'EURS — Gold, enhanced by Chemicals & FinTech',
+                    hero_desc: 'European stability. Daily income. Real assets.',
+                    hero_sub: 'EURS is a Solana Token-2022 token combining physical gold, chemical raw materials for jewelry, and FinTech yield. Just hold — earn passive income every 24 hours.',
+                    structure_title: '67% Real Assets + 33% Yield',
+                    structure_sub: 'EURS is backed by physical gold, certified diamonds, and chemical raw materials used in jewelry production.',
+                    structure_card1: '67% — Real Assets',
+                    structure_card2: '33% — Yield',
+                    tokenomics_title: 'Transparent Distribution',
+                    tokenomics_sub: 'Total supply: 1,000,000,000 EURS. Mint & Freeze authorities revoked.',
+                    t_label1: 'Presale',
+                    t_desc1: 'Initial capital raise',
+                    t_label2: 'Liquidity',
+                    t_desc2: 'Locked 12 months (Meteora)',
+                    t_label3: 'Team',
+                    t_desc3: 'Locked 24 months (vesting)',
+                    t_label4: 'Marketing',
+                    t_desc4: 'Partnerships, listings, ads',
+                    t_label5: 'Reserve',
+                    t_desc5: 'Contingency',
+                    yield_title: 'Your income — every 24 hours',
+                    yield_sub: 'No staking, no locks. Just hold EURS in your wallet.',
+                    yield_card1: '2% from every buy/sell goes to the reward pool.',
+                    yield_card2: 'Automatically distributes the pool to all holders daily.',
+                    yield_card3: 'From gold, chemicals, FinTech & DeFi.',
+                    calc_title: '💵 Yield Calculator',
+                    calc_sub: 'Enter amount in USD:',
+                    tech_title: 'Built on Solana Token-2022',
+                    tech_sub: 'Modern extensions for RWA tokens.',
+                    roadmap_title: 'Roadmap',
+                    roadmap_sub: "What's next?",
+                    faq_title: 'FAQ',
+                    faq_q1: 'Do I need to stake?',
+                    faq_a1: 'No. Just hold EURS in Phantom, Solflare, or Backpack. Rewards come automatically.',
+                    faq_q2: 'How often are payouts?',
+                    faq_a2: 'Every 24 hours via Permanent Delegate.',
+                    faq_q3: 'What are "chemicals" in the structure?',
+                    faq_a3: 'Cyanides, acids, and fluxes used in jewelry refining and processing.',
+                    faq_q4: 'Where to buy EURS?',
+                    faq_q5: 'Is there risk?',
+                    faq_a5: 'Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.',
+                    community_title: 'Join the Community',
+                },
+                ru: {
+                    nav_about: 'О токене',
+                    nav_structure: 'Структура',
+                    nav_tokenomics: 'Токеномика',
+                    nav_yield: 'Доходность',
+                    nav_tech: 'Технология',
+                    nav_roadmap: 'План',
+                    buy_btn: 'Купить EURS',
+                    how_btn: 'Как работает',
+                    hero_title: 'EURS — Золото, усиленное химией и финтехом',
+                    hero_desc: 'Европейская стабильность. Ежедневный доход. Реальные активы.',
+                    hero_sub: 'EURS — токен Solana Token-2022, объединяющий физическое золото, химическое сырьё для ювелирной промышленности и доход от FinTech-платформ. Просто держи — получай доход каждые 24 часа.',
+                    structure_title: '67% реальных активов + 33% доходности',
+                    structure_sub: 'EURS обеспечен физическим золотом, сертифицированными алмазами и химическим сырьём для ювелирной промышленности.',
+                    structure_card1: '67% — Реальные активы',
+                    structure_card2: '33% — Доходность',
+                    tokenomics_title: 'Прозрачное распределение',
+                    tokenomics_sub: 'Общий запас: 1,000,000,000 EURS. Mint и Freeze Authority отозваны.',
+                    t_label1: 'Пресейл',
+                    t_desc1: 'Первичное привлечение',
+                    t_label2: 'Ликвидность',
+                    t_desc2: 'Блокировка на 12 месяцев',
+                    t_label3: 'Команда',
+                    t_desc3: 'Лок на 24 месяца',
+                    t_label4: 'Маркетинг',
+                    t_desc4: 'Партнёрства, листинги',
+                    t_label5: 'Резерв',
+                    t_desc5: 'Непредвиденные расходы',
+                    yield_title: 'Твой доход — каждые 24 часа',
+                    yield_sub: 'Без стейкинга и локов. Просто держи EURS в кошельке.',
+                    yield_card1: '2% с каждой покупки/продажи идут в пул наград.',
+                    yield_card2: 'Автоматически распределяет пул между держателями ежедневно.',
+                    yield_card3: 'От золота, химии, FinTech и DeFi.',
+                    calc_title: '💵 Калькулятор дохода',
+                    calc_sub: 'Введите сумму в USD:',
+                    tech_title: 'Построен на Solana Token-2022',
+                    tech_sub: 'Современные расширения для RWA-токенов.',
+                    roadmap_title: 'Дорожная карта',
+                    roadmap_sub: 'Что дальше?',
+                    faq_title: 'FAQ',
+                    faq_q1: 'Нужно ли стейкать?',
+                    faq_a1: 'Нет. Просто держи EURS в Phantom, Solflare или Backpack. Награды приходят автоматически.',
+                    faq_q2: 'Как часто выплаты?',
+                    faq_a2: 'Каждые 24 часа через Permanent Delegate.',
+                    faq_q3: 'Что за "химия" в структуре?',
+                    faq_a3: 'Цианиды, кислоты и флюсы, используемые в ювелирной обработке.',
+                    faq_q4: 'Где купить EURS?',
+                    faq_q5: 'Есть ли риск?',
+                    faq_a5: 'Как у любой криптовалюты — волатильность есть. Но 67% обеспечено реальными активами (золото, химия), что снижает риски.',
+                    community_title: 'Присоединяйся к сообществу',
+                },
+                es: {
+                    nav_about: 'Acerca',
+                    nav_structure: 'Estructura',
+                    nav_tokenomics: 'Tokenomics',
+                    nav_yield: 'Rendimiento',
+                    nav_tech: 'Tecnología',
+                    nav_roadmap: 'Hoja de ruta',
+                    buy_btn: 'Comprar EURS',
+                    how_btn: 'Cómo funciona',
+                    hero_title: 'EURS — Oro, potenciado por químicos y FinTech',
+                    hero_desc: 'Estabilidad europea. Ingresos diarios. Activos reales.',
+                    hero_sub: 'EURS es un token Solana Token-2022 que combina oro físico, materias primas químicas para joyería y rendimiento FinTech. Solo mantén — gana ingresos pasivos cada 24 horas.',
+                    structure_title: '67% Activos reales + 33% Rendimiento',
+                    structure_sub: 'EURS está respaldado por oro físico, diamantes certificados y materias primas químicas utilizadas en la producción de joyería.',
+                    structure_card1: '67% — Activos reales',
+                    structure_card2: '33% — Rendimiento',
+                    tokenomics_title: 'Distribución transparente',
+                    tokenomics_sub: 'Suministro total: 1,000,000,000 EURS. Autoridades Mint y Freeze revocadas.',
+                    t_label1: 'Preventa',
+                    t_desc1: 'Captación inicial',
+                    t_label2: 'Liquidez',
+                    t_desc2: 'Bloqueada 12 meses',
+                    t_label3: 'Equipo',
+                    t_desc3: 'Bloqueada 24 meses',
+                    t_label4: 'Marketing',
+                    t_desc4: 'Alianzas, listados',
+                    t_label5: 'Reserva',
+                    t_desc5: 'Contingencia',
+                    yield_title: 'Tus ingresos — cada 24 horas',
+                    yield_sub: 'Sin staking ni bloqueos. Solo mantén EURS en tu billetera.',
+                    yield_card1: 'El 2% de cada compra/venta va al fondo de recompensas.',
+                    yield_card2: 'Distribuye automáticamente el fondo a todos los tenedores diariamente.',
+                    yield_card3: 'De oro, químicos, FinTech y DeFi.',
+                    calc_title: '💵 Calculadora de rendimiento',
+                    calc_sub: 'Ingresa el monto en USD:',
+                    tech_title: 'Construido en Solana Token-2022',
+                    tech_sub: 'Extensiones modernas para tokens RWA.',
+                    roadmap_title: 'Hoja de ruta',
+                    roadmap_sub: '¿Qué sigue?',
+                    faq_title: 'FAQ',
+                    faq_q1: '¿Necesito hacer staking?',
+                    faq_a1: 'No. Solo mantén EURS en Phantom, Solflare o Backpack. Las recompensas llegan automáticamente.',
+                    faq_q2: '¿Cada cuándo los pagos?',
+                    faq_a2: 'Cada 24 horas vía Permanent Delegate.',
+                    faq_q3: '¿Qué son los "químicos" en la estructura?',
+                    faq_a3: 'Cianuros, ácidos y fundentes usados en la refinación y procesamiento de joyería.',
+                    faq_q4: '¿Dónde comprar EURS?',
+                    faq_q5: '¿Hay riesgo?',
+                    faq_a5: 'Como cualquier cripto, EURS tiene volatilidad. Pero el 67% está respaldado por activos reales (oro, químicos), lo que reduce el riesgo.',
+                    community_title: 'Únete a la comunidad',
+                },
+                fr: {
+                    nav_about: 'À propos',
+                    nav_structure: 'Structure',
+                    nav_tokenomics: 'Tokenomics',
+                    nav_yield: 'Rendement',
+                    nav_tech: 'Technologie',
+                    nav_roadmap: 'Feuille de route',
+                    buy_btn: 'Acheter EURS',
+                    how_btn: 'Comment ça marche',
+                    hero_title: 'EURS — Or, renforcé par la chimie et la FinTech',
+                    hero_desc: 'Stabilité européenne. Revenus quotidiens. Actifs réels.',
+                    hero_sub: 'EURS est un token Solana Token-2022 combinant or physique, matières premières chimiques pour la joaillerie et rendement FinTech. Il suffit de détenir — gagnez un revenu passif toutes les 24 heures.',
+                    structure_title: '67% Actifs réels + 33% Rendement',
+                    structure_sub: 'EURS est adossé à de l\'or physique, des diamants certifiés et des matières premières chimiques utilisées dans la production de bijoux.',
+                    structure_card1: '67% — Actifs réels',
+                    structure_card2: '33% — Rendement',
+                    tokenomics_title: 'Distribution transparente',
+                    tokenomics_sub: 'Offre totale: 1,000,000,000 EURS. Autorités Mint et Freeze révoquées.',
+                    t_label1: 'Prévente',
+                    t_desc1: 'Collecte initiale',
+                    t_label2: 'Liquidité',
+                    t_desc2: 'Bloquée 12 mois',
+                    t_label3: 'Équipe',
+                    t_desc3: 'Bloquée 24 mois',
+                    t_label4: 'Marketing',
+                    t_desc4: 'Partenariats, listages',
+                    t_label5: 'Réserve',
+                    t_desc5: 'Imprévus',
+                    yield_title: 'Vos revenus — toutes les 24 heures',
+                    yield_sub: 'Sans staking ni blocage. Gardez simplement EURS dans votre portefeuille.',
+                    yield_card1: '2% de chaque achat/vente va au pool de récompenses.',
+                    yield_card2: 'Distribue automatiquement le pool aux détenteurs quotidiennement.',
+                    yield_card3: 'De l\'or, de la chimie, de la FinTech et de la DeFi.',
+                    calc_title: '💵 Calculateur de rendement',
+                    calc_sub: 'Entrez le montant en USD:',
+                    tech_title: 'Construit sur Solana Token-2022',
+                    tech_sub: 'Extensions modernes pour les tokens RWA.',
+                    roadmap_title: 'Feuille de route',
+                    roadmap_sub: 'Et après?',
+                    faq_title: 'FAQ',
+                    faq_q1: 'Dois-je staker?',
+                    faq_a1: 'Non. Gardez simplement EURS dans Phantom, Solflare ou Backpack. Les récompenses arrivent automatiquement.',
+                    faq_q2: 'À quelle fréquence les paiements?',
+                    faq_a2: 'Toutes les 24 heures via Permanent Delegate.',
+                    faq_q3: 'Que sont les "produits chimiques" dans la structure?',
+                    faq_a3: 'Cyanures, acides et fondants utilisés dans le raffinage et le traitement de la joaillerie.',
+                    faq_q4: 'Où acheter EURS?',
+                    faq_q5: 'Y a-t-il un risque?',
+                    faq_a5: 'Comme toute cryptomonnaie, EURS est volatile. Mais 67% est adossé à des actifs réels (or, chimie), ce qui réduit le risque.',
+                    community_title: 'Rejoignez la communauté',
+                },
+                de: {
+                    nav_about: 'Über',
+                    nav_structure: 'Struktur',
+                    nav_tokenomics: 'Tokenomics',
+                    nav_yield: 'Rendite',
+                    nav_tech: 'Technologie',
+                    nav_roadmap: 'Fahrplan',
+                    buy_btn: 'EURS kaufen',
+                    how_btn: 'Wie es funktioniert',
+                    hero_title: 'EURS — Gold, verstärkt durch Chemie & FinTech',
+                    hero_desc: 'Europäische Stabilität. Tägliches Einkommen. Reale Vermögenswerte.',
+                    hero_sub: 'EURS ist ein Solana Token-2022-Token, der physisches Gold, chemische Rohstoffe für Schmuck und FinTech-Rendite kombiniert. Einfach halten — passives Einkommen alle 24 Stunden.',
+                    structure_title: '67% Reale Vermögenswerte + 33% Rendite',
+                    structure_sub: 'EURS wird durch physisches Gold, zertifizierte Diamanten und chemische Rohstoffe für die Schmuckproduktion gedeckt.',
+                    structure_card1: '67% — Reale Vermögenswerte',
+                    structure_card2: '33% — Rendite',
+                    tokenomics_title: 'Transparente Verteilung',
+                    tokenomics_sub: 'Gesamtangebot: 1,000,000,000 EURS. Mint- und Freeze-Behörden widerrufen.',
+                    t_label1: 'Presale',
+                    t_desc1: 'Erste Kapitalbeschaffung',
+                    t_label2: 'Liquidität',
+                    t_desc2: '12 Monate gesperrt',
+                    t_label3: 'Team',
+                    t_desc3: '24 Monate gesperrt',
+                    t_label4: 'Marketing',
+                    t_desc4: 'Partnerschaften, Listings',
+                    t_label5: 'Reserve',
+                    t_desc5: 'Unvorhergesehenes',
+                    yield_title: 'Dein Einkommen — alle 24 Stunden',
+                    yield_sub: 'Ohne Staking oder Sperren. Einfach EURS im Wallet halten.',
+                    yield_card1: '2% von jedem Kauf/Verkauf gehen in den Belohnungspool.',
+                    yield_card2: 'Verteilt den Pool automatisch täglich an alle Halter.',
+                    yield_card3: 'Von Gold, Chemie, FinTech und DeFi.',
+                    calc_title: '💵 Renditerechner',
+                    calc_sub: 'Betrag in USD eingeben:',
+                    tech_title: 'Auf Solana Token-2022 gebaut',
+                    tech_sub: 'Moderne Erweiterungen für RWA-Token.',
+                    roadmap_title: 'Fahrplan',
+                    roadmap_sub: 'Was kommt als nächstes?',
+                    faq_title: 'FAQ',
+                    faq_q1: 'Muss ich staken?',
+                    faq_a1: 'Nein. Halte einfach EURS in Phantom, Solflare oder Backpack. Belohnungen kommen automatisch.',
+                    faq_q2: 'Wie oft gibt es Auszahlungen?',
+                    faq_a2: 'Alle 24 Stunden über Permanent Delegate.',
+                    faq_q3: 'Was sind "Chemikalien" in der Struktur?',
+                    faq_a3: 'Cyanide, Säuren und Flussmittel, die in der Schmuckraffination verwendet werden.',
+                    faq_q4: 'Wo kann man EURS kaufen?',
+                    faq_q5: 'Gibt es ein Risiko?',
+                    faq_a5: 'Wie jede Kryptowährung hat EURS Volatilität. Aber 67% sind durch reale Vermögenswerte (Gold, Chemie) gedeckt, was das Risiko reduziert.',
+                    community_title: 'Tritt der Community bei',
+                },
+                zh: {
+                    nav_about: '关于',
+                    nav_structure: '结构',
+                    nav_tokenomics: '代币经济',
+                    nav_yield: '收益',
+                    nav_tech: '技术',
+                    nav_roadmap: '路线图',
+                    buy_btn: '购买 EURS',
+                    how_btn: '如何运作',
+                    hero_title: 'EURS — 黄金，化学与金融科技增强',
+                    hero_desc: '欧洲稳定。每日收入。真实资产。',
+                    hero_sub: 'EURS 是 Solana Token-2022 代币，结合实物黄金、珠宝用化学品原料和金融科技收益。只需持有 — 每24小时获得被动收入。',
+                    structure_title: '67% 真实资产 + 33% 收益',
+                    structure_sub: 'EURS 由实物黄金、认证钻石和珠宝生产中使用的化学品原料支撑。',
+                    structure_card1: '67% — 真实资产',
+                    structure_card2: '33% — 收益',
+                    tokenomics_title: '透明分配',
+                    tokenomics_sub: '总供应量: 1,000,000,000 EURS。Mint 和 Freeze 权限已撤销。',
+                    t_label1: '预售',
+                    t_desc1: '初始融资',
+                    t_label2: '流动性',
+                    t_desc2: '锁定12个月',
+                    t_label3: '团队',
+                    t_desc3: '锁定24个月',
+                    t_label4: '营销',
+                    t_desc4: '合作、上市',
+                    t_label5: '储备',
+                    t_desc5: '应急资金',
+                    yield_title: '你的收入 — 每24小时',
+                    yield_sub: '无需质押或锁定。只需在钱包中持有 EURS。',
+                    yield_card1: '每笔买卖的2%进入奖励池。',
+                    yield_card2: '每天自动将池子分配给所有持有者。',
+                    yield_card3: '来自黄金、化学、金融科技和DeFi。',
+                    calc_title: '💵 收益计算器',
+                    calc_sub: '输入美元金额:',
+                    tech_title: '基于 Solana Token-2022 构建',
+                    tech_sub: '针对RWA代币的现代扩展。',
+                    roadmap_title: '路线图',
+                    roadmap_sub: '下一步是什么？',
+                    faq_title: '常见问题',
+                    faq_q1: '我需要质押吗？',
+                    faq_a1: '不需要。只需在 Phantom、Solflare 或 Backpack 中持有 EURS。奖励自动到账。',
+                    faq_q2: '多久支付一次？',
+                    faq_a2: '每24小时通过 Permanent Delegate 支付。',
+                    faq_q3: '结构中的“化学品”是什么？',
+                    faq_a3: '珠宝精炼和加工中使用的氰化物、酸和助熔剂。',
+                    faq_q4: '在哪里购买 EURS？',
+                    faq_q5: '有风险吗？',
+                    faq_a5: '与任何加密货币一样，EURS 有波动性。但67%由真实资产（黄金、化学品）支撑，降低了风险。',
+                    community_title: '加入社区',
+                },
+                ja: {
+                    nav_about: '概要',
+                    nav_structure: '構造',
+                    nav_tokenomics: 'トークノミクス',
+                    nav_yield: '利回り',
+                    nav_tech: 'テクノロジー',
+                    nav_roadmap: 'ロードマップ',
+                    buy_btn: 'EURSを購入',
+                    how_btn: '仕組み',
+                    hero_title: 'EURS — ゴールド、化学とFinTechで強化',
+                    hero_desc: 'ヨーロッパの安定性。毎日の収入。実物資産。',
+                    hero_sub: 'EURSはSolana Token-2022トークンで、物理的な金、宝飾品用の化学原料、FinTech利回りを組み合わせています。保有するだけで24時間ごとに受動的収入を得られます。',
+                    structure_title: '67% 実物資産 + 33% 利回り',
+                    structure_sub: 'EURSは物理的な金、認定ダイヤモンド、宝飾品生産に使用される化学原料によって裏付けられています。',
+                    structure_card1: '67% — 実物資産',
+                    structure_card2: '33% — 利回り',
+                    tokenomics_title: '透明な分配',
+                    tokenomics_sub: '総供給量: 1,000,000,000 EURS。MintとFreezeの権限は取り消されました。',
+                    t_label1: 'プレセール',
+                    t_desc1: '初期資金調達',
+                    t_label2: '流動性',
+                    t_desc2: '12ヶ月ロック',
+                    t_label3: 'チーム',
+                    t_desc3: '24ヶ月ロック',
+                    t_label4: 'マーケティング',
+                    t_desc4: 'パートナーシップ、上場',
+                    t_label5: '準備金',
+                    t_desc5: '予備',
+                    yield_title: 'あなたの収入 — 24時間ごと',
+                    yield_sub: 'ステーキングやロックは不要。EURSをウォレットに保有するだけ。',
+                    yield_card1: '売買の2%が報酬プールに入ります。',
+                    yield_card2: '毎日自動的にプールを全保有者に分配します。',
+                    yield_card3: '金、化学、FinTech、DeFiから。',
+                    calc_title: '💵 利回り計算機',
+                    calc_sub: 'USD金額を入力:',
+                    tech_title: 'Solana Token-2022上に構築',
+                    tech_sub: 'RWAトークンのためのモダンな拡張機能。',
+                    roadmap_title: 'ロードマップ',
+                    roadmap_sub: '次のステップは？',
+                    faq_title: 'FAQ',
+                    faq_q1: 'ステーキングは必要ですか？',
+                    faq_a1: 'いいえ。Phantom、Solflare、BackpackでEURSを保有するだけで、自動的に報酬が届きます。',
+                    faq_q2: '支払いの頻度は？',
+                    faq_a2: 'Permanent Delegateを通じて24時間ごと。',
+                    faq_q3: '構造内の「化学物質」とは？',
+                    faq_a3: '宝飾品の精製・加工に使用されるシアン化物、酸、フラックス。',
+                    faq_q4: 'EURSはどこで買えますか？',
+                    faq_q5: 'リスクはありますか？',
+                    faq_a5: '他の暗号資産と同様に変動性がありますが、67%が実物資産（金、化学）で裏付けられており、リスクを低減しています。',
+                    community_title: 'コミュニティに参加',
+                },
+                ar: {
+                    nav_about: 'حول',
+                    nav_structure: 'الهيكل',
+                    nav_tokenomics: 'اقتصاديات الرمز',
+                    nav_yield: 'العائد',
+                    nav_tech: 'التقنية',
+                    nav_roadmap: 'الخريطة',
+                    buy_btn: 'شراء EURS',
+                    how_btn: 'كيف يعمل',
+                    hero_title: 'EURS — الذهب، المعزز بالكيمياء والتمويل الرقمي',
+                    hero_desc: 'استقرار أوروبي. دخل يومي. أصول حقيقية.',
+                    hero_sub: 'EURS هو رمز Solana Token-2022 يجمع بين الذهب المادي والمواد الكيميائية الخام للمجوهرات وعوائد التمويل الرقمي. فقط احتفظ به — احصل على دخل سلبي كل 24 ساعة.',
+                    structure_title: '67% أصول حقيقية + 33% عائد',
+                    structure_sub: 'EURS مدعوم بالذهب المادي والماس المعتمد والمواد الكيميائية الخام المستخدمة في إنتاج المجوهرات.',
+                    structure_card1: '67% — أصول حقيقية',
+                    structure_card2: '33% — عائد',
+                    tokenomics_title: 'توزيع شفاف',
+                    tokenomics_sub: 'إجمالي العرض: 1,000,000,000 EURS. تم إلغاء صلاحيات Mint و Freeze.',
+                    t_label1: 'ما قبل البيع',
+                    t_desc1: 'جمع رأس المال الأولي',
+                    t_label2: 'السيولة',
+                    t_desc2: 'مجمدة 12 شهرًا',
+                    t_label3: 'الفريق',
+                    t_desc3: 'مجمدة 24 شهرًا',
+                    t_label4: 'التسويق',
+                    t_desc4: 'شراكات، إدراجات',
+                    t_label5: 'احتياطي',
+                    t_desc5: 'طوارئ',
+                    yield_title: 'دخلك — كل 24 ساعة',
+                    yield_sub: 'بدون تخزين أو قفل. فقط احتفظ بـ EURS في محفظتك.',
+                    yield_card1: '2% من كل عملية شراء/بيع تذهب إلى مجمع المكافآت.',
+                    yield_card2: 'يوزع المجمع تلقائيًا على جميع الحائزين يوميًا.',
+                    yield_card3: 'من الذهب والكيمياء والتمويل الرقمي و DeFi.',
+                    calc_title: '💵 حاسبة العائد',
+                    calc_sub: 'أدخل المبلغ بالدولار:',
+                    tech_title: 'مبني على Solana Token-2022',
+                    tech_sub: 'إضافات حديثة لرموز RWA.',
+                    roadmap_title: 'الخريطة',
+                    roadmap_sub: 'ما التالي؟',
+                    faq_title: 'الأسئلة الشائعة',
+                    faq_q1: 'هل أحتاج إلى التخزين؟',
+                    faq_a1: 'لا. فقط احتفظ بـ EURS في Phantom أو Solflare أو Backpack. المكافآت تأتي تلقائيًا.',
+                    faq_q2: 'كم مرة المدفوعات؟',
+                    faq_a2: 'كل 24 ساعة عبر Permanent Delegate.',
+                    faq_q3: 'ما هي "المواد الكيميائية" في الهيكل؟',
+                    faq_a3: 'سيانيدات، أحماض، ومواد مساعدة تستخدم في تكرير وتجهيز المجوهرات.',
+                    faq_q4: 'أين يمكن شراء EURS؟',
+                    faq_q5: 'هل هناك خطر؟',
+                    faq_a5: 'مثل أي عملة رقمية، EURS متقلب. لكن 67% مدعوم بأصول حقيقية (ذهب، كيمياء)، مما يقلل المخاطر.',
+                    community_title: 'انضم إلى المجتمع',
                 }
-            });
-        });
+            };
 
-        console.log('💎 EURS — Euro Stable Income');
-        console.log('Контракт: ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq');
-        console.log('Пул: 7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z');
-        console.log('APY: ~15-25%');
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const lang = this.dataset.lang;
+                    const t = translations[lang] || translations.en;
+                    document.querySelectorAll('[data-i18n]').forEach(el => {
+                        const key = el.dataset.i18n;
+                        if (t[key]) {
+                            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                                el.placeholder = t[key];
+                            } else {
+                                el.innerHTML = t[key];
+                            }
+                        }
+                    });
+                });
+            });
+
+            // ---- 8. ПЛАВНЫЙ СКРОЛЛ ----
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            console.log('💎 EURS — Euro Stable Income');
+            console.log('Contract: ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq');
+            console.log('Pool: 7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z');
+            console.log('APY: ~15-25%');
+
+        })();
     </script>
-
 </body>
 </html>
