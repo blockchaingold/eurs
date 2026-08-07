@@ -1447,7 +1447,7 @@
 
             toggleBtn.classList.remove('hidden');
 
-            // ---- 7. FINTECH: 31 продукт с rate ----
+            // ---- 7. FINTECH: 31 продукт ----
             const fintechData = [
                 { icon: '📜', name: 'SBLC', desc: 'Standby Letter of Credit — global trade guarantee.', rate: 0.025 },
                 { icon: '🏦', name: 'Bank Guarantees', desc: 'Unconditional payment guarantee.', rate: 0.015 },
@@ -1482,7 +1482,7 @@
                 { icon: '🏛️', name: 'Bank Integration', desc: 'Connect to banking APIs.', rate: 0.012 }
             ];
 
-            // ---- 8. МОДАЛКИ (старая версия — оставлена для совместимости) ----
+            // ---- 8. МОДАЛКИ ----
             const grid = document.getElementById('fintechGrid');
             const modalOverlay = document.getElementById('modalOverlay');
             const modalBody = document.getElementById('modalBody');
@@ -1511,10 +1511,325 @@
                 if (e.target === modalOverlay) closeModal();
             });
 
-            // ---- 9. СТАРЫЕ ФУНКЦИИ ДЛЯ КАЖДОГО ПРОДУКТА (оставлены) ----
-            // (Все 31 функция — calculateSBLC, applySBLC, calculateBG, applyBG и т.д. — остаются)
-            // Они не используются в новой пошаговой логике, но оставлены для обратной совместимости.
-            // Если они понадобятся в будущем — они здесь.
+            // ---- 9. СТАРЫЕ ФУНКЦИИ (все 31 продукт) ----
+            // SBLC
+            window.calculateSBLC = function() {
+                const amt = parseFloat(document.getElementById('sblcAmount').value) || 0;
+                const term = parseFloat(document.getElementById('sblcTerm').value) || 12;
+                const fee = amt * 0.025 * (term / 12);
+                document.getElementById('sblcResult').textContent = `Fee: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%)`;
+            };
+            window.applySBLC = function() {
+                const company = document.getElementById('sblcCompany').value || 'Not provided';
+                document.getElementById('sblcResult').textContent =
+                    `✅ SBLC application submitted for ${company}. We'll contact you within 24 hours.`;
+            };
+            // Bank Guarantees
+            window.calculateBG = function() {
+                const amt = parseFloat(document.getElementById('bgAmount').value) || 0;
+                const term = parseFloat(document.getElementById('bgTerm').value) || 6;
+                const fee = amt * 0.015 * (term / 12);
+                document.getElementById('bgResult').textContent = `Fee: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%)`;
+            };
+            window.applyBG = function() {
+                const ben = document.getElementById('bgBeneficiary').value || 'Not provided';
+                document.getElementById('bgResult').textContent =
+                    `✅ Guarantee application submitted for ${ben}. We'll contact you within 24 hours.`;
+            };
+            // Letters of Credit
+            window.calculateLC = function() {
+                const amt = parseFloat(document.getElementById('lcAmount').value) || 0;
+                const term = parseFloat(document.getElementById('lcTerm').value) || 90;
+                const fee = amt * 0.005 * (term / 360);
+                document.getElementById('lcResult').textContent =
+                    `Commission: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%)`;
+            };
+            window.applyLC = function() {
+                const exporter = document.getElementById('lcExporter').value || 'Not provided';
+                document.getElementById('lcResult').textContent =
+                    `✅ LC issued for ${exporter}. Reference: LC-${Date.now().toString(36).toUpperCase()}`;
+            };
+            // Asset Tokenization
+            window.calculateTokenization = function() {
+                const val = parseFloat(document.getElementById('assetValue').value) || 0;
+                const fee = val * 0.01;
+                document.getElementById('tokenizationResult').textContent = `Cost: ~$${fee.toFixed(2)} (1%)`;
+            };
+            window.applyTokenization = function() {
+                const type = document.getElementById('assetType').value;
+                const desc = document.getElementById('assetDesc').value || 'No description';
+                document.getElementById('tokenizationResult').textContent =
+                    `✅ ${type} tokenization request submitted. Desc: ${desc}. We'll review within 48 hours.`;
+            };
+            // Digital Bonds
+            window.calculateBond = function() {
+                const term = parseFloat(document.getElementById('bondTerm').value) || 5;
+                const yield_ = 4.5 + term * 0.4;
+                document.getElementById('bondResult').textContent = `Yield: ${yield_.toFixed(1)}% APY`;
+            };
+            window.buyBond = function() {
+                const amt = parseFloat(document.getElementById('bondAmount').value) || 0;
+                document.getElementById('bondResult').textContent =
+                    `✅ Bond purchased: $${amt.toFixed(2)}. Confirmation: BOND-${Date.now().toString(36).toUpperCase()}`;
+            };
+            // Revolving Credit
+            window.calculateRevolving = function() {
+                const draw = parseFloat(document.getElementById('rcDrawdown').value) || 0;
+                const interest = draw * 0.025;
+                document.getElementById('rcResult').textContent = `Interest: $${interest.toFixed(2)} (2.5%)`;
+            };
+            window.applyRevolving = function() {
+                const limit = parseFloat(document.getElementById('rcLimit').value) || 0;
+                document.getElementById('rcResult').textContent =
+                    `✅ Credit line approved: $${limit.toFixed(2)}. Available for 12 months.`;
+            };
+            // Securitization
+            window.calculateSecuritization = function() {
+                document.getElementById('secResult').textContent = `Tranches: 3 | Avg Yield: 7.2%`;
+            };
+            window.applySecuritization = function() {
+                const pool = parseFloat(document.getElementById('secPool').value) || 0;
+                document.getElementById('secResult').textContent =
+                    `✅ Securitization initiated for $${pool.toFixed(2)} pool. Structure docs sent.`;
+            };
+            // Factoring
+            window.calculateFactoring = function() {
+                const amt = parseFloat(document.getElementById('factAmount').value) || 0;
+                const advance = amt * 0.85;
+                document.getElementById('factResult').textContent = `Advance: $${advance.toFixed(2)} (85%)`;
+            };
+            window.applyFactoring = function() {
+                const amt = parseFloat(document.getElementById('factAmount').value) || 0;
+                document.getElementById('factResult').textContent =
+                    `✅ Invoice factored: $${amt.toFixed(2)}. Funds transferred to your wallet.`;
+            };
+            // Forfaiting
+            window.calculateForfaiting = function() {
+                const amt = parseFloat(document.getElementById('forfAmount').value) || 0;
+                const price = amt * 0.85;
+                document.getElementById('forfResult').textContent =
+                    `Purchase Price: $${price.toFixed(2)} (15% discount)`;
+            };
+            window.applyForfaiting = function() {
+                const amt = parseFloat(document.getElementById('forfAmount').value) || 0;
+                document.getElementById('forfResult').textContent =
+                    `✅ Receivable purchased: $${amt.toFixed(2)}. Without recourse.`;
+            };
+            // Trust Management
+            window.calculateTrust = function() {
+                document.getElementById('trustResult').textContent = `Projected Return: 8-12% APY`;
+            };
+            window.applyTrust = function() {
+                const amt = parseFloat(document.getElementById('trustAmount').value) || 0;
+                document.getElementById('trustResult').textContent =
+                    `✅ Trust established with $${amt.toFixed(2)}. Monthly statements will be sent.`;
+            };
+            // Cross-Border Payments
+            window.calculateCrossBorder = function() {
+                document.getElementById('cbResult').textContent = `Rate: 0.92 | Fee: $5 | Arrives: 2-5 min`;
+            };
+            window.applyCrossBorder = function() {
+                const amt = parseFloat(document.getElementById('cbAmount').value) || 0;
+                const curr = document.getElementById('cbCurrency').value;
+                document.getElementById('cbResult').textContent =
+                    `✅ Payment of $${amt.toFixed(2)} sent to ${curr}. TX: ${Date.now().toString(36).toUpperCase()}`;
+            };
+            // Crypto Acquiring
+            window.calculateAcquiring = function() {
+                document.getElementById('caResult').textContent = `Rate: 1.8% + $0.30 per tx`;
+            };
+            window.applyAcquiring = function() {
+                const biz = document.getElementById('caBusiness').value || 'Business';
+                document.getElementById('caResult').textContent =
+                    `✅ ${biz} — acquiring application submitted. We'll contact you within 48 hours.`;
+            };
+            // Custody
+            window.calculateCustody = function() {
+                document.getElementById('custodyResult').textContent = `Fee: 0.5% annually`;
+            };
+            window.applyCustody = function() {
+                const amt = parseFloat(document.getElementById('custodyAmount').value) || 0;
+                document.getElementById('custodyResult').textContent =
+                    `✅ Custody initiated for $${amt.toFixed(2)}. Insurance active.`;
+            };
+            // DeFi Staking
+            window.calculateStaking = function() {
+                const amt = parseFloat(document.getElementById('stakingAmount').value) || 0;
+                const daily = amt * 0.0005;
+                document.getElementById('stakingResult').textContent =
+                    `Daily Reward: ~${daily.toFixed(3)} EURS (${(daily/amt*100).toFixed(2)}%)`;
+            };
+            window.applyStaking = function() {
+                const amt = parseFloat(document.getElementById('stakingAmount').value) || 0;
+                document.getElementById('stakingResult').textContent =
+                    `✅ ${amt} EURS staked. Rewards start in 24 hours.`;
+            };
+            // Collateralized Lending
+            window.calculateLending = function() {
+                const collat = parseFloat(document.getElementById('collateralAmount').value) || 0;
+                const ltv = parseFloat(document.getElementById('ltvRatio').value) / 100;
+                const loan = collat * ltv * 1.15;
+                document.getElementById('lendingResult').textContent =
+                    `Loan: $${loan.toFixed(2)} | Interest: 8% APY | LTV: ${(ltv*100).toFixed(0)}%`;
+            };
+            window.applyLending = function() {
+                const amt = parseFloat(document.getElementById('collateralAmount').value) || 0;
+                document.getElementById('lendingResult').textContent =
+                    `✅ Loan issued against ${amt} EURS collateral. Monitor your LTV ratio.`;
+            };
+            // Gold-Backed EURS
+            window.calculateGold = function() {
+                const amt = parseFloat(document.getElementById('goldAmount').value) || 0;
+                const price = parseFloat(document.getElementById('goldPrice').value) || 2650;
+                const eursPrice = 1.15;
+                const goldOz = amt / price;
+                const eursTokens = goldOz * price / eursPrice;
+                document.getElementById('goldResult').textContent =
+                    `You get: ${eursTokens.toFixed(3)} EURS (1 EURS = $${eursPrice.toFixed(2)} USDC)`;
+            };
+            window.buyGoldToken = function() {
+                const amt = parseFloat(document.getElementById('goldAmount').value) || 0;
+                document.getElementById('goldResult').textContent =
+                    `✅ Gold-backed EURS purchased: $${amt.toFixed(2)}. Tokens sent to your wallet.`;
+            };
+            // Stablecoin Mode
+            window.calculateStable = function() {
+                document.getElementById('stableResult').textContent =
+                    `Fee: 0.5% | Guaranteed rate: 0.92 EUR per EURS for 30 days`;
+            };
+            window.applyStable = function() {
+                const amt = parseFloat(document.getElementById('stableAmount').value) || 0;
+                document.getElementById('stableResult').textContent =
+                    `✅ Stable Mode activated for ${amt} EURS. Rate locked for 30 days.`;
+            };
+            // Three Elephants Index
+            window.calculateIndex = function() {
+                document.getElementById('indexResult').textContent =
+                    `EURS: 33% | USDS: 33% | EUSD: 33% | Rebalanced monthly.`;
+            };
+            window.buyIndex = function() {
+                const amt = parseFloat(document.getElementById('indexAmount').value) || 0;
+                document.getElementById('indexResult').textContent =
+                    `✅ Index purchased: $${amt.toFixed(2)}. Holdings: EURS (33%), USDS (33%), EUSD (33%).`;
+            };
+            // AI Trading
+            window.calculateAI = function() {
+                document.getElementById('aiResult').textContent =
+                    `Projected Return: 18% APY | Sharpe: 1.2 | Max DD: 15%`;
+            };
+            window.applyAI = function() {
+                const cap = parseFloat(document.getElementById('aiCapital').value) || 0;
+                document.getElementById('aiResult').textContent =
+                    `✅ AI Trading activated with $${cap.toFixed(2)}. Strategy: ${document.getElementById('aiStrategy').value}`;
+            };
+            // Portfolio Analysis
+            window.analyzePortfolio = function() {
+                document.getElementById('portfolioResult').textContent =
+                    `Total: $2,100 | Expected Return: 14% | Risk: Medium | Diversification: Good`;
+            };
+            // Dividend Calculator
+            window.calculateDividend = function() {
+                const amt = parseFloat(document.getElementById('divAmount').value) || 0;
+                const monthly = amt * 0.01875;
+                document.getElementById('divResult').textContent =
+                    `Monthly Dividend: ~$${monthly.toFixed(2)} (${(monthly/amt*100*12).toFixed(1)}% APY)`;
+            };
+            // Weekly Auctions
+            window.placeBid = function() {
+                const bid = parseFloat(document.getElementById('auctionBid').value) || 0;
+                document.getElementById('auctionResult').textContent =
+                    `✅ Bid of $${bid.toFixed(2)} placed! Current highest: $${(bid + Math.random()*5000).toFixed(0)}`;
+            };
+            // Fixed-Income Bonds
+            window.calculateFI = function() {
+                document.getElementById('fiResult').textContent = `Yield: 5.2% | Maturity: 2030 | Coupon: Annual`;
+            };
+            window.buyFI = function() {
+                const amt = parseFloat(document.getElementById('fiAmount').value) || 0;
+                document.getElementById('fiResult').textContent =
+                    `✅ Bond purchased: $${amt.toFixed(2)}. Coupon payments semi-annually.`;
+            };
+            // Tokenized Derivatives
+            window.calculateDeriv = function() {
+                document.getElementById('derivResult').textContent =
+                    `Premium: $${(parseFloat(document.getElementById('derivAmount').value||1000)*0.035).toFixed(2)} | Strike: 2650`;
+            };
+            window.tradeDeriv = function() {
+                const amt = parseFloat(document.getElementById('derivAmount').value) || 0;
+                document.getElementById('derivResult').textContent =
+                    `✅ ${document.getElementById('derivType').value} executed on ${document.getElementById('derivUnderlying').value}. Notional: $${amt.toFixed(2)}`;
+            };
+            // Investment Funds
+            window.calculateFund = function() {
+                document.getElementById('fundResult').textContent =
+                    `Projected 5y Return: 14% APY | Management Fee: 1.5%`;
+            };
+            window.investFund = function() {
+                const amt = parseFloat(document.getElementById('fundAmount').value) || 0;
+                document.getElementById('fundResult').textContent =
+                    `✅ Invested $${amt.toFixed(2)} in ${document.getElementById('fundSelect').value}. Welcome aboard!`;
+            };
+            // Portfolio Insurance
+            window.calculateInsurance = function() {
+                const amt = parseFloat(document.getElementById('insAmount').value) || 0;
+                const prem = amt * 0.05;
+                document.getElementById('insResult').textContent =
+                    `Premium: $${prem.toFixed(2)} (${(prem/amt*100).toFixed(0)}%) | Coverage: 20% downside`;
+            };
+            window.buyInsurance = function() {
+                const amt = parseFloat(document.getElementById('insAmount').value) || 0;
+                document.getElementById('insResult').textContent =
+                    `✅ Portfolio insurance active for $${amt.toFixed(2)}. Valid for 12 months.`;
+            };
+            // Carbon Credits
+            window.calculateCarbon = function() {
+                const tonnes = parseFloat(document.getElementById('carbonAmount').value) || 0;
+                document.getElementById('carbonResult').textContent =
+                    `Price: $45/tonne | Total: $${(tonnes*45).toFixed(2)} | Verified by Verra`;
+            };
+            window.tradeCarbon = function() {
+                const tonnes = parseFloat(document.getElementById('carbonAmount').value) || 0;
+                document.getElementById('carbonResult').textContent =
+                    `✅ ${document.getElementById('carbonAction').value} executed: ${tonnes} tCO2. TX confirmed.`;
+            };
+            // Green Bonds
+            window.calculateGreen = function() {
+                document.getElementById('greenResult').textContent =
+                    `Yield: 4.8% | Environmental Impact: 50 tCO2 avoided | Term: 10 years`;
+            };
+            window.buyGreen = function() {
+                const amt = parseFloat(document.getElementById('greenAmount').value) || 0;
+                document.getElementById('greenResult').textContent =
+                    `✅ Green Bond purchased: $${amt.toFixed(2)} for ${document.getElementById('greenProject').value}.`;
+            };
+            // Reporting & Audit
+            window.generateReport = function() {
+                document.getElementById('reportResult').textContent =
+                    `✅ Report ready: EURS_Q2_2026.pdf | Includes: P&L, Balance, Asset Breakdown.`;
+            };
+            window.downloadReport = function() {
+                document.getElementById('reportResult').textContent =
+                    `📄 Download started: EURS_Q2_2026.pdf (simulated)`;
+            };
+            // Legal Structure
+            window.viewLegal = function() {
+                document.getElementById('legalResult').textContent =
+                    `Documents: Incorporation Certificate, Trust Deed, Regulatory Filing, Compliance Manual.`;
+            };
+            window.downloadLegal = function() {
+                document.getElementById('legalResult').textContent =
+                    `📄 Legal pack downloaded: ${document.getElementById('legalJurisdiction').value}_${document.getElementById('legalSPV').value}.zip`;
+            };
+            // Bank Integration
+            window.getBankDocs = function() {
+                document.getElementById('bankResult').textContent =
+                    `✅ Integration guide sent to your email. Includes: API keys, webhooks, sample code.`;
+            };
+            window.applyBank = function() {
+                const bank = document.getElementById('bankName').value || 'Bank';
+                document.getElementById('bankResult').textContent =
+                    `✅ ${bank} integration requested. We'll connect within 48 hours.`;
+            };
 
             // ---- 10. НОВАЯ ПОШАГОВАЯ ЛОГИКА ----
             function renderModal(product) {
@@ -1734,4 +2049,4 @@
         })();
     </script>
 </body>
-                                                                                                                        </html>
+</html>
