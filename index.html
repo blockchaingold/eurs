@@ -2341,8 +2341,12 @@
                 alert(msg);
             };
 
-            // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК ----
-            if (grid) {
+            // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК (исправлено) ----
+            function initGrid() {
+                if (!grid) {
+                    console.error('FinTech grid not found!');
+                    return;
+                }
                 fintechData.forEach((p, index) => {
                     const card = document.createElement('div');
                     card.className = 'fintech-card';
@@ -2350,13 +2354,15 @@
                         <div class="fintech-icon">${p.icon}</div>
                         <h4 class="fintech-name">${p.name}</h4>
                         <p class="fintech-desc">${p.desc}</p>
-                        <button class="btn btn-secondary btn-sm" data-idx="${index}">Open</button>
+                        <button class="btn btn-secondary btn-sm open-btn" data-idx="${index}">Open</button>
                     `;
                     grid.appendChild(card);
                 });
 
-                document.querySelectorAll('.fintech-card .btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
+                // НАЗНАЧАЕМ ОБРАБОТЧИК НА ВСЕ КНОПКИ "Open"
+                document.querySelectorAll('.open-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
                         const idx = parseInt(this.dataset.idx);
                         const product = fintechData[idx];
                         if (product) {
@@ -2365,10 +2371,15 @@
                             currentStep = 'calculator';
                             appData = {};
                             renderModal(product, idx);
+                        } else {
+                            console.error('Product not found for index:', idx);
                         }
                     });
                 });
             }
+
+            // ИНИЦИАЛИЗИРУЕМ
+            initGrid();
 
             // ---- 14. ПЛАВНЫЙ СКРОЛЛ ----
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
