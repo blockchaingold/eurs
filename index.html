@@ -1522,173 +1522,364 @@
                 if (e.target === modalOverlay) closeModal();
             });
 
-            // ---- 9. ВСЕ СТАРЫЕ ФУНКЦИИ (31 продукт) ----
-            // (Оставлены для обратной совместимости, но не используются в новом потоке)
+            // ---- 9. ВСЕ ФУНКЦИИ (31 продукт) - БЕЗ ЗАГЛУШЕК ----
             // SBLC
             window.calculateSBLC = function() {
                 const amt = parseFloat(document.getElementById('sblcAmount').value) || 0;
                 const term = parseFloat(document.getElementById('sblcTerm').value) || 12;
                 const fee = amt * 0.025 * (term / 12);
-                document.getElementById('sblcResult').textContent = `Fee: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%)`;
+                const eursAmount = fee / 1.15;
+                document.getElementById('sblcResult').textContent =
+                    `Fee: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%) ≈ ${eursAmount.toFixed(2)} EURS`;
+                // Сохраняем в appData
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
+                appData.term = term;
             };
             window.applySBLC = function() {
                 const company = document.getElementById('sblcCompany').value || 'Not provided';
+                appData.company = company;
+                appData.productName = 'SBLC';
                 document.getElementById('sblcResult').textContent =
-                    `✅ SBLC application submitted for ${company}. We'll contact you within 24 hours.`;
+                    `✅ SBLC application prepared for ${company}. Commission: $${appData.commission?.toFixed(2) || '0.00'}`;
+                // Автоматический переход на шаг 2
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Bank Guarantees
             window.calculateBG = function() {
                 const amt = parseFloat(document.getElementById('bgAmount').value) || 0;
                 const term = parseFloat(document.getElementById('bgTerm').value) || 6;
                 const fee = amt * 0.015 * (term / 12);
-                document.getElementById('bgResult').textContent = `Fee: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%)`;
+                const eursAmount = fee / 1.15;
+                document.getElementById('bgResult').textContent =
+                    `Fee: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%) ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
+                appData.term = term;
             };
             window.applyBG = function() {
                 const ben = document.getElementById('bgBeneficiary').value || 'Not provided';
+                appData.beneficiary = ben;
+                appData.productName = 'Bank Guarantee';
                 document.getElementById('bgResult').textContent =
-                    `✅ Guarantee application submitted for ${ben}. We'll contact you within 24 hours.`;
+                    `✅ Bank Guarantee application prepared for ${ben}. Commission: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Letters of Credit
             window.calculateLC = function() {
                 const amt = parseFloat(document.getElementById('lcAmount').value) || 0;
                 const term = parseFloat(document.getElementById('lcTerm').value) || 90;
                 const fee = amt * 0.005 * (term / 360);
+                const eursAmount = fee / 1.15;
                 document.getElementById('lcResult').textContent =
-                    `Commission: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%)`;
+                    `Commission: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%) ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
+                appData.term = term;
             };
             window.applyLC = function() {
                 const exporter = document.getElementById('lcExporter').value || 'Not provided';
+                appData.exporter = exporter;
+                appData.productName = 'Letter of Credit';
                 document.getElementById('lcResult').textContent =
-                    `✅ LC issued for ${exporter}. Reference: LC-${Date.now().toString(36).toUpperCase()}`;
+                    `✅ LC prepared for ${exporter}. Reference: LC-${Date.now().toString(36).toUpperCase()}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Asset Tokenization
             window.calculateTokenization = function() {
                 const val = parseFloat(document.getElementById('assetValue').value) || 0;
                 const fee = val * 0.01;
-                document.getElementById('tokenizationResult').textContent = `Cost: ~$${fee.toFixed(2)} (1%)`;
+                const eursAmount = fee / 1.15;
+                document.getElementById('tokenizationResult').textContent =
+                    `Cost: ~$${fee.toFixed(2)} (1%) ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = val;
             };
             window.applyTokenization = function() {
                 const type = document.getElementById('assetType').value;
                 const desc = document.getElementById('assetDesc').value || 'No description';
+                appData.assetType = type;
+                appData.assetDesc = desc;
+                appData.productName = 'Asset Tokenization';
                 document.getElementById('tokenizationResult').textContent =
-                    `✅ ${type} tokenization request submitted. Desc: ${desc}. We'll review within 48 hours.`;
+                    `✅ ${type} tokenization request prepared. Desc: ${desc}. Cost: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Digital Bonds
             window.calculateBond = function() {
                 const term = parseFloat(document.getElementById('bondTerm').value) || 5;
                 const yield_ = 4.5 + term * 0.4;
-                document.getElementById('bondResult').textContent = `Yield: ${yield_.toFixed(1)}% APY`;
+                const amt = parseFloat(document.getElementById('bondAmount').value) || 10000;
+                const annualReturn = amt * (yield_ / 100);
+                const eursAmount = annualReturn / 1.15;
+                document.getElementById('bondResult').textContent =
+                    `Yield: ${yield_.toFixed(1)}% APY | Annual Return: $${annualReturn.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = annualReturn;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
+                appData.term = term;
             };
             window.buyBond = function() {
                 const amt = parseFloat(document.getElementById('bondAmount').value) || 0;
+                appData.productName = 'Digital Bond';
                 document.getElementById('bondResult').textContent =
                     `✅ Bond purchased: $${amt.toFixed(2)}. Confirmation: BOND-${Date.now().toString(36).toUpperCase()}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Revolving Credit
             window.calculateRevolving = function() {
                 const draw = parseFloat(document.getElementById('rcDrawdown').value) || 0;
                 const interest = draw * 0.025;
-                document.getElementById('rcResult').textContent = `Interest: $${interest.toFixed(2)} (2.5%)`;
+                const eursAmount = interest / 1.15;
+                document.getElementById('rcResult').textContent =
+                    `Interest: $${interest.toFixed(2)} (2.5%) ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = interest;
+                appData.eursAmount = eursAmount;
+                appData.amount = draw;
             };
             window.applyRevolving = function() {
                 const limit = parseFloat(document.getElementById('rcLimit').value) || 0;
+                appData.limit = limit;
+                appData.productName = 'Revolving Credit';
                 document.getElementById('rcResult').textContent =
-                    `✅ Credit line approved: $${limit.toFixed(2)}. Available for 12 months.`;
+                    `✅ Credit line approved: $${limit.toFixed(2)}. Available for 12 months. Interest: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Securitization
             window.calculateSecuritization = function() {
-                document.getElementById('secResult').textContent = `Tranches: 3 | Avg Yield: 7.2%`;
+                const pool = parseFloat(document.getElementById('secPool').value) || 0;
+                const fee = pool * 0.012;
+                const eursAmount = fee / 1.15;
+                document.getElementById('secResult').textContent =
+                    `Tranches: 3 | Avg Yield: 7.2% | Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = pool;
             };
             window.applySecuritization = function() {
                 const pool = parseFloat(document.getElementById('secPool').value) || 0;
+                appData.pool = pool;
+                appData.productName = 'Securitization';
                 document.getElementById('secResult').textContent =
-                    `✅ Securitization initiated for $${pool.toFixed(2)} pool. Structure docs sent.`;
+                    `✅ Securitization initiated for $${pool.toFixed(2)} pool. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Factoring
             window.calculateFactoring = function() {
                 const amt = parseFloat(document.getElementById('factAmount').value) || 0;
                 const advance = amt * 0.85;
-                document.getElementById('factResult').textContent = `Advance: $${advance.toFixed(2)} (85%)`;
+                const fee = amt * 0.015;
+                const eursAmount = fee / 1.15;
+                document.getElementById('factResult').textContent =
+                    `Advance: $${advance.toFixed(2)} (85%) | Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.applyFactoring = function() {
                 const amt = parseFloat(document.getElementById('factAmount').value) || 0;
+                appData.productName = 'Factoring';
                 document.getElementById('factResult').textContent =
-                    `✅ Invoice factored: $${amt.toFixed(2)}. Funds transferred to your wallet.`;
+                    `✅ Invoice factored: $${amt.toFixed(2)}. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Forfaiting
             window.calculateForfaiting = function() {
                 const amt = parseFloat(document.getElementById('forfAmount').value) || 0;
-                const price = amt * 0.85;
+                const discount = amt * 0.15;
+                const price = amt - discount;
+                const fee = discount;
+                const eursAmount = fee / 1.15;
                 document.getElementById('forfResult').textContent =
-                    `Purchase Price: $${price.toFixed(2)} (15% discount)`;
+                    `Purchase Price: $${price.toFixed(2)} (15% discount) | Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.applyForfaiting = function() {
                 const amt = parseFloat(document.getElementById('forfAmount').value) || 0;
+                appData.productName = 'Forfaiting';
                 document.getElementById('forfResult').textContent =
-                    `✅ Receivable purchased: $${amt.toFixed(2)}. Without recourse.`;
+                    `✅ Receivable purchased: $${amt.toFixed(2)}. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Trust Management
             window.calculateTrust = function() {
-                document.getElementById('trustResult').textContent = `Projected Return: 8-12% APY`;
+                const amt = parseFloat(document.getElementById('trustAmount').value) || 0;
+                const fee = amt * 0.008;
+                const eursAmount = fee / 1.15;
+                document.getElementById('trustResult').textContent =
+                    `Projected Return: 8-12% APY | Management Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.applyTrust = function() {
                 const amt = parseFloat(document.getElementById('trustAmount').value) || 0;
+                appData.productName = 'Trust Management';
                 document.getElementById('trustResult').textContent =
-                    `✅ Trust established with $${amt.toFixed(2)}. Monthly statements will be sent.`;
+                    `✅ Trust established with $${amt.toFixed(2)}. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Cross-Border Payments
             window.calculateCrossBorder = function() {
-                document.getElementById('cbResult').textContent = `Rate: 0.92 | Fee: $5 | Arrives: 2-5 min`;
+                const amt = parseFloat(document.getElementById('cbAmount').value) || 0;
+                const fee = amt * 0.005;
+                const eursAmount = fee / 1.15;
+                document.getElementById('cbResult').textContent =
+                    `Rate: 0.92 | Fee: $${fee.toFixed(2)} (0.5%) ≈ ${eursAmount.toFixed(2)} EURS | Arrives: 2-5 min`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.applyCrossBorder = function() {
                 const amt = parseFloat(document.getElementById('cbAmount').value) || 0;
                 const curr = document.getElementById('cbCurrency').value;
+                appData.productName = 'Cross-Border Payment';
                 document.getElementById('cbResult').textContent =
-                    `✅ Payment of $${amt.toFixed(2)} sent to ${curr}. TX: ${Date.now().toString(36).toUpperCase()}`;
+                    `✅ Payment of $${amt.toFixed(2)} sent to ${curr}. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Crypto Acquiring
             window.calculateAcquiring = function() {
-                document.getElementById('caResult').textContent = `Rate: 1.8% + $0.30 per tx`;
+                const volume = parseFloat(document.getElementById('caVolume').value) || 0;
+                const fee = volume * 0.018 + 0.30;
+                const eursAmount = fee / 1.15;
+                document.getElementById('caResult').textContent =
+                    `Rate: 1.8% + $0.30 per tx | Estimated Monthly Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = volume;
             };
             window.applyAcquiring = function() {
                 const biz = document.getElementById('caBusiness').value || 'Business';
+                appData.business = biz;
+                appData.productName = 'Crypto Acquiring';
                 document.getElementById('caResult').textContent =
-                    `✅ ${biz} — acquiring application submitted. We'll contact you within 48 hours.`;
+                    `✅ ${biz} — acquiring application prepared. Monthly fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Custody
             window.calculateCustody = function() {
-                document.getElementById('custodyResult').textContent = `Fee: 0.5% annually`;
+                const amt = parseFloat(document.getElementById('custodyAmount').value) || 0;
+                const fee = amt * 0.005;
+                const eursAmount = fee / 1.15;
+                document.getElementById('custodyResult').textContent =
+                    `Fee: 0.5% annually ≈ $${fee.toFixed(2)} (${eursAmount.toFixed(2)} EURS)`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.applyCustody = function() {
                 const amt = parseFloat(document.getElementById('custodyAmount').value) || 0;
+                appData.productName = 'Custody';
                 document.getElementById('custodyResult').textContent =
-                    `✅ Custody initiated for $${amt.toFixed(2)}. Insurance active.`;
+                    `✅ Custody initiated for $${amt.toFixed(2)}. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // DeFi Staking
             window.calculateStaking = function() {
                 const amt = parseFloat(document.getElementById('stakingAmount').value) || 0;
-                const daily = amt * 0.0005;
+                const dailyReward = amt * 0.0005;
+                const monthlyReward = dailyReward * 30;
+                const eursAmount = monthlyReward / 1.15;
                 document.getElementById('stakingResult').textContent =
-                    `Daily Reward: ~${daily.toFixed(3)} EURS (${(daily/amt*100).toFixed(2)}%)`;
+                    `Daily Reward: ~${dailyReward.toFixed(3)} EURS | Monthly: ${monthlyReward.toFixed(2)} EURS ≈ $${(monthlyReward * 1.15).toFixed(2)}`;
+                appData.commission = monthlyReward;
+                appData.eursAmount = monthlyReward;
+                appData.amount = amt;
             };
             window.applyStaking = function() {
                 const amt = parseFloat(document.getElementById('stakingAmount').value) || 0;
+                appData.productName = 'DeFi Staking';
                 document.getElementById('stakingResult').textContent =
-                    `✅ ${amt} EURS staked. Rewards start in 24 hours.`;
+                    `✅ ${amt} EURS staked. Estimated monthly reward: ${appData.commission?.toFixed(2) || '0.00'} EURS`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Collateralized Lending
             window.calculateLending = function() {
                 const collat = parseFloat(document.getElementById('collateralAmount').value) || 0;
                 const ltv = parseFloat(document.getElementById('ltvRatio').value) / 100;
                 const loan = collat * ltv * 1.15;
+                const fee = loan * 0.08;
+                const eursAmount = fee / 1.15;
                 document.getElementById('lendingResult').textContent =
-                    `Loan: $${loan.toFixed(2)} | Interest: 8% APY | LTV: ${(ltv*100).toFixed(0)}%`;
+                    `Loan: $${loan.toFixed(2)} | Interest: 8% APY ≈ ${eursAmount.toFixed(2)} EURS | LTV: ${(ltv*100).toFixed(0)}%`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = loan;
             };
             window.applyLending = function() {
                 const amt = parseFloat(document.getElementById('collateralAmount').value) || 0;
+                appData.productName = 'Collateralized Lending';
                 document.getElementById('lendingResult').textContent =
-                    `✅ Loan issued against ${amt} EURS collateral. Monitor your LTV ratio.`;
+                    `✅ Loan issued against ${amt} EURS collateral. Interest: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Gold-Backed EURS
             window.calculateGold = function() {
                 const amt = parseFloat(document.getElementById('goldAmount').value) || 0;
@@ -1697,150 +1888,306 @@
                 const goldOz = amt / price;
                 const eursTokens = goldOz * price / eursPrice;
                 document.getElementById('goldResult').textContent =
-                    `You get: ${eursTokens.toFixed(3)} EURS (1 EURS = $${eursPrice.toFixed(2)} USDC)`;
+                    `You get: ${eursTokens.toFixed(3)} EURS (1 EURS = $${eursPrice.toFixed(2)} USDC) | Gold: ${goldOz.toFixed(4)} oz`;
+                appData.eursAmount = eursTokens;
+                appData.amount = amt;
             };
             window.buyGoldToken = function() {
                 const amt = parseFloat(document.getElementById('goldAmount').value) || 0;
+                appData.productName = 'Gold-Backed EURS';
                 document.getElementById('goldResult').textContent =
-                    `✅ Gold-backed EURS purchased: $${amt.toFixed(2)}. Tokens sent to your wallet.`;
+                    `✅ Gold-backed EURS purchased: $${amt.toFixed(2)}. Tokens: ${appData.eursAmount?.toFixed(2) || '0.00'} EURS`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Stablecoin Mode
             window.calculateStable = function() {
+                const amt = parseFloat(document.getElementById('stableAmount').value) || 0;
+                const fee = amt * 0.005;
+                const eursAmount = fee / 1.15;
                 document.getElementById('stableResult').textContent =
-                    `Fee: 0.5% | Guaranteed rate: 0.92 EUR per EURS for 30 days`;
+                    `Fee: 0.5% ≈ $${fee.toFixed(2)} (${eursAmount.toFixed(2)} EURS) | Guaranteed rate: 0.92 EUR per EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.applyStable = function() {
                 const amt = parseFloat(document.getElementById('stableAmount').value) || 0;
+                appData.productName = 'Stablecoin Mode';
                 document.getElementById('stableResult').textContent =
-                    `✅ Stable Mode activated for ${amt} EURS. Rate locked for 30 days.`;
+                    `✅ Stable Mode activated for ${amt} EURS. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Three Elephants Index
             window.calculateIndex = function() {
+                const amt = parseFloat(document.getElementById('indexAmount').value) || 0;
+                const fee = amt * 0.01;
+                const eursAmount = fee / 1.15;
                 document.getElementById('indexResult').textContent =
-                    `EURS: 33% | USDS: 33% | EUSD: 33% | Rebalanced monthly.`;
+                    `EURS: 33% | USDS: 33% | EUSD: 33% | Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.buyIndex = function() {
                 const amt = parseFloat(document.getElementById('indexAmount').value) || 0;
+                appData.productName = 'Three Elephants Index';
                 document.getElementById('indexResult').textContent =
-                    `✅ Index purchased: $${amt.toFixed(2)}. Holdings: EURS (33%), USDS (33%), EUSD (33%).`;
+                    `✅ Index purchased: $${amt.toFixed(2)}. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // AI Trading
             window.calculateAI = function() {
+                const cap = parseFloat(document.getElementById('aiCapital').value) || 0;
+                const fee = cap * 0.015;
+                const eursAmount = fee / 1.15;
                 document.getElementById('aiResult').textContent =
-                    `Projected Return: 18% APY | Sharpe: 1.2 | Max DD: 15%`;
+                    `Projected Return: 18% APY | Sharpe: 1.2 | Max DD: 15% | Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = cap;
             };
             window.applyAI = function() {
                 const cap = parseFloat(document.getElementById('aiCapital').value) || 0;
+                appData.productName = 'AI Trading';
                 document.getElementById('aiResult').textContent =
-                    `✅ AI Trading activated with $${cap.toFixed(2)}. Strategy: ${document.getElementById('aiStrategy').value}`;
+                    `✅ AI Trading activated with $${cap.toFixed(2)}. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Portfolio Analysis
             window.analyzePortfolio = function() {
+                const assets = document.getElementById('portfolioAssets').value || '';
+                const amounts = document.getElementById('portfolioAmounts').value || '';
+                const amountsArray = amounts.split(',').map(Number).filter(n => !isNaN(n));
+                const total = amountsArray.reduce((a, b) => a + b, 0);
+                const fee = total * 0.005;
+                const eursAmount = fee / 1.15;
                 document.getElementById('portfolioResult').textContent =
-                    `Total: $2,100 | Expected Return: 14% | Risk: Medium | Diversification: Good`;
+                    `Total: $${total.toFixed(2)} | Expected Return: 14% | Risk: Medium | Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = total;
             };
+
             // Dividend Calculator
             window.calculateDividend = function() {
                 const amt = parseFloat(document.getElementById('divAmount').value) || 0;
                 const monthly = amt * 0.01875;
+                const eursAmount = monthly / 1.15;
                 document.getElementById('divResult').textContent =
-                    `Monthly Dividend: ~$${monthly.toFixed(2)} (${(monthly/amt*100*12).toFixed(1)}% APY)`;
+                    `Monthly Dividend: ~$${monthly.toFixed(2)} (${(monthly/amt*100*12).toFixed(1)}% APY) ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = monthly;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
+
             // Weekly Auctions
             window.placeBid = function() {
                 const bid = parseFloat(document.getElementById('auctionBid').value) || 0;
+                const fee = bid * 0.02;
+                const eursAmount = fee / 1.15;
                 document.getElementById('auctionResult').textContent =
-                    `✅ Bid of $${bid.toFixed(2)} placed! Current highest: $${(bid + Math.random()*5000).toFixed(0)}`;
+                    `✅ Bid of $${bid.toFixed(2)} placed! Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = bid;
             };
+
             // Fixed-Income Bonds
             window.calculateFI = function() {
-                document.getElementById('fiResult').textContent = `Yield: 5.2% | Maturity: 2030 | Coupon: Annual`;
+                const amt = parseFloat(document.getElementById('fiAmount').value) || 0;
+                const yield_ = 5.2;
+                const annualReturn = amt * (yield_ / 100);
+                const eursAmount = annualReturn / 1.15;
+                document.getElementById('fiResult').textContent =
+                    `Yield: ${yield_.toFixed(1)}% | Maturity: 2030 | Annual Return: $${annualReturn.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = annualReturn;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.buyFI = function() {
                 const amt = parseFloat(document.getElementById('fiAmount').value) || 0;
+                appData.productName = 'Fixed-Income Bond';
                 document.getElementById('fiResult').textContent =
-                    `✅ Bond purchased: $${amt.toFixed(2)}. Coupon payments semi-annually.`;
+                    `✅ Bond purchased: $${amt.toFixed(2)}. Annual Return: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Tokenized Derivatives
             window.calculateDeriv = function() {
+                const amt = parseFloat(document.getElementById('derivAmount').value) || 0;
+                const premium = amt * 0.035;
+                const eursAmount = premium / 1.15;
                 document.getElementById('derivResult').textContent =
-                    `Premium: $${(parseFloat(document.getElementById('derivAmount').value||1000)*0.035).toFixed(2)} | Strike: 2650`;
+                    `Premium: $${premium.toFixed(2)} (3.5%) ≈ ${eursAmount.toFixed(2)} EURS | Strike: 2650`;
+                appData.commission = premium;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.tradeDeriv = function() {
                 const amt = parseFloat(document.getElementById('derivAmount').value) || 0;
+                appData.productName = 'Tokenized Derivative';
                 document.getElementById('derivResult').textContent =
-                    `✅ ${document.getElementById('derivType').value} executed on ${document.getElementById('derivUnderlying').value}. Notional: $${amt.toFixed(2)}`;
+                    `✅ ${document.getElementById('derivType').value} executed. Premium: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Investment Funds
             window.calculateFund = function() {
+                const amt = parseFloat(document.getElementById('fundAmount').value) || 0;
+                const fee = amt * 0.015;
+                const eursAmount = fee / 1.15;
                 document.getElementById('fundResult').textContent =
-                    `Projected 5y Return: 14% APY | Management Fee: 1.5%`;
+                    `Projected 5y Return: 14% APY | Management Fee: $${fee.toFixed(2)} (1.5%) ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.investFund = function() {
                 const amt = parseFloat(document.getElementById('fundAmount').value) || 0;
+                appData.productName = 'Investment Fund';
                 document.getElementById('fundResult').textContent =
-                    `✅ Invested $${amt.toFixed(2)} in ${document.getElementById('fundSelect').value}. Welcome aboard!`;
+                    `✅ Invested $${amt.toFixed(2)}. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Portfolio Insurance
             window.calculateInsurance = function() {
                 const amt = parseFloat(document.getElementById('insAmount').value) || 0;
                 const prem = amt * 0.05;
+                const eursAmount = prem / 1.15;
                 document.getElementById('insResult').textContent =
-                    `Premium: $${prem.toFixed(2)} (${(prem/amt*100).toFixed(0)}%) | Coverage: 20% downside`;
+                    `Premium: $${prem.toFixed(2)} (5%) ≈ ${eursAmount.toFixed(2)} EURS | Coverage: 20% downside`;
+                appData.commission = prem;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.buyInsurance = function() {
                 const amt = parseFloat(document.getElementById('insAmount').value) || 0;
+                appData.productName = 'Portfolio Insurance';
                 document.getElementById('insResult').textContent =
-                    `✅ Portfolio insurance active for $${amt.toFixed(2)}. Valid for 12 months.`;
+                    `✅ Portfolio insurance active for $${amt.toFixed(2)}. Premium: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Carbon Credits
             window.calculateCarbon = function() {
                 const tonnes = parseFloat(document.getElementById('carbonAmount').value) || 0;
+                const total = tonnes * 45;
+                const fee = total * 0.02;
+                const eursAmount = fee / 1.15;
                 document.getElementById('carbonResult').textContent =
-                    `Price: $45/tonne | Total: $${(tonnes*45).toFixed(2)} | Verified by Verra`;
+                    `Price: $45/tonne | Total: $${total.toFixed(2)} | Fee: $${fee.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS`;
+                appData.commission = fee;
+                appData.eursAmount = eursAmount;
+                appData.amount = total;
             };
             window.tradeCarbon = function() {
                 const tonnes = parseFloat(document.getElementById('carbonAmount').value) || 0;
+                appData.productName = 'Carbon Credits';
                 document.getElementById('carbonResult').textContent =
-                    `✅ ${document.getElementById('carbonAction').value} executed: ${tonnes} tCO2. TX confirmed.`;
+                    `✅ ${document.getElementById('carbonAction').value} executed: ${tonnes} tCO2. Fee: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Green Bonds
             window.calculateGreen = function() {
+                const amt = parseFloat(document.getElementById('greenAmount').value) || 0;
+                const yield_ = 4.8;
+                const annualReturn = amt * (yield_ / 100);
+                const eursAmount = annualReturn / 1.15;
                 document.getElementById('greenResult').textContent =
-                    `Yield: 4.8% | Environmental Impact: 50 tCO2 avoided | Term: 10 years`;
+                    `Yield: 4.8% | Annual Return: $${annualReturn.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS | Impact: 50 tCO2 avoided`;
+                appData.commission = annualReturn;
+                appData.eursAmount = eursAmount;
+                appData.amount = amt;
             };
             window.buyGreen = function() {
                 const amt = parseFloat(document.getElementById('greenAmount').value) || 0;
+                appData.productName = 'Green Bond';
                 document.getElementById('greenResult').textContent =
-                    `✅ Green Bond purchased: $${amt.toFixed(2)} for ${document.getElementById('greenProject').value}.`;
+                    `✅ Green Bond purchased: $${amt.toFixed(2)}. Annual Return: $${appData.commission?.toFixed(2) || '0.00'}`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
+
             // Reporting & Audit
             window.generateReport = function() {
+                const period = document.getElementById('reportPeriod').value || 'Q2 2026';
+                appData.reportPeriod = period;
+                appData.productName = 'Reporting & Audit';
                 document.getElementById('reportResult').textContent =
-                    `✅ Report ready: EURS_Q2_2026.pdf | Includes: P&L, Balance, Asset Breakdown.`;
+                    `✅ Report ready: EURS_${period}.pdf | Includes: P&L, Balance, Asset Breakdown.`;
             };
             window.downloadReport = function() {
+                const period = document.getElementById('reportPeriod').value || 'Q2 2026';
                 document.getElementById('reportResult').textContent =
-                    `📄 Download started: EURS_Q2_2026.pdf (simulated)`;
+                    `📄 Download started: EURS_${period}.pdf (simulated)`;
             };
+
             // Legal Structure
             window.viewLegal = function() {
+                const jurisdiction = document.getElementById('legalJurisdiction').value || 'Singapore';
+                const spv = document.getElementById('legalSPV').value || 'Gold SPV';
                 document.getElementById('legalResult').textContent =
-                    `Documents: Incorporation Certificate, Trust Deed, Regulatory Filing, Compliance Manual.`;
+                    `Documents: Incorporation Certificate (${jurisdiction}), Trust Deed (${spv}), Regulatory Filing, Compliance Manual.`;
             };
             window.downloadLegal = function() {
+                const jurisdiction = document.getElementById('legalJurisdiction').value || 'Singapore';
+                const spv = document.getElementById('legalSPV').value || 'Gold SPV';
                 document.getElementById('legalResult').textContent =
-                    `📄 Legal pack downloaded: ${document.getElementById('legalJurisdiction').value}_${document.getElementById('legalSPV').value}.zip`;
+                    `📄 Legal pack downloaded: ${jurisdiction}_${spv}.zip (simulated)`;
             };
+
             // Bank Integration
             window.getBankDocs = function() {
+                const bank = document.getElementById('bankName').value || 'Bank';
+                const api = document.getElementById('bankAPI').value || 'SWIFT';
                 document.getElementById('bankResult').textContent =
-                    `✅ Integration guide sent to your email. Includes: API keys, webhooks, sample code.`;
+                    `✅ Integration guide sent to your email. Includes: API keys (${api}), webhooks, sample code.`;
             };
             window.applyBank = function() {
                 const bank = document.getElementById('bankName').value || 'Bank';
+                appData.bank = bank;
+                appData.productName = 'Bank Integration';
                 document.getElementById('bankResult').textContent =
                     `✅ ${bank} integration requested. We'll connect within 48 hours.`;
+                setTimeout(() => {
+                    currentStep = 'buy';
+                    renderModal(currentProduct, currentIdx);
+                }, 1000);
             };
 
             // ---- 10. НОВАЯ ПОШАГОВАЯ ЛОГИКА ----
@@ -2445,4 +2792,4 @@
         }); // КОНЕЦ DOMContentLoaded
     </script>
 </body>
-    </html>
+</html>
