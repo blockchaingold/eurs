@@ -8,6 +8,9 @@
     <meta property="og:title" content="EURS — Euro Stable Income" />
     <meta property="og:description" content="Gold, Chemicals & FinTech — daily yield on Solana." />
     <meta property="og:image" content="https://raw.githubusercontent.com/blockchaingold/eurs/main/eurs_logo.png" />
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
     <style>
         /* ----- БАЗА ----- */
         * {
@@ -1275,6 +1278,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             'use strict';
 
+            // ---- ИНИЦИАЛИЗАЦИЯ EMAILJS ----
+            (function() {
+                emailjs.init('p-mbGFGSojk7tFupL');
+            })();
+
             // ---- 1. ФОН ----
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
@@ -1531,7 +1539,6 @@
                 const eursAmount = fee / 1.15;
                 document.getElementById('sblcResult').textContent =
                     `Fee: $${fee.toFixed(2)} (${(fee/amt*100).toFixed(2)}%) ≈ ${eursAmount.toFixed(2)} EURS`;
-                // Сохраняем в appData
                 appData.commission = fee;
                 appData.eursAmount = eursAmount;
                 appData.amount = amt;
@@ -1543,7 +1550,6 @@
                 appData.productName = 'SBLC';
                 document.getElementById('sblcResult').textContent =
                     `✅ SBLC application prepared for ${company}. Commission: $${appData.commission?.toFixed(2) || '0.00'}`;
-                // Автоматический переход на шаг 2
                 setTimeout(() => {
                     currentStep = 'buy';
                     renderModal(currentProduct, currentIdx);
@@ -2192,7 +2198,6 @@
 
             // ---- 10. НОВАЯ ПОШАГОВАЯ ЛОГИКА ----
             function renderModal(product, idx) {
-                // ПРОВЕРКА: если product или idx не заданы — выходим
                 if (!product || idx === undefined) {
                     console.error('renderModal: product or idx is missing');
                     alert('Error: Unable to open product. Please try again.');
@@ -2203,7 +2208,6 @@
                 let html = `<h2>${product.icon} ${product.name}</h2><span class="step-indicator">Step: ${step}</span><p style="color:var(--text-muted);margin-bottom:16px;">${product.desc}</p>`;
 
                 if (step === 'calculator') {
-                    // ВСТАВЛЯЕМ ПОЛЯ ДЛЯ КАЖДОГО ПРОДУКТА
                     switch (idx) {
                         case 0: // SBLC
                             html += `
@@ -2557,11 +2561,9 @@
                             html += `<p style="color:var(--text-muted);">This product is under development.</p>`;
                     }
 
-                    // ДОБАВЛЯЕМ КНОПКУ ДЛЯ ПЕРЕХОДА НА ШАГ 2
                     html += `<button class="btn btn-success" onclick="goToBuy()" style="margin-top:16px;">Next: Buy EURS ➜</button>`;
 
                 } else if (step === 'buy') {
-                    // БЕРЁМ СУММУ ИЗ ПОЛЯ ПРОДУКТА
                     let amt = 0;
                     const allInputs = document.querySelectorAll('input[type="number"]');
                     allInputs.forEach(input => {
@@ -2638,7 +2640,7 @@
                         </div>
                         <button class="btn btn-secondary" onclick="closeModal()">Close</button>
                     `;
-                    saveApplication(id, currentProduct.name, appData);
+                    saveApplication(id, currentProduct?.name || 'FinTech Product', appData);
                 }
 
                 modalBody.innerHTML = html;
@@ -2667,16 +2669,10 @@
                     resultDiv.style.display = 'block';
                     resultDiv.textContent = '✅ POF verified! Transaction hash is valid.';
                     setTimeout(() => {
-                        // Автоматический переход на шаг 3
                         currentStep = 'contacts';
                         renderModal(currentProduct, currentIdx);
                     }, 1500);
                 }
-            };
-
-            window.goToContacts = function() {
-                currentStep = 'contacts';
-                renderModal(currentProduct, currentIdx);
             };
 
             window.submitApplication = function() {
@@ -2690,8 +2686,38 @@
                 appData.contactEmail = email;
                 appData.contactTelegram = document.getElementById('contactTelegram')?.value?.trim() || 'Not provided';
                 appData.contactCompany = document.getElementById('contactCompany')?.value?.trim() || 'Not provided';
-                currentStep = 'final';
-                renderModal(currentProduct, currentIdx);
+
+                const id = 'EURS-' + Date.now().toString(36).toUpperCase();
+
+                const templateParams = {
+                    id: id,
+                    productName: appData.productName || currentProduct?.name || 'FinTech Product',
+                    commission: appData.commission?.toFixed(2) || '0.00',
+                    eursAmount: appData.eursAmount?.toFixed(2) || '0.00',
+                    date: new Date().toLocaleString(),
+                    contactName: appData.contactName,
+                    contactEmail: appData.contactEmail,
+                    contactTelegram: appData.contactTelegram,
+                    contactCompany: appData.contactCompany,
+                    txHash: appData.txHash || 'Not provided'
+                };
+
+                emailjs.send(
+                    'service_567sck4',
+                    'template_wfeaqqq',
+                    templateParams
+                ).then(function(response) {
+                    console.log('✅ Email sent!', response);
+                    saveApplication(id, currentProduct?.name || 'FinTech Product', appData);
+                    currentStep = 'final';
+                    renderModal(currentProduct, currentIdx);
+                }, function(error) {
+                    console.error('❌ Email failed:', error);
+                    alert('⚠️ Failed to send email. Please try again.');
+                    saveApplication(id, currentProduct?.name || 'FinTech Product', appData);
+                    currentStep = 'final';
+                    renderModal(currentProduct, currentIdx);
+                });
             };
 
             // ---- 12. СОХРАНЕНИЕ ИСТОРИИ ----
@@ -2723,7 +2749,7 @@
                 alert(msg);
             };
 
-            // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК (ИСПРАВЛЕНО) ----
+            // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК ----
             function initGrid() {
                 const grid = document.getElementById('fintechGrid');
                 if (!grid) {
@@ -2731,7 +2757,6 @@
                     return;
                 }
 
-                // Очищаем сетку
                 grid.innerHTML = '';
 
                 fintechData.forEach((p, index) => {
@@ -2746,7 +2771,6 @@
                     grid.appendChild(card);
                 });
 
-                // НАЗНАЧАЕМ ОБРАБОТЧИК НА КАЖДУЮ КНОПКУ
                 document.querySelectorAll('.open-btn').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -2768,7 +2792,6 @@
                 console.log('✅ FinTech grid initialized with ' + fintechData.length + ' products.');
             }
 
-            // ИНИЦИАЛИЗИРУЕМ
             initGrid();
 
             // ---- 14. ПЛАВНЫЙ СКРОЛЛ ----
@@ -2789,7 +2812,7 @@
             console.log('31 FinTech Instruments with Proof of Funds flow.');
             console.log('Applications saved in localStorage.');
 
-        }); // КОНЕЦ DOMContentLoaded
+        });
     </script>
 </body>
 </html>
