@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EURS — Euro Stable Income | Gold, Chemicals & FinTech</title>
     <link rel="icon" href="eurs_logo.png" type="image/png" />
+    <meta property="og:title" content="EURS — Euro Stable Income" />
+    <meta property="og:description" content="Gold, Chemicals & FinTech — daily yield on Solana." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/blockchaingold/eurs/main/eurs_logo.png" />
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
     </script>
     <style>
-        /* ----- БАЗА (без изменений) ----- */
+        /* ----- БАЗА ----- */
         * {
             margin: 0;
             padding: 0;
@@ -1219,7 +1222,7 @@
             <div class="faq-list">
                 <div class="faq-item"><button class="faq-question">Do I need to stake?</button><div class="faq-answer"><p>No. Just hold EURS in Phantom, Solflare, or Backpack. Rewards come automatically.</p></div></div>
                 <div class="faq-item"><button class="faq-question">How often are payouts?</button><div class="faq-answer"><p>Every 24 hours via Permanent Delegate.</p></div></div>
-                <div class="faq-item"><button class="faq-question">What is Proof of Funds (POF)?</button><div class="faq-answer"><p>You buy EURS and submit the transaction hash. This proves you have the funds and are ready to proceed with the FinTech product.</p></div></div>
+                <div class="faq-item"><button class="faq-question">What is Proof of Funds (POF)?</button><div class="faq-answer"><p>You buy EURS and submit the Swap Hash. This proves you have the funds and are ready to proceed with the FinTech product.</p></div></div>
                 <div class="faq-item"><button class="faq-question">Where to buy EURS?</button><div class="faq-answer"><p>Meteora DAMM V2 pool: <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p></div></div>
                 <div class="faq-item"><button class="faq-question">Is there risk?</button><div class="faq-answer"><p>Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.</p></div></div>
             </div>
@@ -1430,14 +1433,14 @@
                     return '🏦 <b>31 FinTech Instruments:</b><br>SBLC, Bank Guarantees, Letters of Credit, Asset Tokenization, Digital Bonds, Revolving Credit, Securitization, Factoring, Forfaiting, Trust Management, Cross-Border Payments, Crypto Acquiring, Custody, DeFi Staking, Collateralized Lending, Gold-Backed EURS, Stablecoin Mode, Three Elephants Index, AI Trading, Portfolio Analysis, Dividend Calculator, Weekly Auctions, Fixed-Income Bonds, Tokenized Derivatives, Investment Funds, Portfolio Insurance, Carbon Credits, Green Bonds, Reporting &amp; Audit, Legal Structure, Bank Integration.';
                 }
                 if (q.includes('proof') || q.includes('pof')) {
-                    return '🔐 <b>Proof of Funds (POF)</b><br>1. Calculate commission<br>2. Buy EURS on Jupiter<br>3. Submit transaction hash<br>4. We verify and contact you within 48 hours';
+                    return '🔐 <b>Proof of Funds (POF)</b><br>1. Calculate commission<br>2. Buy EURS on Jupiter<br>3. Submit Swap Hash (transaction hash)<br>4. We verify and contact you within 48 hours';
                 }
                 return '🤔 Try asking:<br>• "What is EURS?"<br>• "How much APY?"<br>• "Where to buy?"<br>• "List FinTech products"<br>• "What is POF?"';
             }
 
             toggleBtn.classList.remove('hidden');
 
-            // ---- 7. FINTECH: 31 продукт (УНИВЕРСАЛЬНЫЙ ПОДХОД) ----
+            // ---- 7. FINTECH: 31 продукт ----
             const fintechData = [
                 { icon: '📜', name: 'SBLC', desc: 'Standby Letter of Credit — global trade guarantee.', rate: 0.025 },
                 { icon: '🏦', name: 'Bank Guarantees', desc: 'Unconditional payment guarantee.', rate: 0.015 },
@@ -1472,7 +1475,7 @@
                 { icon: '🏛️', name: 'Bank Integration', desc: 'Connect to banking APIs.', rate: 0.012 }
             ];
 
-            // ---- 8. МОДАЛКИ (УНИВЕРСАЛЬНАЯ) ----
+            // ---- 8. МОДАЛКИ ----
             const grid = document.getElementById('fintechGrid');
             const modalOverlay = document.getElementById('modalOverlay');
             const modalBody = document.getElementById('modalBody');
@@ -1518,6 +1521,11 @@
 
                 if (step === 'calculator') {
                     html += `
+                        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:12px;background:rgba(212,168,67,0.08);padding:10px;border-radius:8px;">
+                            💡 <strong>What is this?</strong> Calculate the commission for your selected FinTech product.
+                            This is the amount you need to reserve in EURS as <strong>Proof of Funds (POF)</strong>.
+                            POF proves your serious intent to proceed with the transaction.
+                        </p>
                         <label>Amount (USD):</label>
                         <input type="number" id="calcAmount" value="100000" min="1000" step="1000" />
                         <label>Term (months):</label>
@@ -1537,6 +1545,12 @@
                             ✅ Commission: $${commission.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS
                             <br><span style="font-size:0.8rem;color:var(--text-muted);">Exchange rate: 1 EURS = 1.15 USDC</span>
                         </div>
+                        <p style="font-size:0.9rem;color:var(--text-muted);margin:12px 0;background:rgba(212,168,67,0.08);padding:10px;border-radius:8px;">
+                            🔐 <strong>Proof of Funds (POF) — Step 2 of 4</strong><br>
+                            Buy EURS on Jupiter to prove you have the funds. 
+                            After the swap, copy the <strong>Swap Hash (transaction ID)</strong> and paste it below.
+                            This is NOT a payment — it's proof of your serious intent.
+                        </p>
                         <label>Buy EURS on Jupiter:</label>
                         <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:8px;">
                             Click the button below to buy ~${eursAmount.toFixed(2)} EURS on Jupiter
@@ -1544,20 +1558,25 @@
                         <a href="${jupiterLink}" target="_blank" class="btn btn-buy" style="display:block;text-align:center;width:100%;margin-top:8px;">
                             🚀 Buy EURS on Jupiter
                         </a>
-                        <label style="margin-top:16px;">Transaction Hash (after buying):</label>
-                        <input type="text" id="txHash" placeholder="5z3...xyz" value="5z3XnLrtgSf5Heuu1pc56Z" />
+                        <label style="margin-top:16px;">Swap Hash (transaction ID):</label>
+                        <input type="text" id="txHash" placeholder="Paste your swap hash here..." value="" />
                         <button class="btn btn-primary" onclick="verifyPOF()">✅ Verify Proof of Funds (POF)</button>
                         <div id="pofResult" style="margin-top:12px;display:none;padding:10px;background:rgba(46,125,50,0.2);border-radius:8px;color:#4caf50;">
-                            ✅ POF verified! Transaction hash is valid.
+                            ✅ POF verified! Swap hash is valid.
                         </div>
                     `;
                 } else if (step === 'contacts') {
                     html += `
                         <div class="result-box" style="margin-bottom:16px;">
                             ✅ Proof of Funds verified!
-                            <br>Transaction: <span class="hash-box">${appData.txHash || '5z3...xyz'}</span>
+                            <br>Swap Hash: <span class="hash-box">${appData.txHash || 'Not provided'}</span>
                             <br>Reserved: ${appData.eursAmount?.toFixed(2) || '2,173.91'} EURS
                         </div>
+                        <p style="font-size:0.9rem;color:var(--text-muted);margin:12px 0;background:rgba(212,168,67,0.08);padding:10px;border-radius:8px;">
+                            📋 <strong>Final Step — Your Contact Details</strong><br>
+                            Please provide your contact information. We will verify your POF and send you 
+                            the contract package within <strong>48 hours</strong>.
+                        </p>
                         <label>Full Name *</label>
                         <input type="text" id="contactName" placeholder="John Doe" />
                         <label>Email *</label>
@@ -1577,7 +1596,7 @@
                             <span class="status-badge status-pending">⏳ Awaiting Verification</span>
                             <br><br>
                             <b>What happens next?</b><br>
-                            1. We will verify your Proof of Funds (transaction hash)<br>
+                            1. We will verify your Proof of Funds (Swap Hash)<br>
                             2. We will contact you via email/telegram within <b>48 hours</b><br>
                             3. We will send you the full contract package for signing<br>
                             4. After signing, you pay the commission in EURS<br>
@@ -1613,7 +1632,6 @@
 
             window.goToBuy = function() {
                 if (!appData.eursAmount) {
-                    // Автоматический расчёт с дефолтными значениями
                     const amount = parseFloat(document.getElementById('calcAmount')?.value) || 100000;
                     const term = parseFloat(document.getElementById('calcTerm')?.value) || 12;
                     const result = calculateCommission(currentProduct, amount, term);
@@ -1629,14 +1647,14 @@
             window.verifyPOF = function() {
                 const txHash = document.getElementById('txHash')?.value?.trim() || '';
                 if (txHash.length < 10) {
-                    alert('Please enter a valid transaction hash (at least 10 characters).');
+                    alert('⚠️ Please enter a valid Swap Hash (at least 10 characters).');
                     return;
                 }
                 appData.txHash = txHash;
                 const resultDiv = document.getElementById('pofResult');
                 if (resultDiv) {
                     resultDiv.style.display = 'block';
-                    resultDiv.textContent = '✅ POF verified! Transaction hash is valid.';
+                    resultDiv.textContent = '✅ POF verified! Swap hash is valid.';
                     setTimeout(() => {
                         currentStep = 'contacts';
                         renderModal(currentProduct, currentIdx);
@@ -1740,7 +1758,6 @@
                     grid.appendChild(card);
                 });
 
-                // НАЗНАЧАЕМ ОБРАБОТЧИК НА КАЖДУЮ КНОПКУ
                 document.querySelectorAll('.open-btn').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -1762,7 +1779,6 @@
                 console.log('✅ FinTech grid initialized with ' + fintechData.length + ' products.');
             }
 
-            // ИНИЦИАЛИЗИРУЕМ
             initGrid();
 
             // ---- 14. ПЛАВНЫЙ СКРОЛЛ ----
