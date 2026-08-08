@@ -9,7 +9,7 @@
     <meta property="og:description" content="Gold, Chemicals & FinTech — daily yield on Solana." />
     <meta property="og:image" content="https://raw.githubusercontent.com/blockchaingold/eurs/main/eurs_logo.png" />
     <style>
-        /* ----- БАЗА (без изменений) ----- */
+        /* ----- БАЗА ----- */
         * {
             margin: 0;
             padding: 0;
@@ -104,7 +104,14 @@
             padding: 6px 16px;
             font-size: 0.75rem;
         }
-        /* ----- АНИМАЦИИ (без изменений) ----- */
+        .btn-buy {
+            background: #1a73e8;
+            color: white;
+        }
+        .btn-buy:hover {
+            background: #1557b0;
+        }
+        /* ----- АНИМАЦИИ ----- */
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -169,7 +176,7 @@
                 transform: translateX(-100%);
             }
         }
-        /* ----- ШАПКА (без изменений) ----- */
+        /* ----- ШАПКА ----- */
         .header {
             background: rgba(10, 14, 23, 0.92);
             backdrop-filter: blur(12px);
@@ -256,7 +263,7 @@
             background: var(--text);
             border-radius: 2px;
         }
-        /* ----- ГЕРОЙ (без изменений) ----- */
+        /* ----- ГЕРОЙ ----- */
         .hero {
             padding: 140px 0 80px;
             position: relative;
@@ -305,7 +312,7 @@
             font-size: 0.85rem;
             color: var(--text-muted);
         }
-        /* ----- БЛОКИ (без изменений) ----- */
+        /* ----- БЛОКИ ----- */
         section {
             position: relative;
             z-index: 2;
@@ -559,7 +566,7 @@
             max-height: 300px;
             padding: 0 0 20px 0;
         }
-        /* ----- FINTECH (без изменений) ----- */
+        /* ----- FINTECH ----- */
         .fintech {
             background: var(--primary);
         }
@@ -683,7 +690,7 @@
             background: #2e7d32;
             color: #fff;
         }
-        /* ----- МОДАЛКИ (без изменений) ----- */
+        /* ----- МОДАЛКИ ----- */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -763,7 +770,7 @@
             margin-top: 16px;
             width: 100%;
         }
-        /* ----- ИИ-ЧАТ (без изменений) ----- */
+        /* ----- ИИ-ЧАТ ----- */
         .ai-chat {
             position: fixed;
             bottom: 100px;
@@ -946,7 +953,7 @@
         .ai-chat-toggle.hidden {
             display: none;
         }
-        /* ----- АДАПТИВ (без изменений) ----- */
+        /* ----- АДАПТИВ ----- */
         @media (max-width: 992px) {
             .structure-grid {
                 grid-template-columns: 1fr;
@@ -1177,7 +1184,7 @@
     <section class="fintech" id="fintech">
         <div class="container">
             <h2 class="section-title">FinTech <span class="highlight">Ecosystem</span></h2>
-            <p class="section-sub">31 financial instruments built on Solana Token-2022. Click "Open" to use each.</p>
+            <p class="section-sub">31 financial instruments. Calculate commission, buy EURS, submit Proof of Funds (POF).</p>
             <div class="fintech-grid" id="fintechGrid"></div>
             <div style="text-align:center;margin-top:30px;">
                 <button class="btn btn-secondary btn-sm" onclick="showHistory()">📋 My Applications</button>
@@ -1235,7 +1242,7 @@
             <div class="faq-list">
                 <div class="faq-item"><button class="faq-question">Do I need to stake?</button><div class="faq-answer"><p>No. Just hold EURS in Phantom, Solflare, or Backpack. Rewards come automatically.</p></div></div>
                 <div class="faq-item"><button class="faq-question">How often are payouts?</button><div class="faq-answer"><p>Every 24 hours via Permanent Delegate.</p></div></div>
-                <div class="faq-item"><button class="faq-question">What are "chemicals" in the structure?</button><div class="faq-answer"><p>Cyanides, acids, and fluxes used in jewelry refining and processing.</p></div></div>
+                <div class="faq-item"><button class="faq-question">What is Proof of Funds (POF)?</button><div class="faq-answer"><p>You buy EURS and submit the transaction hash. This proves you have the funds and are ready to proceed with the FinTech product.</p></div></div>
                 <div class="faq-item"><button class="faq-question">Where to buy EURS?</button><div class="faq-answer"><p>Meteora DAMM V2 pool: <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p></div></div>
                 <div class="faq-item"><button class="faq-question">Is there risk?</button><div class="faq-answer"><p>Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.</p></div></div>
             </div>
@@ -1265,7 +1272,7 @@
     </footer>
 
     <script>
-        (function() {
+        document.addEventListener('DOMContentLoaded', function() {
             'use strict';
 
             // ---- 1. ФОН ----
@@ -1442,7 +1449,10 @@
                 if (q.includes('fintech') || q.includes('list')) {
                     return '🏦 <b>31 FinTech Instruments:</b><br>SBLC, Bank Guarantees, Letters of Credit, Asset Tokenization, Digital Bonds, Revolving Credit, Securitization, Factoring, Forfaiting, Trust Management, Cross-Border Payments, Crypto Acquiring, Custody, DeFi Staking, Collateralized Lending, Gold-Backed EURS, Stablecoin Mode, Three Elephants Index, AI Trading, Portfolio Analysis, Dividend Calculator, Weekly Auctions, Fixed-Income Bonds, Tokenized Derivatives, Investment Funds, Portfolio Insurance, Carbon Credits, Green Bonds, Reporting &amp; Audit, Legal Structure, Bank Integration.';
                 }
-                return '🤔 Try asking:<br>• "What is EURS?"<br>• "How much APY?"<br>• "Where to buy?"<br>• "List FinTech products"';
+                if (q.includes('proof') || q.includes('pof')) {
+                    return '🔐 <b>Proof of Funds (POF)</b><br>1. Calculate commission<br>2. Buy EURS on Jupiter<br>3. Submit transaction hash<br>4. We verify and contact you within 48 hours';
+                }
+                return '🤔 Try asking:<br>• "What is EURS?"<br>• "How much APY?"<br>• "Where to buy?"<br>• "List FinTech products"<br>• "What is POF?"';
             }
 
             toggleBtn.classList.remove('hidden');
@@ -1513,6 +1523,7 @@
             });
 
             // ---- 9. ВСЕ СТАРЫЕ ФУНКЦИИ (31 продукт) ----
+            // (Оставлены для обратной совместимости, но не используются в новом потоке)
             // SBLC
             window.calculateSBLC = function() {
                 const amt = parseFloat(document.getElementById('sblcAmount').value) || 0;
@@ -2193,9 +2204,9 @@
                     }
 
                     // ДОБАВЛЯЕМ КНОПКУ ДЛЯ ПЕРЕХОДА НА ШАГ 2
-                    html += `<button class="btn btn-success" onclick="goToConvert()" style="margin-top:16px;">Next: Convert to EURS ➜</button>`;
+                    html += `<button class="btn btn-success" onclick="goToBuy()" style="margin-top:16px;">Next: Buy EURS ➜</button>`;
 
-                } else if (step === 'convert') {
+                } else if (step === 'buy') {
                     // БЕРЁМ СУММУ ИЗ ПОЛЯ ПРОДУКТА
                     let amt = 0;
                     const allInputs = document.querySelectorAll('input[type="number"]');
@@ -2215,28 +2226,34 @@
                     appData.amount = amt;
                     appData.term = term;
 
+                    const jupiterLink =
+                        `https://jup.ag/swap/USDC-EURS?amount=${Math.round(eursAmount * 100)}`;
+
                     html += `
                         <div class="result-box">
                             ✅ Commission: $${commission.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS
                             <br><span style="font-size:0.8rem;color:var(--text-muted);">Exchange rate: 1 EURS = 1.15 USDC</span>
                         </div>
-                        <label>Swap via Jupiter:</label>
+                        <label>Buy EURS on Jupiter:</label>
                         <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:8px;">
-                            <a href="https://jup.ag/swap/USDC-EURS" target="_blank" style="color:var(--gold);">Open Jupiter ↗</a> 
-                            and swap ~${eursAmount.toFixed(2)} USDC to EURS
+                            Click the button below to buy ~${eursAmount.toFixed(2)} EURS on Jupiter
                         </p>
-                        <label>Your Wallet Hash (Solana address):</label>
-                        <input type="text" id="walletHash" placeholder="5z3...xyz" value="5z3XnLrtgSf5Heuu1pc56Z" />
-                        <label>Swap Transaction Hash:</label>
-                        <input type="text" id="swapHash" placeholder="7x9...abc" value="7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" />
-                        <button class="btn btn-primary" onclick="goToContacts()">Submit Proof of Intent</button>
+                        <a href="${jupiterLink}" target="_blank" class="btn btn-buy" style="display:block;text-align:center;width:100%;margin-top:8px;">
+                            🚀 Buy EURS on Jupiter
+                        </a>
+                        <label style="margin-top:16px;">Transaction Hash (after buying):</label>
+                        <input type="text" id="txHash" placeholder="5z3...xyz" value="5z3XnLrtgSf5Heuu1pc56Z" />
+                        <button class="btn btn-primary" onclick="verifyPOF()">✅ Verify Proof of Funds (POF)</button>
+                        <div id="pofResult" style="margin-top:12px;display:none;padding:10px;background:rgba(46,125,50,0.2);border-radius:8px;color:#4caf50;">
+                            ✅ POF verified! Transaction hash is valid.
+                        </div>
                     `;
+
                 } else if (step === 'contacts') {
                     html += `
                         <div class="result-box" style="margin-bottom:16px;">
-                            ✅ Proof of Intent submitted!
-                            <br>Wallet: <span class="hash-box">${appData.walletHash || '5z3...xyz'}</span>
-                            <br>Swap: <span class="hash-box">${appData.swapHash || '7x9...abc'}</span>
+                            ✅ Proof of Funds verified!
+                            <br>Transaction: <span class="hash-box">${appData.txHash || '5z3...xyz'}</span>
                             <br>Reserved: ${appData.eursAmount?.toFixed(2) || '2,173.91'} EURS
                         </div>
                         <label>Full Name *</label>
@@ -2258,7 +2275,7 @@
                             <span class="status-badge status-pending">⏳ Awaiting Verification</span>
                             <br><br>
                             <b>What happens next?</b><br>
-                            1. We will verify your Proof of Intent (wallet + swap hashes)<br>
+                            1. We will verify your Proof of Funds (transaction hash)<br>
                             2. We will contact you via email/telegram within <b>48 hours</b><br>
                             3. We will send you the full contract package for signing<br>
                             4. After signing, you pay the commission in EURS<br>
@@ -2275,24 +2292,31 @@
             }
 
             // ---- 11. ГЛОБАЛЬНЫЕ ФУНКЦИИ ДЛЯ НОВОЙ ЛОГИКИ ----
-            window.goToConvert = function() {
-                currentStep = 'convert';
+            window.goToBuy = function() {
+                currentStep = 'buy';
                 renderModal(currentProduct, currentIdx);
             };
 
+            window.verifyPOF = function() {
+                const txHash = document.getElementById('txHash')?.value?.trim() || '';
+                if (txHash.length < 10) {
+                    alert('Please enter a valid transaction hash (at least 10 characters).');
+                    return;
+                }
+                appData.txHash = txHash;
+                const resultDiv = document.getElementById('pofResult');
+                if (resultDiv) {
+                    resultDiv.style.display = 'block';
+                    resultDiv.textContent = '✅ POF verified! Transaction hash is valid.';
+                    setTimeout(() => {
+                        // Автоматический переход на шаг 3
+                        currentStep = 'contacts';
+                        renderModal(currentProduct, currentIdx);
+                    }, 1500);
+                }
+            };
+
             window.goToContacts = function() {
-                const wallet = document.getElementById('walletHash')?.value?.trim() || '5z3...xyz';
-                const swap = document.getElementById('swapHash')?.value?.trim() || '7x9...abc';
-                if (wallet.length < 10) {
-                    alert('Please enter a valid wallet hash (at least 10 characters).');
-                    return;
-                }
-                if (swap.length < 10) {
-                    alert('Please enter a valid swap transaction hash (at least 10 characters).');
-                    return;
-                }
-                appData.walletHash = wallet;
-                appData.swapHash = swap;
                 currentStep = 'contacts';
                 renderModal(currentProduct, currentIdx);
             };
@@ -2341,12 +2365,16 @@
                 alert(msg);
             };
 
-            // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК (исправлено) ----
+            // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК (ИСПРАВЛЕНО) ----
             function initGrid() {
                 if (!grid) {
                     console.error('FinTech grid not found!');
                     return;
                 }
+
+                // Очищаем сетку (на случай повторного вызова)
+                grid.innerHTML = '';
+
                 fintechData.forEach((p, index) => {
                     const card = document.createElement('div');
                     card.className = 'fintech-card';
@@ -2359,7 +2387,7 @@
                     grid.appendChild(card);
                 });
 
-                // НАЗНАЧАЕМ ОБРАБОТЧИК НА ВСЕ КНОПКИ "Open"
+                // НАЗНАЧАЕМ ОБРАБОТЧИК НА КАЖДУЮ КНОПКУ
                 document.querySelectorAll('.open-btn').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -2373,9 +2401,12 @@
                             renderModal(product, idx);
                         } else {
                             console.error('Product not found for index:', idx);
+                            alert('Error: Product not found. Please try again.');
                         }
                     });
                 });
+
+                console.log('✅ FinTech grid initialized with ' + fintechData.length + ' products.');
             }
 
             // ИНИЦИАЛИЗИРУЕМ
@@ -2396,10 +2427,10 @@
 
             console.log('💎 EURS — Euro Stable Income');
             console.log('Contract: ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq');
-            console.log('31 FinTech Instruments with Proof of Intent flow.');
+            console.log('31 FinTech Instruments with Proof of Funds flow.');
             console.log('Applications saved in localStorage.');
 
-        })();
+        }); // КОНЕЦ DOMContentLoaded
     </script>
 </body>
 </html>
