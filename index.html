@@ -1537,6 +1537,9 @@
                 } else if (step === 'buy') {
                     const eursAmount = appData.eursAmount || 2173.91;
                     const commission = appData.commission || 2500;
+                    const contractId = 'EURS-' + Date.now().toString(36).toUpperCase();
+                    appData.contractId = contractId;
+
                     const jupiterLink =
                         `https://jup.ag/swap/USDC-EURS?amount=${Math.round(eursAmount * 100)}`;
 
@@ -1544,12 +1547,16 @@
                         <div class="result-box">
                             ✅ Commission: $${commission.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS
                             <br><span style="font-size:0.8rem;color:var(--text-muted);">Exchange rate: 1 EURS = 1.15 USDC</span>
+                            <br><br>
+                            <strong>📄 Contract ID:</strong> <span style="color:var(--gold);font-weight:700;font-size:1.1rem;">${contractId}</span>
                         </div>
                         <p style="font-size:0.9rem;color:var(--text-muted);margin:12px 0;background:rgba(212,168,67,0.08);padding:10px;border-radius:8px;">
                             🔐 <strong>Proof of Funds (POF) — Step 2 of 4</strong><br>
                             Buy EURS on Jupiter to prove you have the funds. 
                             After the swap, copy the <strong>Swap Hash (transaction ID)</strong> and paste it below.
                             This is NOT a payment — it's proof of your serious intent.
+                            <br><br>
+                            <strong>Contract ID:</strong> ${contractId} — use this reference in all communications.
                         </p>
                         <label>Buy EURS on Jupiter:</label>
                         <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:8px;">
@@ -1569,6 +1576,7 @@
                     html += `
                         <div class="result-box" style="margin-bottom:16px;">
                             ✅ Proof of Funds verified!
+                            <br>Contract ID: <span class="hash-box">${appData.contractId || 'N/A'}</span>
                             <br>Swap Hash: <span class="hash-box">${appData.txHash || 'Not provided'}</span>
                             <br>Reserved: ${appData.eursAmount?.toFixed(2) || '2,173.91'} EURS
                         </div>
@@ -1588,7 +1596,7 @@
                         <button class="btn btn-success" onclick="submitApplication()">Submit Application</button>
                     `;
                 } else if (step === 'final') {
-                    const id = 'EURS-' + Date.now().toString(36).toUpperCase();
+                    const id = appData.contractId || 'EURS-' + Date.now().toString(36).toUpperCase();
                     html += `
                         <div class="result-box" style="border:2px solid var(--gold);">
                             ✅ <b>Application #${id} Submitted!</b>
@@ -1674,7 +1682,7 @@
                 appData.contactTelegram = document.getElementById('contactTelegram')?.value?.trim() || 'Not provided';
                 appData.contactCompany = document.getElementById('contactCompany')?.value?.trim() || 'Not provided';
 
-                const id = 'EURS-' + Date.now().toString(36).toUpperCase();
+                const id = appData.contractId || 'EURS-' + Date.now().toString(36).toUpperCase();
 
                 const templateParams = {
                     id: id,
@@ -1686,7 +1694,8 @@
                     contactEmail: appData.contactEmail,
                     contactTelegram: appData.contactTelegram,
                     contactCompany: appData.contactCompany,
-                    txHash: appData.txHash || 'Not provided'
+                    txHash: appData.txHash || 'Not provided',
+                    contractId: id
                 };
 
                 emailjs.send(
