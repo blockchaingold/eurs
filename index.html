@@ -1253,12 +1253,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             'use strict';
 
-            // ---- ИНИЦИАЛИЗАЦИЯ EMAILJS ----
+            // ---- EMAILJS INIT ----
             (function() {
                 emailjs.init('p-mbGFGSojk7tFupL');
             })();
 
-            // ---- 1. ФОН ----
+            // ---- FON ----
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
             let w, h, particles = [];
@@ -1297,7 +1297,7 @@
             }
             drawParticles();
 
-            // ---- 2. ПАРЯЩИЕ ТОКЕНЫ ----
+            // ---- FLOATING TOKENS ----
             const symbols = ['✦', '♦', '◈', '✧', '⛁', '💰', '💎', '✦'];
             const container = document.getElementById('floatingTokens');
             for (let i = 0; i < 18; i++) {
@@ -1311,7 +1311,7 @@
                 container.appendChild(el);
             }
 
-            // ---- 3. БУРГЕР ----
+            // ---- BURGER ----
             const burger = document.getElementById('burger');
             const nav = document.getElementById('nav');
             burger.addEventListener('click', () => nav.classList.toggle('open'));
@@ -1319,7 +1319,7 @@
                 link.addEventListener('click', () => nav.classList.remove('open'));
             });
 
-            // ---- 4. FAQ ----
+            // ---- FAQ ----
             document.querySelectorAll('.faq-question').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const item = btn.parentElement;
@@ -1329,7 +1329,7 @@
                 });
             });
 
-            // ---- 5. КАЛЬКУЛЯТОР ----
+            // ---- CALCULATOR ----
             const calcInput = document.getElementById('calcInput');
             const calcResult = document.getElementById('calcResult');
 
@@ -1342,7 +1342,7 @@
             calcInput.addEventListener('input', updateCalc);
             updateCalc();
 
-            // ---- 6. ИИ-ЧАТ ----
+            // ---- AI CHAT ----
             const chat = document.getElementById('aiChat');
             const toggleBtn = document.getElementById('aiChatToggle');
             const closeBtn = document.getElementById('aiCloseChat');
@@ -1440,7 +1440,7 @@
 
             toggleBtn.classList.remove('hidden');
 
-            // ---- 7. FINTECH: 31 продукт ----
+            // ---- FINTECH DATA ----
             const fintechData = [
                 { icon: '📜', name: 'SBLC', desc: 'Standby Letter of Credit — global trade guarantee.', rate: 0.025 },
                 { icon: '🏦', name: 'Bank Guarantees', desc: 'Unconditional payment guarantee.', rate: 0.015 },
@@ -1475,7 +1475,7 @@
                 { icon: '🏛️', name: 'Bank Integration', desc: 'Connect to banking APIs.', rate: 0.012 }
             ];
 
-            // ---- 8. МОДАЛКИ ----
+            // ---- MODAL ----
             const grid = document.getElementById('fintechGrid');
             const modalOverlay = document.getElementById('modalOverlay');
             const modalBody = document.getElementById('modalBody');
@@ -1499,14 +1499,14 @@
                 if (e.target === modalOverlay) closeModal();
             });
 
-            // ---- 9. УНИВЕРСАЛЬНАЯ ФУНКЦИЯ РАСЧЁТА ----
+            // ---- CALCULATE COMMISSION ----
             function calculateCommission(product, amount, term) {
                 const fee = amount * product.rate * (term / 12);
                 const eurs = fee / 1.15;
                 return { fee, eurs };
             }
 
-            // ---- 10. РЕНДЕР МОДАЛКИ ----
+            // ---- RENDER MODAL ----
             function renderModal(product, idx) {
                 if (!product) {
                     alert('Error: Product not found.');
@@ -1543,6 +1543,9 @@
                     const jupiterLink =
                         `https://jup.ag/swap/USDC-EURS?amount=${Math.round(eursAmount * 100)}`;
 
+                    // Адрес смарт-контракта EURS (Token-2022)
+                    const eursContract = 'ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq';
+
                     html += `
                         <div class="result-box">
                             ✅ Commission: $${commission.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS
@@ -1565,6 +1568,10 @@
                         <a href="${jupiterLink}" target="_blank" class="btn btn-buy" style="display:block;text-align:center;width:100%;margin-top:8px;">
                             🚀 Buy EURS on Jupiter
                         </a>
+                        <div style="margin-top:8px;font-size:0.8rem;color:var(--text-muted);background:rgba(255,255,255,0.04);padding:8px 12px;border-radius:6px;border:1px dashed var(--border);">
+                            📋 <strong>EURS Token Contract:</strong> <code style="background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:4px;font-size:0.75rem;word-break:break-all;">${eursContract}</code>
+                            <br><span style="font-size:0.7rem;">Use this address to verify the token on Solana Explorer</span>
+                        </div>
                         <label style="margin-top:16px;">Swap Hash (transaction ID):</label>
                         <input type="text" id="txHash" placeholder="Paste your swap hash here..." value="" />
                         <button class="btn btn-primary" onclick="verifyPOF()">✅ Verify Proof of Funds (POF)</button>
@@ -1622,7 +1629,7 @@
                 document.getElementById('modalContent').scrollTop = 0;
             }
 
-            // ---- 11. ГЛОБАЛЬНЫЕ ФУНКЦИИ ----
+            // ---- GLOBAL FUNCTIONS ----
             window.calculateAndShow = function() {
                 const amount = parseFloat(document.getElementById('calcAmount').value) || 0;
                 const term = parseFloat(document.getElementById('calcTerm').value) || 12;
@@ -1716,7 +1723,7 @@
                 });
             };
 
-            // ---- 12. СОХРАНЕНИЕ ИСТОРИИ ----
+            // ---- SAVE APPLICATION ----
             function saveApplication(id, productName, data) {
                 const history = JSON.parse(localStorage.getItem('eurs_applications') || '[]');
                 history.push({
@@ -1745,7 +1752,7 @@
                 alert(msg);
             };
 
-            // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК ----
+            // ---- INIT GRID ----
             function initGrid() {
                 const grid = document.getElementById('fintechGrid');
                 if (!grid) {
@@ -1790,7 +1797,7 @@
 
             initGrid();
 
-            // ---- 14. ПЛАВНЫЙ СКРОЛЛ ----
+            // ---- SMOOTH SCROLL ----
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     const targetId = this.getAttribute('href');
@@ -1810,4 +1817,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
