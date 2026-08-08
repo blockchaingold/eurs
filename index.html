@@ -1845,6 +1845,13 @@
 
             // ---- 10. НОВАЯ ПОШАГОВАЯ ЛОГИКА ----
             function renderModal(product, idx) {
+                // ПРОВЕРКА: если product или idx не заданы — выходим
+                if (!product || idx === undefined) {
+                    console.error('renderModal: product or idx is missing');
+                    alert('Error: Unable to open product. Please try again.');
+                    return;
+                }
+
                 const step = currentStep;
                 let html = `<h2>${product.icon} ${product.name}</h2><span class="step-indicator">Step: ${step}</span><p style="color:var(--text-muted);margin-bottom:16px;">${product.desc}</p>`;
 
@@ -2293,6 +2300,10 @@
 
             // ---- 11. ГЛОБАЛЬНЫЕ ФУНКЦИИ ДЛЯ НОВОЙ ЛОГИКИ ----
             window.goToBuy = function() {
+                if (!currentProduct || currentIdx === undefined) {
+                    alert('Error: No product selected. Please try again.');
+                    return;
+                }
                 currentStep = 'buy';
                 renderModal(currentProduct, currentIdx);
             };
@@ -2367,12 +2378,13 @@
 
             // ---- 13. ГЕНЕРАЦИЯ КАРТОЧЕК (ИСПРАВЛЕНО) ----
             function initGrid() {
+                const grid = document.getElementById('fintechGrid');
                 if (!grid) {
                     console.error('FinTech grid not found!');
                     return;
                 }
 
-                // Очищаем сетку (на случай повторного вызова)
+                // Очищаем сетку
                 grid.innerHTML = '';
 
                 fintechData.forEach((p, index) => {
@@ -2433,4 +2445,4 @@
         }); // КОНЕЦ DOMContentLoaded
     </script>
 </body>
-</html>
+    </html>
