@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EURS — Euro Stable Income | Gold, Chemicals & FinTech</title>
+    <title>EURS — FinTech Ecosystem</title>
     <link rel="icon" href="eurs_logo.png" type="image/png" />
-    <meta property="og:title" content="EURS — Euro Stable Income" />
-    <meta property="og:description" content="Gold, Chemicals & FinTech — daily yield on Solana." />
+    <meta property="og:title" content="EURS — FinTech Ecosystem" />
+    <meta property="og:description" content="31 FinTech instruments. Calculate commission, buy EURS, submit Proof of Funds (POF)." />
     <meta property="og:image" content="https://raw.githubusercontent.com/blockchaingold/eurs/main/eurs_logo.png" />
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
     </script>
     <style>
-        /* ----- БАЗА ----- */
         * {
             margin: 0;
             padding: 0;
@@ -113,6 +112,24 @@
         .btn-buy:hover {
             background: #1557b0;
         }
+        .btn-nav {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-nav:hover {
+            background: var(--gold);
+            color: var(--primary);
+            border-color: var(--gold);
+        }
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -212,7 +229,7 @@
         }
         .nav-list {
             display: flex;
-            gap: 24px;
+            gap: 16px;
             list-style: none;
             flex-wrap: wrap;
         }
@@ -314,7 +331,7 @@
         section {
             position: relative;
             z-index: 2;
-            padding: 80px 0;
+            padding: 60px 0;
         }
         .structure {
             background: var(--primary);
@@ -563,9 +580,6 @@
         .faq-item.active .faq-answer {
             max-height: 300px;
             padding: 0 0 20px 0;
-        }
-        .fintech {
-            background: var(--primary);
         }
         .fintech-grid {
             display: grid;
@@ -947,6 +961,13 @@
         .ai-chat-toggle.hidden {
             display: none;
         }
+        .page-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0 10px;
+            flex-wrap: wrap;
+        }
         @media (max-width: 992px) {
             .structure-grid {
                 grid-template-columns: 1fr;
@@ -1009,6 +1030,10 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 12px;
             }
+            .page-nav .btn-nav {
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
         }
         @media (max-width: 480px) {
             .fintech-grid {
@@ -1024,7 +1049,7 @@
 
     <div class="ticker">
         <div class="ticker-track">
-            <span>🚀 EURS — Gold + Chemicals + FinTech &nbsp;|&nbsp; Daily Yield ~15-25% APY &nbsp;|&nbsp; Built on Solana Token-2022 &nbsp;|&nbsp; 67% Real Assets + 33% Yield &nbsp;|&nbsp; 31 FinTech Instruments &nbsp;|&nbsp; Buy on Meteora &nbsp;|&nbsp; 🚀</span>
+            <span>🚀 EURS — FinTech Ecosystem &nbsp;|&nbsp; 31 Financial Instruments &nbsp;|&nbsp; Proof of Funds (POF) &nbsp;|&nbsp; Built on Solana Token-2022 &nbsp;|&nbsp; Daily Yield ~15-25% APY &nbsp;|&nbsp; 🚀</span>
         </div>
     </div>
 
@@ -1038,12 +1063,12 @@
         </div>
         <div class="ai-chat-body">
             <div class="ai-messages" id="aiMessages">
-                <div class="ai-msg-bot">👋 Hi! I'm your EURS assistant. Ask me about token, yield, FinTech products, or where to buy.</div>
+                <div class="ai-msg-bot">👋 Hi! I'm your EURS assistant. Ask me about FinTech products, commissions, or Proof of Funds.</div>
             </div>
             <div class="ai-quick-btns">
                 <button class="ai-qbtn" data-q="What is EURS?">What is EURS?</button>
                 <button class="ai-qbtn" data-q="How much APY?">How much APY?</button>
-                <button class="ai-qbtn" data-q="Where to buy?">Where to buy?</button>
+                <button class="ai-qbtn" data-q="What is POF?">What is POF?</button>
                 <button class="ai-qbtn" data-q="List FinTech products">FinTech list</button>
             </div>
             <div class="ai-input-wrap">
@@ -1089,12 +1114,12 @@
     <section class="hero" id="about">
         <div class="container hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">EURS — Gold, <span class="highlight">enhanced by Chemicals</span> &amp; FinTech</h1>
+                <h1 class="hero-title">EURS — <span class="highlight">FinTech</span> Ecosystem</h1>
                 <p class="hero-desc">European stability. Daily income. Real assets.</p>
                 <p class="hero-sub">EURS is a Solana Token-2022 token combining physical gold, chemical raw materials, and 31 FinTech instruments. Just hold — earn passive income every 24 hours.</p>
                 <div class="hero-buttons">
                     <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary">Buy EURS</a>
-                    <a href="#yield" class="btn btn-secondary">How it works</a>
+                    <a href="#fintech" class="btn btn-secondary">Explore FinTech</a>
                 </div>
                 <div class="hero-stats">
                     <div><span class="stat-number">1.15</span><span class="stat-label"> USDC</span></div>
@@ -1165,6 +1190,7 @@
         </div>
     </section>
 
+    <!-- ===== FINTECH ===== -->
     <section class="fintech" id="fintech">
         <div class="container">
             <h2 class="section-title">FinTech <span class="highlight">Ecosystem</span></h2>
@@ -1173,9 +1199,14 @@
             <div style="text-align:center;margin-top:30px;">
                 <button class="btn btn-secondary btn-sm" onclick="showHistory()">📋 My Applications</button>
             </div>
+            <div class="page-nav">
+                <a href="commodities.html" class="btn-nav">💎 Commodities</a>
+                <a href="vehicles.html" class="btn-nav">🚀 Vehicles &amp; Robotics</a>
+            </div>
         </div>
     </section>
 
+    <!-- ===== МОДАЛКИ ===== -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal" id="modalContent">
             <button class="modal-close" id="modalClose">✕</button>
@@ -1209,7 +1240,7 @@
                 <div class="roadmap-item"><span class="roadmap-phase">Phase 1</span><span class="roadmap-status done">✅ Done</span><p>Token creation, presale, liquidity on Meteora</p></div>
                 <div class="roadmap-item"><span class="roadmap-phase">Phase 2</span><span class="roadmap-status">Jul 2026</span><p>Daily payouts activation (Permanent Delegate)</p></div>
                 <div class="roadmap-item"><span class="roadmap-phase">Phase 3</span><span class="roadmap-status">Aug 2026</span><p>Solana Pay integration</p></div>
-                <div class="roadmap-item"><span class="roadmap-phase">Phase 4</span><span class="roadmap-status">Sep 2026</span><p>Partnership with jewelry platforms</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 4</span><span class="roadmap-status">Sep 2026</span><p>Commodities &amp; Vehicles trading module</p></div>
                 <div class="roadmap-item"><span class="roadmap-phase">Phase 5</span><span class="roadmap-status">Oct 2026</span><p>CEX listing (MEXC / Gate.io)</p></div>
                 <div class="roadmap-item"><span class="roadmap-phase">Phase 6</span><span class="roadmap-status">Dec 2026</span><p>Cross-conversion with USDS &amp; EUSD</p></div>
             </div>
@@ -1222,7 +1253,7 @@
             <div class="faq-list">
                 <div class="faq-item"><button class="faq-question">Do I need to stake?</button><div class="faq-answer"><p>No. Just hold EURS in Phantom, Solflare, or Backpack. Rewards come automatically.</p></div></div>
                 <div class="faq-item"><button class="faq-question">How often are payouts?</button><div class="faq-answer"><p>Every 24 hours via Permanent Delegate.</p></div></div>
-                <div class="faq-item"><button class="faq-question">What is Proof of Funds (POF)?</button><div class="faq-answer"><p>You buy EURS and submit the Swap Hash. This proves you have the funds and are ready to proceed with the FinTech product.</p></div></div>
+                <div class="faq-item"><button class="faq-question">What is Proof of Funds (POF)?</button><div class="faq-answer"><p>You buy EURS (commission amount) and submit the Swap Hash. This proves you have the funds and are ready to proceed with the transaction.</p></div></div>
                 <div class="faq-item"><button class="faq-question">Where to buy EURS?</button><div class="faq-answer"><p>Meteora DAMM V2 pool: <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p></div></div>
                 <div class="faq-item"><button class="faq-question">Is there risk?</button><div class="faq-answer"><p>Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.</p></div></div>
             </div>
@@ -1258,7 +1289,7 @@
                 emailjs.init('p-mbGFGSojk7tFupL');
             })();
 
-            // ---- FON ----
+            // ---- ФОН ----
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
             let w, h, particles = [];
@@ -1297,7 +1328,7 @@
             }
             drawParticles();
 
-            // ---- FLOATING TOKENS ----
+            // ---- ПАРЯЩИЕ ТОКЕНЫ ----
             const symbols = ['✦', '♦', '◈', '✧', '⛁', '💰', '💎', '✦'];
             const container = document.getElementById('floatingTokens');
             for (let i = 0; i < 18; i++) {
@@ -1311,7 +1342,7 @@
                 container.appendChild(el);
             }
 
-            // ---- BURGER ----
+            // ---- БУРГЕР ----
             const burger = document.getElementById('burger');
             const nav = document.getElementById('nav');
             burger.addEventListener('click', () => nav.classList.toggle('open'));
@@ -1329,7 +1360,7 @@
                 });
             });
 
-            // ---- CALCULATOR ----
+            // ---- КАЛЬКУЛЯТОР ----
             const calcInput = document.getElementById('calcInput');
             const calcResult = document.getElementById('calcResult');
 
@@ -1342,7 +1373,7 @@
             calcInput.addEventListener('input', updateCalc);
             updateCalc();
 
-            // ---- AI CHAT ----
+            // ---- ИИ-ЧАТ ----
             const chat = document.getElementById('aiChat');
             const toggleBtn = document.getElementById('aiChatToggle');
             const closeBtn = document.getElementById('aiCloseChat');
@@ -1426,16 +1457,13 @@
                 if (q.includes('apy') || q.includes('yield')) {
                     return '📊 <b>APY: ~15-25%</b><br>• Transfer Fee: 2%<br>• Daily distributions via Permanent Delegate<br>• From gold, chemicals, FinTech &amp; DeFi';
                 }
-                if (q.includes('buy') || q.includes('where')) {
-                    return '🛒 <b>Buy EURS on Meteora</b><br>Pool: <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code><br><a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank">🔗 Open Meteora</a>';
+                if (q.includes('pof') || q.includes('proof')) {
+                    return '🔐 <b>Proof of Funds (POF)</b><br>1. Calculate commission<br>2. Buy EURS on Jupiter<br>3. Submit Swap Hash<br>4. We verify and contact you within 48 hours';
                 }
                 if (q.includes('fintech') || q.includes('list')) {
                     return '🏦 <b>31 FinTech Instruments:</b><br>SBLC, Bank Guarantees, Letters of Credit, Asset Tokenization, Digital Bonds, Revolving Credit, Securitization, Factoring, Forfaiting, Trust Management, Cross-Border Payments, Crypto Acquiring, Custody, DeFi Staking, Collateralized Lending, Gold-Backed EURS, Stablecoin Mode, Three Elephants Index, AI Trading, Portfolio Analysis, Dividend Calculator, Weekly Auctions, Fixed-Income Bonds, Tokenized Derivatives, Investment Funds, Portfolio Insurance, Carbon Credits, Green Bonds, Reporting &amp; Audit, Legal Structure, Bank Integration.';
                 }
-                if (q.includes('proof') || q.includes('pof')) {
-                    return '🔐 <b>Proof of Funds (POF)</b><br>1. Calculate commission<br>2. Buy EURS on Jupiter<br>3. Submit Swap Hash (transaction hash)<br>4. We verify and contact you within 48 hours';
-                }
-                return '🤔 Try asking:<br>• "What is EURS?"<br>• "How much APY?"<br>• "Where to buy?"<br>• "List FinTech products"<br>• "What is POF?"';
+                return '🤔 Try asking:<br>• "What is EURS?"<br>• "How much APY?"<br>• "What is POF?"<br>• "List FinTech products"';
             }
 
             toggleBtn.classList.remove('hidden');
@@ -1475,16 +1503,15 @@
                 { icon: '🏛️', name: 'Bank Integration', desc: 'Connect to banking APIs.', rate: 0.012 }
             ];
 
-            // ---- MODAL ----
-            const grid = document.getElementById('fintechGrid');
+            // ---- МОДАЛКИ ----
             const modalOverlay = document.getElementById('modalOverlay');
             const modalBody = document.getElementById('modalBody');
             const modalClose = document.getElementById('modalClose');
 
             let currentProduct = null;
-            let currentIdx = 0;
             let currentStep = 'calculator';
             let appData = {};
+            let currentIdx = 0;
 
             function closeModal() {
                 modalOverlay.classList.remove('active');
@@ -1499,14 +1526,153 @@
                 if (e.target === modalOverlay) closeModal();
             });
 
-            // ---- CALCULATE COMMISSION ----
+            // ---- РАСЧЁТ КОМИССИИ ----
             function calculateCommission(product, amount, term) {
-                const fee = amount * product.rate * (term / 12);
+                let fee = 0;
+                let description = '';
+
+                switch (product.name) {
+                    case 'SBLC':
+                        const effectiveAmount = Math.max(amount, 5000000);
+                        const effectiveTerm = Math.max(term, 13);
+                        fee = effectiveAmount * 0.025 * (effectiveTerm / 12);
+                        description = `2.5% annualized (min $5M, min 13 months)`;
+                        break;
+                    case 'Bank Guarantees':
+                        fee = Math.max(amount * 0.015 * (term / 12), 2500);
+                        description = `1.5% annualized (min fee $2,500)`;
+                        break;
+                    case 'Letters of Credit':
+                        fee = Math.max(amount * 0.005 * (term / 360), 2500);
+                        description = `0.5% per 360 days (min fee $2,500)`;
+                        break;
+                    case 'Asset Tokenization':
+                        fee = Math.max(amount * 0.01, 5000);
+                        description = `1% one-time (min fee $5,000)`;
+                        break;
+                    case 'Digital Bonds':
+                        fee = Math.max(amount * (0.045 + term * 0.004), 2500);
+                        description = `4.5% + ${(term*0.4).toFixed(1)}% annual yield (min fee $2,500)`;
+                        break;
+                    case 'Revolving Credit':
+                        fee = amount * 0.025;
+                        description = `2.5% one-time`;
+                        break;
+                    case 'Securitization':
+                        fee = amount * 0.012;
+                        description = `1.2% structuring fee`;
+                        break;
+                    case 'Factoring':
+                        fee = Math.max(amount * 0.015, 2500);
+                        description = `1.5% discount fee (min fee $2,500)`;
+                        break;
+                    case 'Forfaiting':
+                        fee = amount * 0.15;
+                        description = `15% discount without recourse`;
+                        break;
+                    case 'Trust Management':
+                        fee = Math.max(amount * 0.008, 2500);
+                        description = `0.8% annual management fee (min fee $2,500)`;
+                        break;
+                    case 'Cross-Border Payments':
+                        fee = Math.max(amount * 0.005, 500);
+                        description = `0.5% transaction fee (min fee $500)`;
+                        break;
+                    case 'Crypto Acquiring':
+                        fee = Math.max(amount * 0.018 + 0.30, 1500);
+                        description = `1.8% + $0.30 per tx (min fee $1,500)`;
+                        break;
+                    case 'Custody':
+                        fee = amount * 0.015;
+                        description = `1.5% annual custody fee`;
+                        break;
+                    case 'DeFi Staking':
+                        fee = amount * 0.0005 * 30;
+                        description = `0.05% daily reward (est. monthly)`;
+                        break;
+                    case 'Collateralized Lending':
+                        const ltv = 0.7;
+                        const minLoan = 1000000;
+                        const effectiveLoan = Math.max(amount, minLoan);
+                        fee = (effectiveLoan * ltv * 1.15) * 0.08;
+                        description = `8% APR with ${ltv*100}% LTV (min loan $1M)`;
+                        break;
+                    case 'Gold-Backed EURS':
+                        const goldPrice = 2650;
+                        fee = amount / goldPrice * 1.15;
+                        description = `1 EURS = $1.15, Gold at $${goldPrice}/oz`;
+                        break;
+                    case 'Stablecoin Mode':
+                        fee = amount * 0.005;
+                        description = `0.5% stabilization fee`;
+                        break;
+                    case 'Three Elephants Index':
+                        fee = amount * 0.01;
+                        description = `1% index entry fee`;
+                        break;
+                    case 'AI Trading':
+                        fee = amount * 0.015;
+                        description = `1.5% management fee`;
+                        break;
+                    case 'Portfolio Analysis':
+                        fee = amount * 0.005;
+                        description = `0.5% analysis fee`;
+                        break;
+                    case 'Dividend Calculator':
+                        fee = amount * 0.01875;
+                        description = `1.875% monthly dividend (22.5% APY)`;
+                        break;
+                    case 'Weekly Auctions':
+                        fee = amount * 0.02;
+                        description = `2% auction participation fee`;
+                        break;
+                    case 'Fixed-Income Bonds':
+                        fee = amount * 0.052;
+                        description = `5.2% annual fixed yield`;
+                        break;
+                    case 'Tokenized Derivatives':
+                        fee = amount * 0.035;
+                        description = `3.5% option premium`;
+                        break;
+                    case 'Investment Funds':
+                        fee = amount * 0.015;
+                        description = `1.5% entry fee`;
+                        break;
+                    case 'Portfolio Insurance':
+                        fee = amount * 0.05;
+                        description = `5% insurance premium`;
+                        break;
+                    case 'Carbon Credits':
+                        const tonnes = amount / 45;
+                        fee = tonnes * 45 * 0.02;
+                        description = `2% trading fee on carbon credits`;
+                        break;
+                    case 'Green Bonds':
+                        fee = amount * 0.048;
+                        description = `4.8% annual green bond yield`;
+                        break;
+                    case 'Reporting & Audit':
+                        fee = 0;
+                        description = `Free service (no commission)`;
+                        break;
+                    case 'Legal Structure':
+                        fee = 0;
+                        description = `Free service (no commission)`;
+                        break;
+                    case 'Bank Integration':
+                        fee = 0;
+                        description = `Free service (no commission)`;
+                        break;
+                    default:
+                        fee = amount * 0.025 * (term / 12);
+                        description = `Standard fee (2.5% annualized)`;
+                }
+
                 const eurs = fee / 1.15;
-                return { fee, eurs };
+                return { fee, eurs, description };
             }
 
-            // ---- RENDER MODAL ----
+            // ---- РЕНДЕР МОДАЛКИ ----
             function renderModal(product, idx) {
                 if (!product) {
                     alert('Error: Product not found.');
@@ -1531,7 +1697,10 @@
                         <label>Term (months):</label>
                         <input type="number" id="calcTerm" value="12" min="1" max="60" />
                         <button class="btn btn-primary" onclick="calculateAndShow()">Calculate Commission</button>
-                        <div class="result-box" id="calcResultBox">Commission: $2,500.00 (2.5%) ≈ 2,173.91 EURS</div>
+                        <div class="result-box" id="calcResultBox">
+                            Commission: $2,500.00 (2.5%) ≈ 2,173.91 EURS
+                            <br><span style="font-size:0.75rem;color:var(--text-muted);">Fee structure: 2.5% annualized fee</span>
+                        </div>
                         <button class="btn btn-success" onclick="goToBuy()" style="margin-top:16px;">Next: Buy EURS ➜</button>
                     `;
                 } else if (step === 'buy') {
@@ -1543,7 +1712,6 @@
                     const jupiterLink =
                         `https://jup.ag/swap/USDC-EURS?amount=${Math.round(eursAmount * 100)}`;
 
-                    // Адрес смарт-контракта EURS (Token-2022)
                     const eursContract = 'ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq';
 
                     html += `
@@ -1585,7 +1753,7 @@
                             ✅ Proof of Funds verified!
                             <br>Contract ID: <span class="hash-box">${appData.contractId || 'N/A'}</span>
                             <br>Swap Hash: <span class="hash-box">${appData.txHash || 'Not provided'}</span>
-                            <br>Reserved: ${appData.eursAmount?.toFixed(2) || '2,173.91'} EURS
+                            <br>Reserved: ${appData.eursAmount?.toFixed(2) || '0.00'} EURS
                         </div>
                         <p style="font-size:0.9rem;color:var(--text-muted);margin:12px 0;background:rgba(212,168,67,0.08);padding:10px;border-radius:8px;">
                             📋 <strong>Final Step — Your Contact Details</strong><br>
@@ -1629,7 +1797,7 @@
                 document.getElementById('modalContent').scrollTop = 0;
             }
 
-            // ---- GLOBAL FUNCTIONS ----
+            // ---- ГЛОБАЛЬНЫЕ ФУНКЦИИ ----
             window.calculateAndShow = function() {
                 const amount = parseFloat(document.getElementById('calcAmount').value) || 0;
                 const term = parseFloat(document.getElementById('calcTerm').value) || 12;
@@ -1641,8 +1809,10 @@
                 appData.amount = amount;
                 appData.term = term;
 
-                document.getElementById('calcResultBox').textContent =
-                    `Commission: $${result.fee.toFixed(2)} (${(currentProduct.rate*100).toFixed(1)}%) ≈ ${result.eurs.toFixed(2)} EURS`;
+                document.getElementById('calcResultBox').innerHTML = `
+                    Commission: $${result.fee.toFixed(2)} (${(currentProduct.rate*100).toFixed(1)}%) ≈ ${result.eurs.toFixed(2)} EURS
+                    <br><span style="font-size:0.75rem;color:var(--text-muted);">${result.description}</span>
+                `;
             };
 
             window.goToBuy = function() {
@@ -1723,12 +1893,13 @@
                 });
             };
 
-            // ---- SAVE APPLICATION ----
+            // ---- СОХРАНЕНИЕ ИСТОРИИ ----
             function saveApplication(id, productName, data) {
                 const history = JSON.parse(localStorage.getItem('eurs_applications') || '[]');
                 history.push({
                     id: id,
                     product: productName,
+                    type: 'fintech',
                     date: new Date().toISOString(),
                     status: 'pending',
                     data: data
@@ -1752,7 +1923,7 @@
                 alert(msg);
             };
 
-            // ---- INIT GRID ----
+            // ---- ГЕНЕРАЦИЯ КАРТОЧЕК ----
             function initGrid() {
                 const grid = document.getElementById('fintechGrid');
                 if (!grid) {
@@ -1797,7 +1968,7 @@
 
             initGrid();
 
-            // ---- SMOOTH SCROLL ----
+            // ---- ПЛАВНЫЙ СКРОЛЛ ----
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     const targetId = this.getAttribute('href');
@@ -1810,11 +1981,11 @@
                 });
             });
 
-            console.log('💎 EURS — Euro Stable Income');
+            console.log('💎 EURS — FinTech Ecosystem');
             console.log('Contract: ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq');
-            console.log('31 FinTech Instruments with Proof of Funds flow.');
+            console.log('FinTech: ' + fintechData.length + ' products');
             console.log('Applications saved in localStorage.');
         });
     </script>
 </body>
-    </html>
+</html>
