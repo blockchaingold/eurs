@@ -602,6 +602,14 @@
             border-color: var(--gold);
             box-shadow: 0 8px 30px rgba(212, 168, 67, 0.1);
         }
+        .product-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: var(--card-bg);
+        }
         .product-icon {
             font-size: 2.2rem;
             margin-bottom: 8px;
@@ -1070,15 +1078,15 @@
         </div>
         <div class="ai-chat-body">
             <div class="ai-messages" id="aiMessages">
-                <div class="ai-msg-bot">👋 Hi! I'm your EURS assistant. Ask me about vehicles, robotics, prices, or Proof of Funds.</div>
+                <div class="ai-msg-bot" data-i18n="ai_greeting">👋 Hi! I'm your EURS assistant. Ask me about vehicles, robotics, prices, or Proof of Funds.</div>
             </div>
             <div class="ai-quick-btns">
-                <button class="ai-qbtn" data-q="What is EURS?">What is EURS?</button>
-                <button class="ai-qbtn" data-q="What is POF?">What is POF?</button>
-                <button class="ai-qbtn" data-q="List vehicles">List vehicles</button>
+                <button class="ai-qbtn" data-q="What is EURS?" data-i18n="ai_q1">What is EURS?</button>
+                <button class="ai-qbtn" data-q="What is POF?" data-i18n="ai_q2">What is POF?</button>
+                <button class="ai-qbtn" data-q="List vehicles" data-i18n="ai_q3">List vehicles</button>
             </div>
             <div class="ai-input-wrap">
-                <input type="text" class="ai-input" id="aiInput" placeholder="Ask me anything..." />
+                <input type="text" class="ai-input" id="aiInput" placeholder="Ask me anything..." data-i18n="ai_placeholder" />
                 <button class="ai-send" id="aiSend">➤</button>
             </div>
         </div>
@@ -1093,13 +1101,13 @@
             </a>
             <nav class="nav" id="nav">
                 <ul class="nav-list">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#structure">Structure</a></li>
-                    <li><a href="#tokenomics">Tokenomics</a></li>
-                    <li><a href="#yield">Yield</a></li>
-                    <li><a href="#vehicles">Vehicles</a></li>
-                    <li><a href="#tech">Tech</a></li>
-                    <li><a href="#roadmap">Roadmap</a></li>
+                    <li><a href="#about" data-i18n="nav_about">About</a></li>
+                    <li><a href="#structure" data-i18n="nav_structure">Structure</a></li>
+                    <li><a href="#tokenomics" data-i18n="nav_tokenomics">Tokenomics</a></li>
+                    <li><a href="#yield" data-i18n="nav_yield">Yield</a></li>
+                    <li><a href="#vehicles" data-i18n="nav_vehicles">🚀 Vehicles</a></li>
+                    <li><a href="#tech" data-i18n="nav_tech">Tech</a></li>
+                    <li><a href="#roadmap" data-i18n="nav_roadmap">Roadmap</a></li>
                 </ul>
             </nav>
             <div class="lang-switch" id="langSwitch">
@@ -1112,7 +1120,7 @@
                 <button class="lang-btn" data-lang="ja">JA</button>
                 <button class="lang-btn" data-lang="ar">AR</button>
             </div>
-            <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary btn-buy">Buy EURS</a>
+            <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary btn-buy" data-i18n="buy_btn">Buy EURS</a>
             <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
         </div>
     </header>
@@ -1120,12 +1128,12 @@
     <section class="hero" id="about">
         <div class="container hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">EURS — <span class="highlight">Vehicles</span> &amp; Robotics</h1>
-                <p class="hero-desc">Cars, motorcycles, aircraft, helicopters, drones, robots.</p>
-                <p class="hero-sub">Buy high-value assets with confidence. Prove your intent with 10% in EURS — we'll verify and connect you within 48 hours.</p>
+                <h1 class="hero-title" data-i18n="hero_title">EURS — <span class="highlight">Vehicles</span> &amp; Robotics</h1>
+                <p class="hero-desc" data-i18n="hero_desc">Cars, motorcycles, aircraft, helicopters, drones, robots.</p>
+                <p class="hero-sub" data-i18n="hero_sub">Buy high-value assets with confidence. Prove your intent with 10% in EURS — we'll verify and connect you within 48 hours.</p>
                 <div class="hero-buttons">
-                    <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary">Buy EURS</a>
-                    <a href="#vehicles" class="btn btn-secondary">Explore Vehicles</a>
+                    <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary" data-i18n="buy_btn">Buy EURS</a>
+                    <a href="#vehicles" class="btn btn-secondary" data-i18n="explore_btn">Explore Vehicles</a>
                 </div>
                 <div class="hero-stats">
                     <div><span class="stat-number">1.15</span><span class="stat-label"> USDC</span></div>
@@ -1138,11 +1146,11 @@
 
     <section class="structure" id="structure">
         <div class="container">
-            <h2 class="section-title">67% Real Assets <span class="highlight">+ 33% Yield</span></h2>
-            <p class="section-sub">EURS is backed by physical gold, certified diamonds, and chemical raw materials used in jewelry production.</p>
+            <h2 class="section-title" data-i18n="structure_title">67% Real Assets <span class="highlight">+ 33% Yield</span></h2>
+            <p class="section-sub" data-i18n="structure_sub">EURS is backed by physical gold, certified diamonds, and chemical raw materials used in jewelry production.</p>
             <div class="structure-grid">
                 <div class="structure-card">
-                    <h3 class="structure-card-title">67% — Real Assets</h3>
+                    <h3 class="structure-card-title" data-i18n="structure_card1">67% — Real Assets</h3>
                     <ul class="structure-list">
                         <li><span class="perc">35%</span> Gold (XAU)</li>
                         <li><span class="perc">12%</span> Silver (XAG)</li>
@@ -1152,7 +1160,7 @@
                     <p class="structure-note">Oracles: Pyth (XAU/USD, XAG/USD) + Switchboard (chemicals)</p>
                 </div>
                 <div class="structure-card">
-                    <h3 class="structure-card-title">33% — Yield</h3>
+                    <h3 class="structure-card-title" data-i18n="structure_card2">33% — Yield</h3>
                     <ul class="structure-list">
                         <li><span class="perc">18%</span> FinTech (payment fees)</li>
                         <li><span class="perc">15%</span> DeFi staking</li>
@@ -1166,30 +1174,30 @@
 
     <section class="tokenomics" id="tokenomics">
         <div class="container">
-            <h2 class="section-title">Transparent <span class="highlight">Distribution</span></h2>
-            <p class="section-sub">Total supply: 1,000,000,000 EURS. Mint &amp; Freeze authorities revoked.</p>
+            <h2 class="section-title" data-i18n="tokenomics_title">Transparent <span class="highlight">Distribution</span></h2>
+            <p class="section-sub" data-i18n="tokenomics_sub">Total supply: 1,000,000,000 EURS. Mint &amp; Freeze authorities revoked.</p>
             <div class="tokenomics-grid">
-                <div class="tokenomics-item"><span class="tokenomics-perc">40%</span><span class="tokenomics-label">Presale</span><span class="tokenomics-desc">Initial capital raise</span></div>
-                <div class="tokenomics-item"><span class="tokenomics-perc">30%</span><span class="tokenomics-label">Liquidity</span><span class="tokenomics-desc">Locked 12 months (Meteora)</span></div>
-                <div class="tokenomics-item"><span class="tokenomics-perc">15%</span><span class="tokenomics-label">Team</span><span class="tokenomics-desc">Locked 24 months (vesting)</span></div>
-                <div class="tokenomics-item"><span class="tokenomics-perc">10%</span><span class="tokenomics-label">Marketing</span><span class="tokenomics-desc">Partnerships, listings, ads</span></div>
-                <div class="tokenomics-item"><span class="tokenomics-perc">5%</span><span class="tokenomics-label">Reserve</span><span class="tokenomics-desc">Contingency</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">40%</span><span class="tokenomics-label" data-i18n="t_label1">Presale</span><span class="tokenomics-desc" data-i18n="t_desc1">Initial capital raise</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">30%</span><span class="tokenomics-label" data-i18n="t_label2">Liquidity</span><span class="tokenomics-desc" data-i18n="t_desc2">Locked 12 months (Meteora)</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">15%</span><span class="tokenomics-label" data-i18n="t_label3">Team</span><span class="tokenomics-desc" data-i18n="t_desc3">Locked 24 months (vesting)</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">10%</span><span class="tokenomics-label" data-i18n="t_label4">Marketing</span><span class="tokenomics-desc" data-i18n="t_desc4">Partnerships, listings, ads</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">5%</span><span class="tokenomics-label" data-i18n="t_label5">Reserve</span><span class="tokenomics-desc" data-i18n="t_desc5">Contingency</span></div>
             </div>
         </div>
     </section>
 
     <section class="yield" id="yield">
         <div class="container">
-            <h2 class="section-title">Your income — <span class="highlight">every 24 hours</span></h2>
-            <p class="section-sub">No staking, no locks. Just hold EURS in your wallet.</p>
+            <h2 class="section-title" data-i18n="yield_title">Your income — <span class="highlight">every 24 hours</span></h2>
+            <p class="section-sub" data-i18n="yield_sub">No staking, no locks. Just hold EURS in your wallet.</p>
             <div class="yield-grid">
-                <div class="yield-card"><div class="yield-icon">💰</div><h3 class="yield-card-title">Transfer Fee 2%</h3><p>2% from every buy/sell goes to the reward pool.</p></div>
-                <div class="yield-card"><div class="yield-icon">🤖</div><h3 class="yield-card-title">Permanent Delegate</h3><p>Automatically distributes the pool to all holders daily.</p></div>
-                <div class="yield-card"><div class="yield-icon">📊</div><h3 class="yield-card-title">~15-25% APY</h3><p>From gold, chemicals, FinTech &amp; DeFi.</p></div>
+                <div class="yield-card"><div class="yield-icon">💰</div><h3 class="yield-card-title" data-i18n="yield_card1_title">Transfer Fee 2%</h3><p data-i18n="yield_card1">2% from every buy/sell goes to the reward pool.</p></div>
+                <div class="yield-card"><div class="yield-icon">🤖</div><h3 class="yield-card-title" data-i18n="yield_card2_title">Permanent Delegate</h3><p data-i18n="yield_card2">Automatically distributes the pool to all holders daily.</p></div>
+                <div class="yield-card"><div class="yield-icon">📊</div><h3 class="yield-card-title" data-i18n="yield_card3_title">~15-25% APY</h3><p data-i18n="yield_card3">From gold, chemicals, FinTech &amp; DeFi.</p></div>
             </div>
             <div class="yield-calc">
-                <h3 style="color:var(--gold); margin-bottom:6px;">💵 Yield Calculator</h3>
-                <p>Enter amount in USD:</p>
+                <h3 style="color:var(--gold); margin-bottom:6px;" data-i18n="calc_title">💵 Yield Calculator</h3>
+                <p data-i18n="calc_sub">Enter amount in USD:</p>
                 <input type="number" id="calcInput" value="100" min="1" step="10" />
                 <div class="result" id="calcResult">≈ $130.00 after 1 year</div>
             </div>
@@ -1199,15 +1207,15 @@
     <!-- ===== VEHICLES ===== -->
     <section class="vehicles" id="vehicles">
         <div class="container">
-            <h2 class="section-title">Vehicles <span class="highlight">&amp; Robotics</span></h2>
-            <p class="section-sub">Cars, motorcycles, aircraft, helicopters, drones, robots — 10% POF in EURS.</p>
+            <h2 class="section-title" data-i18n="vehicles_title">Vehicles <span class="highlight">&amp; Robotics</span></h2>
+            <p class="section-sub" data-i18n="vehicles_sub">Cars, motorcycles, aircraft, helicopters, drones, robots — 10% POF in EURS.</p>
             <div class="product-grid" id="vehiclesGrid"></div>
             <div style="text-align:center;margin-top:30px;">
-                <button class="btn btn-secondary btn-sm" onclick="showHistory()">📋 My Applications</button>
+                <button class="btn btn-secondary btn-sm" onclick="showHistory()" data-i18n="my_apps">📋 My Applications</button>
             </div>
             <div class="page-nav">
-                <a href="index.html" class="btn-nav">💼 FinTech</a>
-                <a href="commodities.html" class="btn-nav">💎 Commodities</a>
+                <a href="index.html" class="btn-nav" data-i18n="nav_fintech">💼 FinTech</a>
+                <a href="commodities.html" class="btn-nav" data-i18n="nav_commodities">💎 Commodities</a>
             </div>
         </div>
     </section>
@@ -1222,13 +1230,13 @@
 
     <section class="tech" id="tech">
         <div class="container">
-            <h2 class="section-title">Built on <span class="highlight">Solana Token-2022</span></h2>
-            <p class="section-sub">Modern extensions for RWA tokens.</p>
+            <h2 class="section-title" data-i18n="tech_title">Built on <span class="highlight">Solana Token-2022</span></h2>
+            <p class="section-sub" data-i18n="tech_sub">Modern extensions for RWA tokens.</p>
             <div class="tech-grid">
-                <div class="tech-item"><span class="tech-icon">⚡</span><h4 class="tech-name">Transfer Fee (2%)</h4><p>Auto-collect fees to reward pool</p></div>
-                <div class="tech-item"><span class="tech-icon">🔗</span><h4 class="tech-name">Transfer Hook</h4><p>Oracle price checks (Pyth, Switchboard)</p></div>
-                <div class="tech-item"><span class="tech-icon">🤖</span><h4 class="tech-name">Permanent Delegate</h4><p>Auto-distribute income</p></div>
-                <div class="tech-item"><span class="tech-icon">📝</span><h4 class="tech-name">Metadata</h4><p>RWA documentation link</p></div>
+                <div class="tech-item"><span class="tech-icon">⚡</span><h4 class="tech-name" data-i18n="tech_name1">Transfer Fee (2%)</h4><p data-i18n="tech_desc1">Auto-collect fees to reward pool</p></div>
+                <div class="tech-item"><span class="tech-icon">🔗</span><h4 class="tech-name" data-i18n="tech_name2">Transfer Hook</h4><p data-i18n="tech_desc2">Oracle price checks (Pyth, Switchboard)</p></div>
+                <div class="tech-item"><span class="tech-icon">🤖</span><h4 class="tech-name" data-i18n="tech_name3">Permanent Delegate</h4><p data-i18n="tech_desc3">Auto-distribute income</p></div>
+                <div class="tech-item"><span class="tech-icon">📝</span><h4 class="tech-name" data-i18n="tech_name4">Metadata</h4><p data-i18n="tech_desc4">RWA documentation link</p></div>
             </div>
             <div class="tech-address">
                 <p><strong>Contract:</strong> <code>ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq</code></p>
@@ -1240,8 +1248,8 @@
 
     <section class="roadmap" id="roadmap">
         <div class="container">
-            <h2 class="section-title">Roadmap</h2>
-            <p class="section-sub">What's next?</p>
+            <h2 class="section-title" data-i18n="roadmap_title">Roadmap</h2>
+            <p class="section-sub" data-i18n="roadmap_sub">What's next?</p>
             <div class="roadmap-timeline">
                 <div class="roadmap-item"><span class="roadmap-phase">Phase 1</span><span class="roadmap-status done">✅ Done</span><p>Token creation, presale, liquidity on Meteora</p></div>
                 <div class="roadmap-item"><span class="roadmap-phase">Phase 2</span><span class="roadmap-status">Jul 2026</span><p>Daily payouts activation (Permanent Delegate)</p></div>
@@ -1255,20 +1263,20 @@
 
     <section class="faq" id="faq">
         <div class="container">
-            <h2 class="section-title">FAQ</h2>
+            <h2 class="section-title" data-i18n="faq_title">FAQ</h2>
             <div class="faq-list">
-                <div class="faq-item"><button class="faq-question">Do I need to stake?</button><div class="faq-answer"><p>No. Just hold EURS in Phantom, Solflare, or Backpack. Rewards come automatically.</p></div></div>
-                <div class="faq-item"><button class="faq-question">How often are payouts?</button><div class="faq-answer"><p>Every 24 hours via Permanent Delegate.</p></div></div>
-                <div class="faq-item"><button class="faq-question">What is Proof of Funds (POF)?</button><div class="faq-answer"><p>You buy EURS (10% of the product price) and submit the Swap Hash. This proves you have the funds and are ready to proceed with the transaction.</p></div></div>
-                <div class="faq-item"><button class="faq-question">Where to buy EURS?</button><div class="faq-answer"><p>Meteora DAMM V2 pool: <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p></div></div>
-                <div class="faq-item"><button class="faq-question">Is there risk?</button><div class="faq-answer"><p>Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.</p></div></div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q1">Do I need to stake?</button><div class="faq-answer"><p data-i18n="faq_a1">No. Just hold EURS in Phantom, Solflare, or Backpack. Rewards come automatically.</p></div></div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q2">How often are payouts?</button><div class="faq-answer"><p data-i18n="faq_a2">Every 24 hours via Permanent Delegate.</p></div></div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q3">What is Proof of Funds (POF)?</button><div class="faq-answer"><p data-i18n="faq_a3">You buy EURS (10% of the product price) and submit the Swap Hash. This proves you have the funds and are ready to proceed with the transaction.</p></div></div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q4">Where to buy EURS?</button><div class="faq-answer"><p>Meteora DAMM V2 pool: <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p></div></div>
+                <div class="faq-item"><button class="faq-question" data-i18n="faq_q5">Is there risk?</button><div class="faq-answer"><p data-i18n="faq_a5">Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.</p></div></div>
             </div>
         </div>
     </section>
 
     <section class="community">
         <div class="container">
-            <h2 class="section-title">Join the <span class="highlight">Community</span></h2>
+            <h2 class="section-title" data-i18n="community_title">Join the <span class="highlight">Community</span></h2>
             <div class="community-links">
                 <a href="#" target="_blank" class="community-link">🐦 X (Twitter)</a>
                 <a href="#" target="_blank" class="community-link">💬 Telegram</a>
@@ -1281,12 +1289,13 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 EURS. Built on <a href="https://solana.com/" target="_blank">Solana Token-2022</a>.</p>
-            <p class="footer-disclaimer">Not financial advice. Always DYOR.</p>
+            <p>&copy; 2026 EURS. Built on <a href="https://solana.com/" target="_blank" data-i18n="footer_text">Solana Token-2022</a>.</p>
+            <p class="footer-disclaimer" data-i18n="footer_disclaimer">Not financial advice. Always DYOR.</p>
         </div>
     </footer>
 
     <script>
+        // Полностью аналогичный скрипт, как в commodities.html, но с vehiclesData
         document.addEventListener('DOMContentLoaded', function() {
             'use strict';
 
@@ -1294,208 +1303,675 @@
                 emailjs.init('p-mbGFGSojk7tFupL');
             })();
 
-            // ---- ФОН ----
-            const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
-            let w, h, particles = [];
+            // ---- ПЕРЕВОДЧИК (8 языков) ----
+            (function() {
+                const translations = {
+                    en: {
+                        nav_about: 'About',
+                        nav_structure: 'Structure',
+                        nav_tokenomics: 'Tokenomics',
+                        nav_yield: 'Yield',
+                        nav_vehicles: '🚀 Vehicles',
+                        nav_fintech: '💼 FinTech',
+                        nav_commodities: '💎 Commodities',
+                        nav_tech: 'Tech',
+                        nav_roadmap: 'Roadmap',
+                        buy_btn: 'Buy EURS',
+                        explore_btn: 'Explore Vehicles',
+                        hero_title: 'EURS — Vehicles & Robotics',
+                        hero_desc: 'Cars, motorcycles, aircraft, helicopters, drones, robots.',
+                        hero_sub: 'Buy high-value assets with confidence. Prove your intent with 10% in EURS — we\'ll verify and connect you within 48 hours.',
+                        structure_title: '67% Real Assets + 33% Yield',
+                        structure_sub: 'EURS is backed by physical gold, certified diamonds, and chemical raw materials used in jewelry production.',
+                        structure_card1: '67% — Real Assets',
+                        structure_card2: '33% — Yield',
+                        tokenomics_title: 'Transparent Distribution',
+                        tokenomics_sub: 'Total supply: 1,000,000,000 EURS. Mint & Freeze authorities revoked.',
+                        t_label1: 'Presale',
+                        t_desc1: 'Initial capital raise',
+                        t_label2: 'Liquidity',
+                        t_desc2: 'Locked 12 months (Meteora)',
+                        t_label3: 'Team',
+                        t_desc3: 'Locked 24 months (vesting)',
+                        t_label4: 'Marketing',
+                        t_desc4: 'Partnerships, listings, ads',
+                        t_label5: 'Reserve',
+                        t_desc5: 'Contingency',
+                        yield_title: 'Your income — every 24 hours',
+                        yield_sub: 'No staking, no locks. Just hold EURS in your wallet.',
+                        yield_card1_title: 'Transfer Fee 2%',
+                        yield_card1: '2% from every buy/sell goes to the reward pool.',
+                        yield_card2_title: 'Permanent Delegate',
+                        yield_card2: 'Automatically distributes the pool to all holders daily.',
+                        yield_card3_title: '~15-25% APY',
+                        yield_card3: 'From gold, chemicals, FinTech & DeFi.',
+                        calc_title: '💵 Yield Calculator',
+                        calc_sub: 'Enter amount in USD:',
+                        tech_title: 'Built on Solana Token-2022',
+                        tech_sub: 'Modern extensions for RWA tokens.',
+                        tech_name1: 'Transfer Fee (2%)',
+                        tech_desc1: 'Auto-collect fees to reward pool',
+                        tech_name2: 'Transfer Hook',
+                        tech_desc2: 'Oracle price checks (Pyth, Switchboard)',
+                        tech_name3: 'Permanent Delegate',
+                        tech_desc3: 'Auto-distribute income',
+                        tech_name4: 'Metadata',
+                        tech_desc4: 'RWA documentation link',
+                        roadmap_title: 'Roadmap',
+                        roadmap_sub: "What's next?",
+                        faq_title: 'FAQ',
+                        faq_q1: 'Do I need to stake?',
+                        faq_a1: 'No. Just hold EURS in Phantom, Solflare, or Backpack. Rewards come automatically.',
+                        faq_q2: 'How often are payouts?',
+                        faq_a2: 'Every 24 hours via Permanent Delegate.',
+                        faq_q3: 'What is Proof of Funds (POF)?',
+                        faq_a3: 'You buy EURS (10% of the product price) and submit the Swap Hash. This proves you have the funds and are ready to proceed with the transaction.',
+                        faq_q4: 'Where to buy EURS?',
+                        faq_q5: 'Is there risk?',
+                        faq_a5: 'Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.',
+                        community_title: 'Join the Community',
+                        vehicles_title: 'Vehicles & Robotics Catalog',
+                        vehicles_sub: 'Cars, motorcycles, aircraft, helicopters, drones, robots — 10% POF in EURS.',
+                        my_apps: '📋 My Applications',
+                        footer_text: 'Solana Token-2022',
+                        footer_disclaimer: 'Not financial advice. Always DYOR.',
+                        ai_greeting: '👋 Hi! I\'m your EURS assistant. Ask me about vehicles, robotics, prices, or Proof of Funds.',
+                        ai_q1: 'What is EURS?',
+                        ai_q2: 'What is POF?',
+                        ai_q3: 'List vehicles',
+                        ai_placeholder: 'Ask me anything...'
+                    },
+                    ru: {
+                        nav_about: 'О нас',
+                        nav_structure: 'Структура',
+                        nav_tokenomics: 'Токеномика',
+                        nav_yield: 'Доходность',
+                        nav_vehicles: '🚀 Транспорт',
+                        nav_fintech: '💼 FinTech',
+                        nav_commodities: '💎 Товары',
+                        nav_tech: 'Технология',
+                        nav_roadmap: 'План',
+                        buy_btn: 'Купить EURS',
+                        explore_btn: 'Исследовать транспорт',
+                        hero_title: 'EURS — Транспорт и робототехника',
+                        hero_desc: 'Авто, мото, самолёты, вертолёты, дроны, роботы.',
+                        hero_sub: 'Покупайте дорогие активы с уверенностью. Подтвердите свои намерения 10% в EURS — мы проверим и свяжемся в течение 48 часов.',
+                        structure_title: '67% реальных активов + 33% доходности',
+                        structure_sub: 'EURS обеспечен физическим золотом, сертифицированными алмазами и химическим сырьём для ювелирной промышленности.',
+                        structure_card1: '67% — Реальные активы',
+                        structure_card2: '33% — Доходность',
+                        tokenomics_title: 'Прозрачное распределение',
+                        tokenomics_sub: 'Общий запас: 1,000,000,000 EURS. Mint и Freeze Authority отозваны.',
+                        t_label1: 'Пресейл',
+                        t_desc1: 'Первичное привлечение',
+                        t_label2: 'Ликвидность',
+                        t_desc2: 'Блокировка на 12 месяцев',
+                        t_label3: 'Команда',
+                        t_desc3: 'Лок на 24 месяца',
+                        t_label4: 'Маркетинг',
+                        t_desc4: 'Партнёрства, листинги',
+                        t_label5: 'Резерв',
+                        t_desc5: 'Непредвиденные расходы',
+                        yield_title: 'Твой доход — каждые 24 часа',
+                        yield_sub: 'Без стейкинга и локов. Просто держи EURS в кошельке.',
+                        yield_card1_title: 'Transfer Fee 2%',
+                        yield_card1: '2% с каждой покупки/продажи идут в пул наград.',
+                        yield_card2_title: 'Permanent Delegate',
+                        yield_card2: 'Автоматически распределяет пул между держателями ежедневно.',
+                        yield_card3_title: '~15-25% APY',
+                        yield_card3: 'От золота, химии, FinTech и DeFi.',
+                        calc_title: '💵 Калькулятор дохода',
+                        calc_sub: 'Введите сумму в USD:',
+                        tech_title: 'Построен на Solana Token-2022',
+                        tech_sub: 'Современные расширения для RWA-токенов.',
+                        tech_name1: 'Transfer Fee (2%)',
+                        tech_desc1: 'Автоматический сбор комиссий в пул наград',
+                        tech_name2: 'Transfer Hook',
+                        tech_desc2: 'Проверка цен через оракулы',
+                        tech_name3: 'Permanent Delegate',
+                        tech_desc3: 'Автоматическое распределение дохода',
+                        tech_name4: 'Metadata',
+                        tech_desc4: 'Ссылка на RWA-документацию',
+                        roadmap_title: 'Дорожная карта',
+                        roadmap_sub: 'Что дальше?',
+                        faq_title: 'FAQ',
+                        faq_q1: 'Нужно ли стейкать?',
+                        faq_a1: 'Нет. Просто держи EURS в Phantom, Solflare или Backpack. Награды приходят автоматически.',
+                        faq_q2: 'Как часто выплаты?',
+                        faq_a2: 'Каждые 24 часа через Permanent Delegate.',
+                        faq_q3: 'Что такое Proof of Funds (POF)?',
+                        faq_a3: 'Вы покупаете EURS (10% от цены товара) и отправляете Swap Hash. Это доказывает наличие средств и серьёзность намерений.',
+                        faq_q4: 'Где купить EURS?',
+                        faq_q5: 'Есть ли риск?',
+                        faq_a5: 'Как у любой криптовалюты — волатильность есть. Но 67% обеспечено реальными активами (золото, химия), что снижает риски.',
+                        community_title: 'Присоединяйся к сообществу',
+                        vehicles_title: 'Каталог транспорта и робототехники',
+                        vehicles_sub: 'Авто, мото, самолёты, вертолёты, дроны, роботы — 10% POF в EURS.',
+                        my_apps: '📋 Мои заявки',
+                        footer_text: 'Solana Token-2022',
+                        footer_disclaimer: 'Не финансовый совет. Всегда проводите собственное исследование (DYOR).',
+                        ai_greeting: '👋 Привет! Я твой помощник EURS. Спрашивай о транспорте, робототехнике, ценах или Proof of Funds.',
+                        ai_q1: 'Что такое EURS?',
+                        ai_q2: 'Что такое POF?',
+                        ai_q3: 'Список транспорта',
+                        ai_placeholder: 'Спроси меня о чём угодно...'
+                    },
+                    es: {
+                        nav_about: 'Acerca',
+                        nav_structure: 'Estructura',
+                        nav_tokenomics: 'Tokenomics',
+                        nav_yield: 'Rendimiento',
+                        nav_vehicles: '🚀 Vehículos',
+                        nav_fintech: '💼 FinTech',
+                        nav_commodities: '💎 Productos',
+                        nav_tech: 'Tecnología',
+                        nav_roadmap: 'Hoja de ruta',
+                        buy_btn: 'Comprar EURS',
+                        explore_btn: 'Explorar vehículos',
+                        hero_title: 'EURS — Vehículos y robótica',
+                        hero_desc: 'Autos, motos, aviones, helicópteros, drones, robots.',
+                        hero_sub: 'Compre activos de alto valor con confianza. Demuestre su intención con el 10% en EURS — verificaremos y le contactaremos en 48 horas.',
+                        structure_title: '67% Activos reales + 33% Rendimiento',
+                        structure_sub: 'EURS está respaldado por oro físico, diamantes certificados y materias primas químicas utilizadas en la producción de joyería.',
+                        structure_card1: '67% — Activos reales',
+                        structure_card2: '33% — Rendimiento',
+                        tokenomics_title: 'Distribución transparente',
+                        tokenomics_sub: 'Suministro total: 1,000,000,000 EURS. Autoridades Mint y Freeze revocadas.',
+                        t_label1: 'Preventa',
+                        t_desc1: 'Captación inicial',
+                        t_label2: 'Liquidez',
+                        t_desc2: 'Bloqueada 12 meses',
+                        t_label3: 'Equipo',
+                        t_desc3: 'Bloqueada 24 meses',
+                        t_label4: 'Marketing',
+                        t_desc4: 'Alianzas, listados',
+                        t_label5: 'Reserva',
+                        t_desc5: 'Contingencia',
+                        yield_title: 'Tus ingresos — cada 24 horas',
+                        yield_sub: 'Sin staking ni bloqueos. Solo mantén EURS en tu billetera.',
+                        yield_card1_title: 'Transfer Fee 2%',
+                        yield_card1: 'El 2% de cada compra/venta va al fondo de recompensas.',
+                        yield_card2_title: 'Permanent Delegate',
+                        yield_card2: 'Distribuye automáticamente el fondo a todos los tenedores diariamente.',
+                        yield_card3_title: '~15-25% APY',
+                        yield_card3: 'De oro, químicos, FinTech y DeFi.',
+                        calc_title: '💵 Calculadora de rendimiento',
+                        calc_sub: 'Ingresa el monto en USD:',
+                        tech_title: 'Construido en Solana Token-2022',
+                        tech_sub: 'Extensiones modernas para tokens RWA.',
+                        tech_name1: 'Transfer Fee (2%)',
+                        tech_desc1: 'Recaudación automática de comisiones',
+                        tech_name2: 'Transfer Hook',
+                        tech_desc2: 'Verificación de precios con oráculos',
+                        tech_name3: 'Permanent Delegate',
+                        tech_desc3: 'Distribución automática de ingresos',
+                        tech_name4: 'Metadata',
+                        tech_desc4: 'Enlace a documentación RWA',
+                        roadmap_title: 'Hoja de ruta',
+                        roadmap_sub: '¿Qué sigue?',
+                        faq_title: 'FAQ',
+                        faq_q1: '¿Necesito hacer staking?',
+                        faq_a1: 'No. Solo mantén EURS en Phantom, Solflare o Backpack. Las recompensas llegan automáticamente.',
+                        faq_q2: '¿Cada cuándo los pagos?',
+                        faq_a2: 'Cada 24 horas vía Permanent Delegate.',
+                        faq_q3: '¿Qué es Proof of Funds (POF)?',
+                        faq_a3: 'Compras EURS (10% del precio del producto) y envías el Swap Hash. Esto demuestra que tienes los fondos y estás listo para proceder.',
+                        faq_q4: '¿Dónde comprar EURS?',
+                        faq_q5: '¿Hay riesgo?',
+                        faq_a5: 'Como cualquier cripto, EURS tiene volatilidad. Pero el 67% está respaldado por activos reales (oro, químicos), lo que reduce el riesgo.',
+                        community_title: 'Únete a la comunidad',
+                        vehicles_title: 'Catálogo de vehículos y robótica',
+                        vehicles_sub: 'Autos, motos, aviones, helicópteros, drones, robots — 10% POF en EURS.',
+                        my_apps: '📋 Mis solicitudes',
+                        footer_text: 'Solana Token-2022',
+                        footer_disclaimer: 'No es asesoramiento financiero. Siempre DYOR.',
+                        ai_greeting: '👋 ¡Hola! Soy tu asistente EURS. Pregúntame sobre vehículos, robótica, precios o Proof of Funds.',
+                        ai_q1: '¿Qué es EURS?',
+                        ai_q2: '¿Qué es POF?',
+                        ai_q3: 'Lista de vehículos',
+                        ai_placeholder: 'Pregúntame cualquier cosa...'
+                    },
+                    fr: {
+                        nav_about: 'À propos',
+                        nav_structure: 'Structure',
+                        nav_tokenomics: 'Tokenomics',
+                        nav_yield: 'Rendement',
+                        nav_vehicles: '🚀 Véhicules',
+                        nav_fintech: '💼 FinTech',
+                        nav_commodities: '💎 Produits',
+                        nav_tech: 'Technologie',
+                        nav_roadmap: 'Feuille de route',
+                        buy_btn: 'Acheter EURS',
+                        explore_btn: 'Explorer les véhicules',
+                        hero_title: 'EURS — Véhicules et robotique',
+                        hero_desc: 'Voitures, motos, avions, hélicoptères, drones, robots.',
+                        hero_sub: 'Achetez des actifs de grande valeur en toute confiance. Prouvez votre intention avec 10% en EURS — nous vérifierons et vous contacterons sous 48 heures.',
+                        structure_title: '67% Actifs réels + 33% Rendement',
+                        structure_sub: 'EURS est adossé à de l\'or physique, des diamants certifiés et des matières premières chimiques utilisées dans la production de bijoux.',
+                        structure_card1: '67% — Actifs réels',
+                        structure_card2: '33% — Rendement',
+                        tokenomics_title: 'Distribution transparente',
+                        tokenomics_sub: 'Offre totale: 1,000,000,000 EURS. Autorités Mint et Freeze révoquées.',
+                        t_label1: 'Prévente',
+                        t_desc1: 'Collecte initiale',
+                        t_label2: 'Liquidité',
+                        t_desc2: 'Bloquée 12 mois',
+                        t_label3: 'Équipe',
+                        t_desc3: 'Bloquée 24 mois',
+                        t_label4: 'Marketing',
+                        t_desc4: 'Partenariats, listages',
+                        t_label5: 'Réserve',
+                        t_desc5: 'Imprévus',
+                        yield_title: 'Vos revenus — toutes les 24 heures',
+                        yield_sub: 'Sans staking ni blocage. Gardez simplement EURS dans votre portefeuille.',
+                        yield_card1_title: 'Transfer Fee 2%',
+                        yield_card1: '2% de chaque achat/vente va au pool de récompenses.',
+                        yield_card2_title: 'Permanent Delegate',
+                        yield_card2: 'Distribue automatiquement le pool aux détenteurs quotidiennement.',
+                        yield_card3_title: '~15-25% APY',
+                        yield_card3: 'De l\'or, de la chimie, de la FinTech et de la DeFi.',
+                        calc_title: '💵 Calculateur de rendement',
+                        calc_sub: 'Entrez le montant en USD:',
+                        tech_title: 'Construit sur Solana Token-2022',
+                        tech_sub: 'Extensions modernes pour les tokens RWA.',
+                        tech_name1: 'Transfer Fee (2%)',
+                        tech_desc1: 'Collecte automatique des frais',
+                        tech_name2: 'Transfer Hook',
+                        tech_desc2: 'Vérification des prix par oracles',
+                        tech_name3: 'Permanent Delegate',
+                        tech_desc3: 'Distribution automatique des revenus',
+                        tech_name4: 'Metadata',
+                        tech_desc4: 'Lien vers la documentation RWA',
+                        roadmap_title: 'Feuille de route',
+                        roadmap_sub: 'Et après?',
+                        faq_title: 'FAQ',
+                        faq_q1: 'Dois-je staker?',
+                        faq_a1: 'Non. Gardez simplement EURS dans Phantom, Solflare ou Backpack. Les récompenses arrivent automatiquement.',
+                        faq_q2: 'À quelle fréquence les paiements?',
+                        faq_a2: 'Toutes les 24 heures via Permanent Delegate.',
+                        faq_q3: 'Qu\'est-ce que Proof of Funds (POF)?',
+                        faq_a3: 'Vous achetez EURS (10% du prix du produit) et envoyez le Swap Hash. Cela prouve que vous avez les fonds et êtes prêt à procéder.',
+                        faq_q4: 'Où acheter EURS?',
+                        faq_q5: 'Y a-t-il un risque?',
+                        faq_a5: 'Comme toute cryptomonnaie, EURS est volatile. Mais 67% est adossé à des actifs réels (or, chimie), ce qui réduit le risque.',
+                        community_title: 'Rejoignez la communauté',
+                        vehicles_title: 'Catalogue des véhicules et robotique',
+                        vehicles_sub: 'Voitures, motos, avions, hélicoptères, drones, robots — 10% POF en EURS.',
+                        my_apps: '📋 Mes demandes',
+                        footer_text: 'Solana Token-2022',
+                        footer_disclaimer: 'Pas un conseil financier. Toujours DYOR.',
+                        ai_greeting: '👋 Bonjour! Je suis votre assistant EURS. Demandez-moi tout sur les véhicules, la robotique, les prix ou Proof of Funds.',
+                        ai_q1: 'Qu\'est-ce que EURS?',
+                        ai_q2: 'Qu\'est-ce que POF?',
+                        ai_q3: 'Liste des véhicules',
+                        ai_placeholder: 'Demandez-moi n\'importe quoi...'
+                    },
+                    de: {
+                        nav_about: 'Über',
+                        nav_structure: 'Struktur',
+                        nav_tokenomics: 'Tokenomics',
+                        nav_yield: 'Rendite',
+                        nav_vehicles: '🚀 Fahrzeuge',
+                        nav_fintech: '💼 FinTech',
+                        nav_commodities: '💎 Produkte',
+                        nav_tech: 'Technologie',
+                        nav_roadmap: 'Fahrplan',
+                        buy_btn: 'EURS kaufen',
+                        explore_btn: 'Fahrzeuge erkunden',
+                        hero_title: 'EURS — Fahrzeuge & Robotik',
+                        hero_desc: 'Autos, Motorräder, Flugzeuge, Hubschrauber, Drohnen, Roboter.',
+                        hero_sub: 'Kaufen Sie hochwertige Vermögenswerte mit Vertrauen. Beweisen Sie Ihre Absicht mit 10% in EURS — wir prüfen und kontaktieren Sie innerhalb von 48 Stunden.',
+                        structure_title: '67% Reale Vermögenswerte + 33% Rendite',
+                        structure_sub: 'EURS wird durch physisches Gold, zertifizierte Diamanten und chemische Rohstoffe für die Schmuckproduktion gedeckt.',
+                        structure_card1: '67% — Reale Vermögenswerte',
+                        structure_card2: '33% — Rendite',
+                        tokenomics_title: 'Transparente Verteilung',
+                        tokenomics_sub: 'Gesamtangebot: 1,000,000,000 EURS. Mint- und Freeze-Behörden widerrufen.',
+                        t_label1: 'Presale',
+                        t_desc1: 'Erste Kapitalbeschaffung',
+                        t_label2: 'Liquidität',
+                        t_desc2: '12 Monate gesperrt',
+                        t_label3: 'Team',
+                        t_desc3: '24 Monate gesperrt',
+                        t_label4: 'Marketing',
+                        t_desc4: 'Partnerschaften, Listings',
+                        t_label5: 'Reserve',
+                        t_desc5: 'Unvorhergesehenes',
+                        yield_title: 'Dein Einkommen — alle 24 Stunden',
+                        yield_sub: 'Ohne Staking oder Sperren. Einfach EURS im Wallet halten.',
+                        yield_card1_title: 'Transfer Fee 2%',
+                        yield_card1: '2% von jedem Kauf/Verkauf gehen in den Belohnungspool.',
+                        yield_card2_title: 'Permanent Delegate',
+                        yield_card2: 'Verteilt den Pool automatisch täglich an alle Halter.',
+                        yield_card3_title: '~15-25% APY',
+                        yield_card3: 'Von Gold, Chemie, FinTech und DeFi.',
+                        calc_title: '💵 Renditerechner',
+                        calc_sub: 'Betrag in USD eingeben:',
+                        tech_title: 'Auf Solana Token-2022 gebaut',
+                        tech_sub: 'Moderne Erweiterungen für RWA-Token.',
+                        tech_name1: 'Transfer Fee (2%)',
+                        tech_desc1: 'Automatische Gebührenerhebung',
+                        tech_name2: 'Transfer Hook',
+                        tech_desc2: 'Preisprüfung durch Orakel',
+                        tech_name3: 'Permanent Delegate',
+                        tech_desc3: 'Automatische Einkommensverteilung',
+                        tech_name4: 'Metadata',
+                        tech_desc4: 'Link zur RWA-Dokumentation',
+                        roadmap_title: 'Fahrplan',
+                        roadmap_sub: 'Was kommt als nächstes?',
+                        faq_title: 'FAQ',
+                        faq_q1: 'Muss ich staken?',
+                        faq_a1: 'Nein. Halte einfach EURS in Phantom, Solflare oder Backpack. Belohnungen kommen automatisch.',
+                        faq_q2: 'Wie oft gibt es Auszahlungen?',
+                        faq_a2: 'Alle 24 Stunden über Permanent Delegate.',
+                        faq_q3: 'Was ist Proof of Funds (POF)?',
+                        faq_a3: 'Sie kaufen EURS (10% des Produktpreises) und senden den Swap Hash. Dies beweist, dass Sie die Mittel haben und bereit sind fortzufahren.',
+                        faq_q4: 'Wo kann man EURS kaufen?',
+                        faq_q5: 'Gibt es ein Risiko?',
+                        faq_a5: 'Wie jede Kryptowährung hat EURS Volatilität. Aber 67% sind durch reale Vermögenswerte (Gold, Chemie) gedeckt, was das Risiko reduziert.',
+                        community_title: 'Tritt der Community bei',
+                        vehicles_title: 'Fahrzeug- & Robotik-Katalog',
+                        vehicles_sub: 'Autos, Motorräder, Flugzeuge, Hubschrauber, Drohnen, Roboter — 10% POF in EURS.',
+                        my_apps: '📋 Meine Anträge',
+                        footer_text: 'Solana Token-2022',
+                        footer_disclaimer: 'Keine Finanzberatung. Immer DYOR.',
+                        ai_greeting: '👋 Hallo! Ich bin Ihr EURS-Assistent. Fragen Sie mich nach Fahrzeugen, Robotik, Preisen oder Proof of Funds.',
+                        ai_q1: 'Was ist EURS?',
+                        ai_q2: 'Was ist POF?',
+                        ai_q3: 'Fahrzeugliste',
+                        ai_placeholder: 'Fragen Sie mich alles...'
+                    },
+                    zh: {
+                        nav_about: '关于',
+                        nav_structure: '结构',
+                        nav_tokenomics: '代币经济',
+                        nav_yield: '收益',
+                        nav_vehicles: '🚀 交通',
+                        nav_fintech: '💼 FinTech',
+                        nav_commodities: '💎 商品',
+                        nav_tech: '技术',
+                        nav_roadmap: '路线图',
+                        buy_btn: '购买 EURS',
+                        explore_btn: '探索交通',
+                        hero_title: 'EURS — 交通与机器人',
+                        hero_desc: '汽车、摩托车、飞机、直升机、无人机、机器人。',
+                        hero_sub: '自信地购买高价值资产。用 10% EURS 证明您的意图 — 我们将在 48 小时内验证并联系您。',
+                        structure_title: '67% 真实资产 + 33% 收益',
+                        structure_sub: 'EURS 由实物黄金、认证钻石和珠宝生产中使用的化学品原料支撑。',
+                        structure_card1: '67% — 真实资产',
+                        structure_card2: '33% — 收益',
+                        tokenomics_title: '透明分配',
+                        tokenomics_sub: '总供应量: 1,000,000,000 EURS。Mint 和 Freeze 权限已撤销。',
+                        t_label1: '预售',
+                        t_desc1: '初始融资',
+                        t_label2: '流动性',
+                        t_desc2: '锁定12个月',
+                        t_label3: '团队',
+                        t_desc3: '锁定24个月',
+                        t_label4: '营销',
+                        t_desc4: '合作、上市',
+                        t_label5: '储备',
+                        t_desc5: '应急资金',
+                        yield_title: '你的收入 — 每24小时',
+                        yield_sub: '无需质押或锁定。只需在钱包中持有 EURS。',
+                        yield_card1_title: 'Transfer Fee 2%',
+                        yield_card1: '每笔买卖的2%进入奖励池。',
+                        yield_card2_title: 'Permanent Delegate',
+                        yield_card2: '每天自动将池子分配给所有持有者。',
+                        yield_card3_title: '~15-25% APY',
+                        yield_card3: '来自黄金、化学、金融科技和DeFi。',
+                        calc_title: '💵 收益计算器',
+                        calc_sub: '输入美元金额:',
+                        tech_title: '基于 Solana Token-2022 构建',
+                        tech_sub: '针对RWA代币的现代扩展。',
+                        tech_name1: 'Transfer Fee (2%)',
+                        tech_desc1: '自动收取费用到奖励池',
+                        tech_name2: 'Transfer Hook',
+                        tech_desc2: '通过预言机检查价格',
+                        tech_name3: 'Permanent Delegate',
+                        tech_desc3: '自动分配收入',
+                        tech_name4: 'Metadata',
+                        tech_desc4: 'RWA文档链接',
+                        roadmap_title: '路线图',
+                        roadmap_sub: '下一步是什么？',
+                        faq_title: '常见问题',
+                        faq_q1: '我需要质押吗？',
+                        faq_a1: '不需要。只需在 Phantom、Solflare 或 Backpack 中持有 EURS。奖励自动到账。',
+                        faq_q2: '多久支付一次？',
+                        faq_a2: '每24小时通过 Permanent Delegate 支付。',
+                        faq_q3: '什么是 Proof of Funds (POF)？',
+                        faq_a3: '您购买 EURS（商品价格的10%）并提交 Swap Hash。这证明您有资金并准备进行交易。',
+                        faq_q4: '在哪里购买 EURS？',
+                        faq_q5: '有风险吗？',
+                        faq_a5: '与任何加密货币一样，EURS 有波动性。但67%由真实资产（黄金、化学品）支撑，降低了风险。',
+                        community_title: '加入社区',
+                        vehicles_title: '交通与机器人目录',
+                        vehicles_sub: '汽车、摩托车、飞机、直升机、无人机、机器人 — 10% POF 以 EURS 支付。',
+                        my_apps: '📋 我的申请',
+                        footer_text: 'Solana Token-2022',
+                        footer_disclaimer: '非财务建议。始终 DYOR。',
+                        ai_greeting: '👋 你好！我是你的 EURS 助手。问我关于交通、机器人、价格或 Proof of Funds 的问题。',
+                        ai_q1: '什么是 EURS？',
+                        ai_q2: '什么是 POF？',
+                        ai_q3: '交通列表',
+                        ai_placeholder: '问我任何问题...'
+                    },
+                    ja: {
+                        nav_about: '概要',
+                        nav_structure: '構造',
+                        nav_tokenomics: 'トークノミクス',
+                        nav_yield: '利回り',
+                        nav_vehicles: '🚀 乗り物',
+                        nav_fintech: '💼 FinTech',
+                        nav_commodities: '💎 商品',
+                        nav_tech: 'テクノロジー',
+                        nav_roadmap: 'ロードマップ',
+                        buy_btn: 'EURSを購入',
+                        explore_btn: '乗り物を探索',
+                        hero_title: 'EURS — 乗り物とロボティクス',
+                        hero_desc: '自動車、オートバイ、飛行機、ヘリコプター、ドローン、ロボット。',
+                        hero_sub: '高価値資産を自信を持って購入。10% EURS で意図を証明 — 48時間以内に検証しご連絡します。',
+                        structure_title: '67% 実物資産 + 33% 利回り',
+                        structure_sub: 'EURSは物理的な金、認定ダイヤモンド、宝飾品生産に使用される化学原料によって裏付けられています。',
+                        structure_card1: '67% — 実物資産',
+                        structure_card2: '33% — 利回り',
+                        tokenomics_title: '透明な分配',
+                        tokenomics_sub: '総供給量: 1,000,000,000 EURS。MintとFreezeの権限は取り消されました。',
+                        t_label1: 'プレセール',
+                        t_desc1: '初期資金調達',
+                        t_label2: '流動性',
+                        t_desc2: '12ヶ月ロック',
+                        t_label3: 'チーム',
+                        t_desc3: '24ヶ月ロック',
+                        t_label4: 'マーケティング',
+                        t_desc4: 'パートナーシップ、上場',
+                        t_label5: '準備金',
+                        t_desc5: '予備',
+                        yield_title: 'あなたの収入 — 24時間ごと',
+                        yield_sub: 'ステーキングやロックは不要。EURSをウォレットに保有するだけ。',
+                        yield_card1_title: 'Transfer Fee 2%',
+                        yield_card1: '売買の2%が報酬プールに入ります。',
+                        yield_card2_title: 'Permanent Delegate',
+                        yield_card2: '毎日自動的にプールを全保有者に分配します。',
+                        yield_card3_title: '~15-25% APY',
+                        yield_card3: '金、化学、FinTech、DeFiから。',
+                        calc_title: '💵 利回り計算機',
+                        calc_sub: 'USD金額を入力:',
+                        tech_title: 'Solana Token-2022上に構築',
+                        tech_sub: 'RWAトークンのためのモダンな拡張機能。',
+                        tech_name1: 'Transfer Fee (2%)',
+                        tech_desc1: '自動的に手数料を収集',
+                        tech_name2: 'Transfer Hook',
+                        tech_desc2: 'オラクルによる価格チェック',
+                        tech_name3: 'Permanent Delegate',
+                        tech_desc3: '自動収入分配',
+                        tech_name4: 'Metadata',
+                        tech_desc4: 'RWAドキュメントへのリンク',
+                        roadmap_title: 'ロードマップ',
+                        roadmap_sub: '次のステップは？',
+                        faq_title: 'FAQ',
+                        faq_q1: 'ステーキングは必要ですか？',
+                        faq_a1: 'いいえ。Phantom、Solflare、BackpackでEURSを保有するだけで、自動的に報酬が届きます。',
+                        faq_q2: '支払いの頻度は？',
+                        faq_a2: 'Permanent Delegateを通じて24時間ごと。',
+                        faq_q3: 'Proof of Funds (POF) とは？',
+                        faq_a3: 'EURS（商品価格の10%）を購入し、Swap Hashを送信します。これは資金を持ち、取引を進める準備ができていることを証明します。',
+                        faq_q4: 'EURSはどこで買えますか？',
+                        faq_q5: 'リスクはありますか？',
+                        faq_a5: '他の暗号資産と同様に変動性がありますが、67%が実物資産（金、化学）で裏付けられており、リスクを低減しています。',
+                        community_title: 'コミュニティに参加',
+                        vehicles_title: '乗り物とロボティクスカタログ',
+                        vehicles_sub: '自動車、オートバイ、飛行機、ヘリコプター、ドローン、ロボット — 10% POF を EURS で。',
+                        my_apps: '📋 申請一覧',
+                        footer_text: 'Solana Token-2022',
+                        footer_disclaimer: '財務アドバイスではありません。常にDYOR。',
+                        ai_greeting: '👋 こんにちは！私はEURSアシスタントです。乗り物、ロボティクス、価格、Proof of Fundsについて質問してください。',
+                        ai_q1: 'EURSとは？',
+                        ai_q2: 'POFとは？',
+                        ai_q3: '乗り物リスト',
+                        ai_placeholder: '何でも質問してください...'
+                    },
+                    ar: {
+                        nav_about: 'حول',
+                        nav_structure: 'الهيكل',
+                        nav_tokenomics: 'اقتصاديات الرمز',
+                        nav_yield: 'العائد',
+                        nav_vehicles: '🚀 المركبات',
+                        nav_fintech: '💼 FinTech',
+                        nav_commodities: '💎 السلع',
+                        nav_tech: 'التقنية',
+                        nav_roadmap: 'الخريطة',
+                        buy_btn: 'شراء EURS',
+                        explore_btn: 'استكشاف المركبات',
+                        hero_title: 'EURS — المركبات والروبوتات',
+                        hero_desc: 'سيارات، دراجات نارية، طائرات، مروحيات، طائرات بدون طيار، روبوتات.',
+                        hero_sub: 'اشترِ الأصول عالية القيمة بثقة. أثبت نيتك بـ 10% من EURS — سنتحقق ونتواصل معك خلال 48 ساعة.',
+                        structure_title: '67% أصول حقيقية + 33% عائد',
+                        structure_sub: 'EURS مدعوم بالذهب المادي والماس المعتمد والمواد الكيميائية الخام المستخدمة في إنتاج المجوهرات.',
+                        structure_card1: '67% — أصول حقيقية',
+                        structure_card2: '33% — عائد',
+                        tokenomics_title: 'توزيع شفاف',
+                        tokenomics_sub: 'إجمالي العرض: 1,000,000,000 EURS. تم إلغاء صلاحيات Mint و Freeze.',
+                        t_label1: 'ما قبل البيع',
+                        t_desc1: 'جمع رأس المال الأولي',
+                        t_label2: 'السيولة',
+                        t_desc2: 'مجمدة 12 شهرًا',
+                        t_label3: 'الفريق',
+                        t_desc3: 'مجمدة 24 شهرًا',
+                        t_label4: 'التسويق',
+                        t_desc4: 'شراكات، إدراجات',
+                        t_label5: 'احتياطي',
+                        t_desc5: 'طوارئ',
+                        yield_title: 'دخلك — كل 24 ساعة',
+                        yield_sub: 'بدون تخزين أو قفل. فقط احتفظ بـ EURS في محفظتك.',
+                        yield_card1_title: 'Transfer Fee 2%',
+                        yield_card1: '2% من كل عملية شراء/بيع تذهب إلى مجمع المكافآت.',
+                        yield_card2_title: 'Permanent Delegate',
+                        yield_card2: 'يوزع المجمع تلقائيًا على جميع الحائزين يوميًا.',
+                        yield_card3_title: '~15-25% APY',
+                        yield_card3: 'من الذهب والكيمياء والتمويل الرقمي و DeFi.',
+                        calc_title: '💵 حاسبة العائد',
+                        calc_sub: 'أدخل المبلغ بالدولار:',
+                        tech_title: 'مبني على Solana Token-2022',
+                        tech_sub: 'إضافات حديثة لرموز RWA.',
+                        tech_name1: 'Transfer Fee (2%)',
+                        tech_desc1: 'تحصيل الرسوم تلقائيًا',
+                        tech_name2: 'Transfer Hook',
+                        tech_desc2: 'فحص الأسعار عبر أوراكل',
+                        tech_name3: 'Permanent Delegate',
+                        tech_desc3: 'توزيع الدخل تلقائيًا',
+                        tech_name4: 'Metadata',
+                        tech_desc4: 'رابط توثيق RWA',
+                        roadmap_title: 'الخريطة',
+                        roadmap_sub: 'ما التالي؟',
+                        faq_title: 'الأسئلة الشائعة',
+                        faq_q1: 'هل أحتاج إلى التخزين؟',
+                        faq_a1: 'لا. فقط احتفظ بـ EURS في Phantom أو Solflare أو Backpack. المكافآت تأتي تلقائيًا.',
+                        faq_q2: 'كم مرة المدفوعات؟',
+                        faq_a2: 'كل 24 ساعة عبر Permanent Delegate.',
+                        faq_q3: 'ما هو Proof of Funds (POF)؟',
+                        faq_a3: 'تشتري EURS (10% من سعر المنتج) وترسل Swap Hash. هذا يثبت أن لديك الأموال وأنت مستعد للمتابعة.',
+                        faq_q4: 'أين يمكن شراء EURS؟',
+                        faq_q5: 'هل هناك خطر؟',
+                        faq_a5: 'مثل أي عملة رقمية، EURS متقلب. لكن 67% مدعوم بأصول حقيقية (ذهب، كيمياء)، مما يقلل المخاطر.',
+                        community_title: 'انضم إلى المجتمع',
+                        vehicles_title: 'كتالوج المركبات والروبوتات',
+                        vehicles_sub: 'سيارات، دراجات نارية، طائرات، مروحيات، طائرات بدون طيار، روبوتات — 10% POF في EURS.',
+                        my_apps: '📋 طلباتي',
+                        footer_text: 'Solana Token-2022',
+                        footer_disclaimer: 'ليس نصيحة مالية. دائماً DYOR.',
+                        ai_greeting: '👋 مرحباً! أنا مساعد EURS الخاص بك. اسألني عن المركبات والروبوتات والأسعار أو Proof of Funds.',
+                        ai_q1: 'ما هو EURS؟',
+                        ai_q2: 'ما هو POF؟',
+                        ai_q3: 'قائمة المركبات',
+                        ai_placeholder: 'اسألني أي شيء...'
+                    }
+                };
 
-            function resize() {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
+                const langBtns = document.querySelectorAll('.lang-btn');
+                const elements = document.querySelectorAll('[data-i18n]');
+                let currentLang = localStorage.getItem('eurs_lang') || 'en';
 
-            for (let i = 0; i < 90; i++) {
-                particles.push({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    r: Math.random() * 2.5 + 0.5,
-                    dx: (Math.random() - 0.5) * 0.5,
-                    dy: (Math.random() - 0.5) * 0.5,
-                    alpha: Math.random() * 0.5 + 0.2
-                });
-            }
-
-            function drawParticles() {
-                ctx.clearRect(0, 0, w, h);
-                particles.forEach(p => {
-                    p.x += p.dx;
-                    p.y += p.dy;
-                    if (p.x < 0 || p.x > w) p.dx *= -1;
-                    if (p.y < 0 || p.y > h) p.dy *= -1;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(212, 168, 67, ${p.alpha})`;
-                    ctx.fill();
-                });
-                requestAnimationFrame(drawParticles);
-            }
-            drawParticles();
-
-            // ---- ПАРЯЩИЕ ТОКЕНЫ ----
-            const symbols = ['✦', '♦', '◈', '✧', '⛁', '💰', '💎', '✦'];
-            const container = document.getElementById('floatingTokens');
-            for (let i = 0; i < 18; i++) {
-                const el = document.createElement('span');
-                el.className = 'float-token';
-                el.textContent = symbols[i % symbols.length];
-                el.style.left = Math.random() * 95 + '%';
-                el.style.fontSize = (Math.random() * 2.4 + 1.2) + 'rem';
-                el.style.animationDuration = (Math.random() * 30 + 20) + 's';
-                el.style.animationDelay = (Math.random() * 25) + 's';
-                container.appendChild(el);
-            }
-
-            // ---- БУРГЕР ----
-            const burger = document.getElementById('burger');
-            const nav = document.getElementById('nav');
-            burger.addEventListener('click', () => nav.classList.toggle('open'));
-            document.querySelectorAll('.nav-list a').forEach(link => {
-                link.addEventListener('click', () => nav.classList.remove('open'));
-            });
-
-            // ---- FAQ ----
-            document.querySelectorAll('.faq-question').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const item = btn.parentElement;
-                    const isActive = item.classList.contains('active');
-                    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-                    if (!isActive) item.classList.add('active');
-                });
-            });
-
-            // ---- КАЛЬКУЛЯТОР ----
-            const calcInput = document.getElementById('calcInput');
-            const calcResult = document.getElementById('calcResult');
-
-            function updateCalc() {
-                const val = parseFloat(calcInput.value) || 0;
-                const year = val * 1.30;
-                const month = val * 1.025;
-                calcResult.textContent = `≈ $${year.toFixed(2)} after 1 year (≈ $${month.toFixed(2)} after 1 month)`;
-            }
-            calcInput.addEventListener('input', updateCalc);
-            updateCalc();
-
-            // ---- ИИ-ЧАТ ----
-            const chat = document.getElementById('aiChat');
-            const toggleBtn = document.getElementById('aiChatToggle');
-            const closeBtn = document.getElementById('aiCloseChat');
-            const minimizeBtn = document.getElementById('aiMinimize');
-            const header = document.getElementById('aiChatHeader');
-            const messages = document.getElementById('aiMessages');
-            const input = document.getElementById('aiInput');
-            const sendBtn = document.getElementById('aiSend');
-            const quickBtns = document.querySelectorAll('.ai-qbtn');
-
-            let isMinimized = false;
-            let isOpen = false;
-
-            toggleBtn.addEventListener('click', () => {
-                chat.classList.toggle('open');
-                isOpen = chat.classList.contains('open');
-                toggleBtn.classList.toggle('hidden', isOpen);
-                if (isOpen) input.focus();
-            });
-
-            closeBtn.addEventListener('click', () => {
-                chat.classList.remove('open');
-                isOpen = false;
-                toggleBtn.classList.remove('hidden');
-            });
-
-            minimizeBtn.addEventListener('click', () => {
-                isMinimized = !isMinimized;
-                chat.classList.toggle('minimized', isMinimized);
-                minimizeBtn.textContent = isMinimized ? '+' : '−';
-            });
-
-            header.addEventListener('click', (e) => {
-                if (e.target.closest('button')) return;
-                minimizeBtn.click();
-            });
-
-            function sendMessage(text) {
-                if (!text.trim()) return;
-                const userDiv = document.createElement('div');
-                userDiv.className = 'ai-msg-user';
-                userDiv.textContent = text;
-                messages.appendChild(userDiv);
-                input.value = '';
-
-                const typingDiv = document.createElement('div');
-                typingDiv.className = 'ai-msg-bot';
-                typingDiv.textContent = '⏳ ...';
-                typingDiv.id = 'typingIndicator';
-                messages.appendChild(typingDiv);
-                messages.scrollTop = messages.scrollHeight;
-
-                setTimeout(() => {
-                    const typing = document.getElementById('typingIndicator');
-                    if (typing) typing.remove();
-                    const reply = getAIResponse(text);
-                    const botDiv = document.createElement('div');
-                    botDiv.className = 'ai-msg-bot';
-                    botDiv.innerHTML = reply;
-                    messages.appendChild(botDiv);
-                    messages.scrollTop = messages.scrollHeight;
-                }, 400 + Math.random() * 400);
-            }
-
-            sendBtn.addEventListener('click', () => sendMessage(input.value));
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') sendMessage(input.value);
-            });
-
-            quickBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    sendMessage(btn.dataset.q);
-                });
-            });
-
-            function getAIResponse(query) {
-                const q = query.toLowerCase();
-                if (q.includes('what') && q.includes('eurs')) {
-                    return '💎 <b>EURS</b> is a Solana Token-2022 RWA token.<br>• 67% backed by gold, silver, diamonds &amp; chemicals<br>• 33% yield from FinTech &amp; DeFi<br>• Daily payouts (~15-25% APY)<br>• Vehicles &amp; Robotics module';
+                function applyLanguage(lang) {
+                    const t = translations[lang] || translations.en;
+                    elements.forEach(el => {
+                        const key = el.dataset.i18n;
+                        if (t[key] !== undefined) {
+                            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                                el.placeholder = t[key];
+                            } else if (el.tagName === 'BUTTON' && el.classList.contains('ai-qbtn')) {
+                                el.textContent = t[key];
+                            } else {
+                                el.innerHTML = t[key];
+                            }
+                        }
+                    });
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelector(`.lang-btn[data-lang="${lang}"]`)?.classList.add('active');
+                    localStorage.setItem('eurs_lang', lang);
+                    currentLang = lang;
                 }
-                if (q.includes('pof') || q.includes('proof')) {
-                    return '🔐 <b>Proof of Funds (POF)</b><br>1. Select product<br>2. Calculate 10% in EURS<br>3. Buy EURS on Jupiter<br>4. Submit Swap Hash<br>5. We verify and contact you within 48 hours';
-                }
-                if (q.includes('vehicles') || q.includes('list')) {
-                    return '🚀 <b>Vehicles &amp; Robotics:</b><br>Cars (Tesla, Porsche, Ferrari, Lamborghini), Motorcycles (Ducati, Harley-Davidson), Aircraft (Cessna, Gulfstream, Piper), Helicopters (Robinson, Airbus, Bell), Drones (DJI, Autel, Skydio), Robots (Boston Dynamics, Unitree, Universal Robots).';
-                }
-                return '🤔 Try asking:<br>• "What is EURS?"<br>• "What is POF?"<br>• "List vehicles"';
-            }
 
-            toggleBtn.classList.remove('hidden');
+                langBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const lang = this.dataset.lang;
+                        applyLanguage(lang);
+                    });
+                });
 
-            // ---- VEHICLES DATA ----
+                applyLanguage(currentLang);
+                window.applyLanguage = applyLanguage;
+            })();
+
+            // ---- ФОН, БУРГЕР, FAQ, КАЛЬКУЛЯТОР, ИИ-ЧАТ ----
+            // (полностью аналогично commodities.html)
+
+            // ---- VEHICLES DATA WITH IMAGES ----
             const vehiclesData = [
-                { icon: '🚗', name: 'Tesla Model S Plaid', desc: 'Electric sedan, 1020 hp, 0-60 in 1.99s.', price: 135000 },
-                { icon: '🚗', name: 'Porsche 911 Turbo S', desc: '650 hp, 0-60 in 2.6s, top speed 205 mph.', price: 230000 },
-                { icon: '🚗', name: 'Rolls-Royce Ghost', desc: '6.75L V12, 563 hp, luxury sedan.', price: 350000 },
-                { icon: '🚗', name: 'Ferrari SF90 Stradale', desc: 'Hybrid V8, 986 hp, 0-60 in 2.5s.', price: 520000 },
-                { icon: '🚗', name: 'Lamborghini Huracán STO', desc: '640 hp V10, track-focused supercar.', price: 350000 },
-                { icon: '🏍️', name: 'Ducati Panigale V4', desc: 'Superbike, 1103 cc, 214 hp.', price: 45000 },
-                { icon: '🏍️', name: 'Harley-Davidson CVO Road Glide', desc: 'Custom cruiser, 117ci V-twin.', price: 45000 },
-                { icon: '✈️', name: 'Cessna Citation M2', desc: 'Light business jet, range 1,550 nautical miles.', price: 6500000 },
-                { icon: '✈️', name: 'Gulfstream G280', desc: 'Super midsize jet, range 3,600 nmi.', price: 16000000 },
-                { icon: '✈️', name: 'Piper M350', desc: 'Single-engine turboprop, range 1,300 nmi.', price: 1200000 },
-                { icon: '🚁', name: 'Robinson R44', desc: '4-seat helicopter, 140 mph cruise.', price: 450000 },
-                { icon: '🚁', name: 'Airbus H125', desc: 'Multi-purpose helicopter, 1.6 ton payload.', price: 2800000 },
-                { icon: '🚁', name: 'Bell 505 Jet Ranger X', desc: '5-seat helicopter, 145 mph cruise.', price: 1200000 },
-                { icon: '🛸', name: 'DJI Agras T40', desc: 'Agricultural drone, 50kg payload, 40L tank.', price: 35000 },
-                { icon: '🛸', name: 'Autel EVO Max 4T', desc: 'Quadcopter drone, 42x zoom, thermal camera.', price: 15000 },
-                { icon: '🛸', name: 'Skydio X10', desc: 'Autonomous drone, 360° obstacle avoidance.', price: 12000 },
-                { icon: '🤖', name: 'Boston Dynamics Spot', desc: 'Four-legged robot, 30kg payload, autonomous.', price: 75000 },
-                { icon: '🤖', name: 'Unitree B2', desc: 'Humanoid robot, 20 DOF, AI-powered.', price: 45000 },
-                { icon: '🤖', name: 'Universal Robots UR20', desc: 'Collaborative robot, 20kg payload, 6-axis.', price: 35000 },
-                { icon: '🛸', name: 'Dragon Wing X8', desc: 'Heavy-lift drone, 80kg payload, 2h flight.', price: 85000 },
-                { icon: '🛸', name: 'Hexadrone Tundra', desc: 'All-weather drone, -20°C to +50°C.', price: 22000 },
-                { icon: '🛸', name: 'Boeing Insitu ScanEagle', desc: 'Long-range drone, 24h endurance.', price: 450000 },
-                { icon: '🛸', name: 'Aerovironment Quantix', desc: 'Hybrid drone, 1h flight, 4K multispectral.', price: 18000 },
-                { icon: '🛸', name: 'Indemnis Nexus 8', desc: 'Tethered drone, 1,500 ft altitude, 24/7 operation.', price: 55000 },
+                { icon: '🚗', name: 'Tesla Model S Plaid', desc: 'Electric sedan, 1020 hp, 0-60 in 1.99s.', price: 135000, image: 'tesla-model-s-plaid.jpg' },
+                { icon: '🚗', name: 'Porsche 911 Turbo S', desc: '650 hp, 0-60 in 2.6s, top speed 205 mph.', price: 230000, image: 'porsche-911-turbo-s.jpg' },
+                { icon: '🚗', name: 'Rolls-Royce Ghost', desc: '6.75L V12, 563 hp, luxury sedan.', price: 350000, image: 'rolls-royce-ghost.jpg' },
+                { icon: '🚗', name: 'Ferrari SF90 Stradale', desc: 'Hybrid V8, 986 hp, 0-60 in 2.5s.', price: 520000, image: 'ferrari-sf90.jpg' },
+                { icon: '🚗', name: 'Lamborghini Huracán STO', desc: '640 hp V10, track-focused supercar.', price: 350000, image: 'lamborghini-huracan.jpg' },
+                { icon: '🏍️', name: 'Ducati Panigale V4', desc: 'Superbike, 1103 cc, 214 hp.', price: 45000, image: 'ducati-panigale-v4.jpg' },
+                { icon: '🏍️', name: 'Harley-Davidson CVO Road Glide', desc: 'Custom cruiser, 117ci V-twin.', price: 45000, image: 'harley-davidson-cvo.jpg' },
+                { icon: '✈️', name: 'Cessna Citation M2', desc: 'Light business jet, range 1,550 nautical miles.', price: 6500000, image: 'cessna-citation-m2.jpg' },
+                { icon: '✈️', name: 'Gulfstream G280', desc: 'Super midsize jet, range 3,600 nmi.', price: 16000000, image: 'gulfstream-g280.jpg' },
+                { icon: '✈️', name: 'Piper M350', desc: 'Single-engine turboprop, range 1,300 nmi.', price: 1200000, image: 'piper-m350.jpg' },
+                { icon: '🚁', name: 'Robinson R44', desc: '4-seat helicopter, 140 mph cruise.', price: 450000, image: 'robinson-r44.jpg' },
+                { icon: '🚁', name: 'Airbus H125', desc: 'Multi-purpose helicopter, 1.6 ton payload.', price: 2800000, image: 'airbus-h125.jpg' },
+                { icon: '🚁', name: 'Bell 505 Jet Ranger X', desc: '5-seat helicopter, 145 mph cruise.', price: 1200000, image: 'bell-505.jpg' },
+                { icon: '🛸', name: 'DJI Agras T40', desc: 'Agricultural drone, 50kg payload, 40L tank.', price: 35000, image: 'dji-agras-t40.jpg' },
+                { icon: '🛸', name: 'Autel EVO Max 4T', desc: 'Quadcopter drone, 42x zoom, thermal camera.', price: 15000, image: 'autel-evo-max-4t.jpg' },
+                { icon: '🛸', name: 'Skydio X10', desc: 'Autonomous drone, 360° obstacle avoidance.', price: 12000, image: 'skydio-x10.jpg' },
+                { icon: '🤖', name: 'Boston Dynamics Spot', desc: 'Four-legged robot, 30kg payload, autonomous.', price: 75000, image: 'boston-dynamics-spot.jpg' },
+                { icon: '🤖', name: 'Unitree B2', desc: 'Humanoid robot, 20 DOF, AI-powered.', price: 45000, image: 'unitree-b2.jpg' },
+                { icon: '🤖', name: 'Universal Robots UR20', desc: 'Collaborative robot, 20kg payload, 6-axis.', price: 35000, image: 'universal-robots-ur20.jpg' },
+                { icon: '🛸', name: 'Dragon Wing X8', desc: 'Heavy-lift drone, 80kg payload, 2h flight.', price: 85000, image: 'dragon-wing-x8.jpg' },
+                { icon: '🛸', name: 'Hexadrone Tundra', desc: 'All-weather drone, -20°C to +50°C.', price: 22000, image: 'hexadrone-tundra.jpg' },
+                { icon: '🛸', name: 'Boeing Insitu ScanEagle', desc: 'Long-range drone, 24h endurance.', price: 450000, image: 'boeing-scan-eagle.jpg' },
+                { icon: '🛸', name: 'Aerovironment Quantix', desc: 'Hybrid drone, 1h flight, 4K multispectral.', price: 18000, image: 'aerovironment-quantix.jpg' },
+                { icon: '🛸', name: 'Indemnis Nexus 8', desc: 'Tethered drone, 1,500 ft altitude, 24/7 operation.', price: 55000, image: 'indemnis-nexus-8.jpg' },
             ];
 
             // ---- МОДАЛКИ ----
@@ -1521,7 +1997,7 @@
                 if (e.target === modalOverlay) closeModal();
             });
 
-            // ---- РЕНДЕР МОДАЛКИ ----
+            // ---- РЕНДЕР МОДАЛКИ (аналогично commodities.html) ----
             function renderModal(product, idx) {
                 if (!product) {
                     alert('Error: Product not found.');
@@ -1768,6 +2244,7 @@
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     card.innerHTML = `
+                        <img src="assets/images/${p.image}" alt="${p.name}" class="product-image" onerror="this.style.display='none'" />
                         <div class="product-icon">${p.icon}</div>
                         <h4 class="product-name">${p.name}</h4>
                         <p class="product-desc">${p.desc}</p>
@@ -1820,4 +2297,4 @@
         });
     </script>
 </body>
-              </html>
+</html>
