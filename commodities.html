@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EURS — Commodities Trading</title>
+    <link rel="icon" href="eurs_logo.png" type="image/png" />
+    <meta property="og:title" content="EURS — Commodities Trading" />
+    <meta property="og:description" content="Gold, diamonds, precious metals — 10% POF in EURS." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/blockchaingold/eurs/main/eurs_logo.png" />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <style>
+        /* Тот же CSS, что в index.html, но с product-grid вместо fintech-grid */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary: #0b1a2e;
+            --gold: #d4a843;
+            --gold-light: #f0d080;
+            --text: #e8e8e8;
+            --text-muted: #aaa;
+            --bg-dark: #0a0e17;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border: rgba(212, 168, 67, 0.25);
+            --radius: 16px;
+            --transition: 0.3s ease;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+        .section-title {
+            font-size: 2.4rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .section-sub {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .highlight {
+            color: var(--gold);
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-align: center;
+        }
+        .btn-primary {
+            background: var(--gold);
+            color: var(--primary);
+        }
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 168, 67, 0.3);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1.5px solid var(--gold);
+        }
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: var(--primary);
+        }
+        .btn-success {
+            background: #2e7d32;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #388e3c;
+        }
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 0.75rem;
+        }
+        .btn-buy {
+            background: #1a73e8;
+            color: white;
+        }
+        .btn-buy:hover {
+            background: #1557b0;
+        }
+        .btn-nav {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-nav:hover {
+            background: var(--gold);
+            color: var(--primary);
+            border-color: var(--gold);
+        }
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .floating-tokens {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .float-token {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.10;
+            animation: floatUp linear infinite;
+            user-select: none;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.6);
+                opacity: 0.06;
+            }
+            50% {
+                opacity: 0.16;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(720deg) scale(1.2);
+                opacity: 0.02;
+            }
+        }
+        .ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(212, 168, 67, 0.12);
+            border-top: 1px solid var(--border);
+            padding: 8px 0;
+            z-index: 999;
+            overflow: hidden;
+            backdrop-filter: blur(6px);
+        }
+        .ticker-track {
+            display: flex;
+            gap: 60px;
+            white-space: nowrap;
+            animation: ticker-scroll 28s linear infinite;
+            font-size: 0.95rem;
+            color: var(--gold-light);
+        }
+        @keyframes ticker-scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        .header {
+            background: rgba(10, 14, 23, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+        .logo-text {
+            color: var(--gold);
+        }
+        .nav-list {
+            display: flex;
+            gap: 16px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        .nav-list a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .nav-list a:hover {
+            color: var(--gold);
+        }
+        .lang-switch {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--gold);
+            color: var(--primary);
+            border-color: var(--gold);
+        }
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .burger span {
+            display: block;
+            width: 26px;
+            height: 2.5px;
+            background: var(--text);
+            border-radius: 2px;
+        }
+        .hero {
+            padding: 140px 0 80px;
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .hero-content {
+            max-width: 720px;
+        }
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .hero-desc {
+            font-size: 1.4rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        section {
+            position: relative;
+            z-index: 2;
+            padding: 60px 0;
+        }
+        .structure {
+            background: var(--primary);
+        }
+        .structure-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .structure-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+        }
+        .structure-card-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+        .structure-list {
+            list-style: none;
+        }
+        .structure-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .structure-list li:last-child {
+            border-bottom: none;
+        }
+        .perc {
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .structure-img {
+            max-width: 500px;
+            width: 100%;
+            margin: 20px auto 0;
+            border-radius: var(--radius);
+            display: block;
+        }
+        .tokenomics {
+            background: var(--bg-dark);
+        }
+        .tokenomics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .tokenomics-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 16px;
+            text-align: center;
+        }
+        .tokenomics-perc {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gold);
+            display: block;
+        }
+        .tokenomics-label {
+            font-weight: 600;
+            margin: 8px 0 4px;
+            display: block;
+        }
+        .tokenomics-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .yield {
+            background: var(--primary);
+        }
+        .yield-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .yield-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+        }
+        .yield-icon {
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+        }
+        .yield-card-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--gold);
+        }
+        .yield-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .yield-calc {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .yield-calc input {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-size: 1.2rem;
+            width: 200px;
+            text-align: center;
+            margin: 12px 0;
+        }
+        .yield-calc .result {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-top: 8px;
+        }
+        .tech {
+            background: var(--bg-dark);
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        .tech-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+        }
+        .tech-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .tech-name {
+            font-size: 1rem;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+        .tech-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .tech-address {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+        }
+        .tech-address code {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
+        }
+        .roadmap {
+            background: var(--primary);
+        }
+        .roadmap-timeline {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .roadmap-item {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .roadmap-item:last-child {
+            border-bottom: none;
+        }
+        .roadmap-phase {
+            font-weight: 700;
+            min-width: 90px;
+            color: var(--gold);
+        }
+        .roadmap-status {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            min-width: 100px;
+        }
+        .roadmap-status.done {
+            color: #4caf50;
+        }
+        .faq {
+            background: var(--bg-dark);
+        }
+        .faq-list {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 18px 0;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+        .faq-item.active .faq-question::after {
+            content: '−';
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            color: var(--text-muted);
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 0 20px 0;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 16px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: default;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--gold);
+            box-shadow: 0 8px 30px rgba(212, 168, 67, 0.1);
+        }
+        .product-icon {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+        .product-name {
+            font-weight: 600;
+            color: var(--gold);
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        .product-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .product-price {
+            font-size: 1rem;
+            color: var(--text);
+            font-weight: 600;
+            margin: 8px 0;
+        }
+        .product-card .btn {
+            margin-top: 10px;
+            font-size: 0.75rem;
+            padding: 6px 16px;
+        }
+        .community {
+            background: var(--bg-dark);
+        }
+        .community-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+        .community-link {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 10px 24px;
+            color: var(--text);
+            transition: var(--transition);
+        }
+        .community-link:hover {
+            background: var(--gold);
+            color: var(--primary);
+            border-color: var(--gold);
+        }
+        .footer {
+            padding: 30px 0;
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .footer-disclaimer {
+            font-size: 0.75rem;
+            margin-top: 8px;
+            opacity: 0.6;
+        }
+        .modal .step-indicator {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .modal .result-box {
+            margin-top: 16px;
+            padding: 14px;
+            background: rgba(212, 168, 67, 0.08);
+            border-radius: 10px;
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+        .modal .hash-box {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            word-break: break-all;
+            color: var(--text-muted);
+            border: 1px dashed var(--border);
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .status-pending {
+            background: #f57f17;
+            color: #fff;
+        }
+        .status-approved {
+            background: #2e7d32;
+            color: #fff;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 20000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: var(--bg-dark);
+            border: 1px solid var(--gold);
+            border-radius: var(--radius);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .modal-close:hover {
+            color: var(--text);
+        }
+        .modal h2 {
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+        .modal label {
+            display: block;
+            margin: 12px 0 4px;
+            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .modal input,
+        .modal select,
+        .modal textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .modal input:focus,
+        .modal select:focus {
+            border-color: var(--gold);
+            outline: none;
+        }
+        .modal .modal-result {
+            margin-top: 16px;
+            padding: 14px;
+            background: rgba(212, 168, 67, 0.08);
+            border-radius: 10px;
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+        .modal .btn {
+            margin-top: 16px;
+            width: 100%;
+        }
+        .ai-chat {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 380px;
+            max-width: calc(100vw - 40px);
+            background: rgba(10, 14, 23, 0.96);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--gold);
+            border-radius: 20px;
+            z-index: 10001;
+            box-shadow: 0 16px 60px rgba(0, 0, 0, 0.8);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .ai-chat.open {
+            display: flex;
+        }
+        .ai-chat.minimized .ai-chat-body {
+            display: none;
+        }
+        .ai-chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: rgba(212, 168, 67, 0.08);
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+        .ai-chat-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 0.95rem;
+        }
+        .ai-dot {
+            width: 10px;
+            height: 10px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: inline-block;
+            animation: dotBlink 1.2s infinite;
+        }
+        @keyframes dotBlink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+        }
+        .ai-chat-header button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+        .ai-chat-body {
+            display: flex;
+            flex-direction: column;
+            height: 420px;
+            max-height: 60vh;
+        }
+        .ai-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        .ai-msg-bot {
+            background: rgba(212, 168, 67, 0.12);
+            border-left: 3px solid var(--gold);
+            padding: 10px 14px;
+            border-radius: 0 12px 12px 12px;
+            max-width: 90%;
+            color: var(--text);
+            line-height: 1.5;
+            align-self: flex-start;
+        }
+        .ai-msg-user {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px 14px;
+            border-radius: 12px 12px 0 12px;
+            max-width: 85%;
+            color: var(--text);
+            align-self: flex-end;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .ai-quick-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 18px 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .ai-qbtn {
+            background: rgba(212, 168, 67, 0.12);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 4px 14px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .ai-qbtn:hover {
+            background: var(--gold);
+            color: var(--primary);
+            border-color: var(--gold);
+        }
+        .ai-input-wrap {
+            display: flex;
+            gap: 6px;
+            padding: 8px 18px 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .ai-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 10px 16px;
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .ai-input:focus {
+            border-color: var(--gold);
+        }
+        .ai-send {
+            background: var(--gold);
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-send:hover {
+            transform: scale(1.05);
+            background: var(--gold-light);
+        }
+        .ai-chat-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--primary);
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 8px 30px rgba(212, 168, 67, 0.3);
+            transition: var(--transition);
+        }
+        .ai-chat-toggle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 40px rgba(212, 168, 67, 0.5);
+        }
+        .ai-chat-toggle.hidden {
+            display: none;
+        }
+        .page-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0 10px;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 992px) {
+            .structure-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-title {
+                font-size: 2.6rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                padding: 20px;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav.open {
+                display: block;
+            }
+            .nav-list {
+                flex-direction: column;
+                gap: 14px;
+                align-items: center;
+            }
+            .burger {
+                display: flex;
+            }
+            .btn-buy {
+                display: none;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-stats {
+                gap: 24px;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .lang-btn {
+                font-size: 0.6rem;
+                padding: 2px 8px;
+            }
+            .ai-chat {
+                right: 12px;
+                bottom: 80px;
+                width: calc(100vw - 24px);
+            }
+            .ai-chat-toggle {
+                width: 52px;
+                height: 52px;
+                font-size: 1.6rem;
+                right: 16px;
+                bottom: 20px;
+            }
+            .product-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .page-nav .btn-nav {
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+        }
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+    <div class="floating-tokens" id="floatingTokens"></div>
+
+    <div class="ticker">
+        <div class="ticker-track">
+            <span>💎 EURS — Commodities Trading &nbsp;|&nbsp; Gold · Diamonds · Platinum · Palladium · Rhodium &nbsp;|&nbsp; 10% Proof of Funds (POF) in EURS &nbsp;|&nbsp; 🚀</span>
+        </div>
+    </div>
+
+    <div class="ai-chat" id="aiChat">
+        <div class="ai-chat-header" id="aiChatHeader">
+            <div class="ai-chat-title"><span class="ai-dot"></span>🤖 AI Assistant</div>
+            <div>
+                <button class="ai-chat-minimize" id="aiMinimize">−</button>
+                <button class="ai-chat-close" id="aiCloseChat">✕</button>
+            </div>
+        </div>
+        <div class="ai-chat-body">
+            <div class="ai-messages" id="aiMessages">
+                <div class="ai-msg-bot">👋 Hi! I'm your EURS assistant. Ask me about commodities, prices, or Proof of Funds.</div>
+            </div>
+            <div class="ai-quick-btns">
+                <button class="ai-qbtn" data-q="What is EURS?">What is EURS?</button>
+                <button class="ai-qbtn" data-q="What is POF?">What is POF?</button>
+                <button class="ai-qbtn" data-q="List commodities">List commodities</button>
+            </div>
+            <div class="ai-input-wrap">
+                <input type="text" class="ai-input" id="aiInput" placeholder="Ask me anything..." />
+                <button class="ai-send" id="aiSend">➤</button>
+            </div>
+        </div>
+    </div>
+    <button class="ai-chat-toggle" id="aiChatToggle">💬</button>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="eurs_logo.png" alt="EURS Logo" class="logo-img" onerror="this.style.display='none'" />
+                <span class="logo-text">EURS</span>
+            </a>
+            <nav class="nav" id="nav">
+                <ul class="nav-list">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#structure">Structure</a></li>
+                    <li><a href="#tokenomics">Tokenomics</a></li>
+                    <li><a href="#yield">Yield</a></li>
+                    <li><a href="#commodities">Commodities</a></li>
+                    <li><a href="#tech">Tech</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                </ul>
+            </nav>
+            <div class="lang-switch" id="langSwitch">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+                <button class="lang-btn" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="zh">ZH</button>
+                <button class="lang-btn" data-lang="ja">JA</button>
+                <button class="lang-btn" data-lang="ar">AR</button>
+            </div>
+            <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary btn-buy">Buy EURS</a>
+            <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <section class="hero" id="about">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">EURS — <span class="highlight">Commodities</span> Trading</h1>
+                <p class="hero-desc">Gold, diamonds, platinum, palladium, rhodium.</p>
+                <p class="hero-sub">Buy physical commodities with confidence. Prove your intent with 10% in EURS — we'll verify and connect you within 48 hours.</p>
+                <div class="hero-buttons">
+                    <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="btn btn-primary">Buy EURS</a>
+                    <a href="#commodities" class="btn btn-secondary">Explore Commodities</a>
+                </div>
+                <div class="hero-stats">
+                    <div><span class="stat-number">1.15</span><span class="stat-label"> USDC</span></div>
+                    <div><span class="stat-number">~25%</span><span class="stat-label"> APY</span></div>
+                    <div><span class="stat-number">24h</span><span class="stat-label"> Payouts</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="structure" id="structure">
+        <div class="container">
+            <h2 class="section-title">67% Real Assets <span class="highlight">+ 33% Yield</span></h2>
+            <p class="section-sub">EURS is backed by physical gold, certified diamonds, and chemical raw materials used in jewelry production.</p>
+            <div class="structure-grid">
+                <div class="structure-card">
+                    <h3 class="structure-card-title">67% — Real Assets</h3>
+                    <ul class="structure-list">
+                        <li><span class="perc">35%</span> Gold (XAU)</li>
+                        <li><span class="perc">12%</span> Silver (XAG)</li>
+                        <li><span class="perc">10%</span> Diamonds</li>
+                        <li><span class="perc">10%</span> Chemicals (cyanides, acids)</li>
+                    </ul>
+                    <p class="structure-note">Oracles: Pyth (XAU/USD, XAG/USD) + Switchboard (chemicals)</p>
+                </div>
+                <div class="structure-card">
+                    <h3 class="structure-card-title">33% — Yield</h3>
+                    <ul class="structure-list">
+                        <li><span class="perc">18%</span> FinTech (payment fees)</li>
+                        <li><span class="perc">15%</span> DeFi staking</li>
+                    </ul>
+                    <p class="structure-note">Income distributed automatically via Permanent Delegate</p>
+                </div>
+            </div>
+            <img src="structure-diagram.png" alt="EURS Structure" class="structure-img" onerror="this.style.display='none'" />
+        </div>
+    </section>
+
+    <section class="tokenomics" id="tokenomics">
+        <div class="container">
+            <h2 class="section-title">Transparent <span class="highlight">Distribution</span></h2>
+            <p class="section-sub">Total supply: 1,000,000,000 EURS. Mint &amp; Freeze authorities revoked.</p>
+            <div class="tokenomics-grid">
+                <div class="tokenomics-item"><span class="tokenomics-perc">40%</span><span class="tokenomics-label">Presale</span><span class="tokenomics-desc">Initial capital raise</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">30%</span><span class="tokenomics-label">Liquidity</span><span class="tokenomics-desc">Locked 12 months (Meteora)</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">15%</span><span class="tokenomics-label">Team</span><span class="tokenomics-desc">Locked 24 months (vesting)</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">10%</span><span class="tokenomics-label">Marketing</span><span class="tokenomics-desc">Partnerships, listings, ads</span></div>
+                <div class="tokenomics-item"><span class="tokenomics-perc">5%</span><span class="tokenomics-label">Reserve</span><span class="tokenomics-desc">Contingency</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="yield" id="yield">
+        <div class="container">
+            <h2 class="section-title">Your income — <span class="highlight">every 24 hours</span></h2>
+            <p class="section-sub">No staking, no locks. Just hold EURS in your wallet.</p>
+            <div class="yield-grid">
+                <div class="yield-card"><div class="yield-icon">💰</div><h3 class="yield-card-title">Transfer Fee 2%</h3><p>2% from every buy/sell goes to the reward pool.</p></div>
+                <div class="yield-card"><div class="yield-icon">🤖</div><h3 class="yield-card-title">Permanent Delegate</h3><p>Automatically distributes the pool to all holders daily.</p></div>
+                <div class="yield-card"><div class="yield-icon">📊</div><h3 class="yield-card-title">~15-25% APY</h3><p>From gold, chemicals, FinTech &amp; DeFi.</p></div>
+            </div>
+            <div class="yield-calc">
+                <h3 style="color:var(--gold); margin-bottom:6px;">💵 Yield Calculator</h3>
+                <p>Enter amount in USD:</p>
+                <input type="number" id="calcInput" value="100" min="1" step="10" />
+                <div class="result" id="calcResult">≈ $130.00 after 1 year</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COMMODITIES ===== -->
+    <section class="commodities" id="commodities">
+        <div class="container">
+            <h2 class="section-title">Commodities <span class="highlight">Catalog</span></h2>
+            <p class="section-sub">Gold, diamonds, platinum, palladium, rhodium — 10% POF in EURS.</p>
+            <div class="product-grid" id="commoditiesGrid"></div>
+            <div style="text-align:center;margin-top:30px;">
+                <button class="btn btn-secondary btn-sm" onclick="showHistory()">📋 My Applications</button>
+            </div>
+            <div class="page-nav">
+                <a href="index.html" class="btn-nav">💼 FinTech</a>
+                <a href="vehicles.html" class="btn-nav">🚀 Vehicles &amp; Robotics</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== МОДАЛКИ ===== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <section class="tech" id="tech">
+        <div class="container">
+            <h2 class="section-title">Built on <span class="highlight">Solana Token-2022</span></h2>
+            <p class="section-sub">Modern extensions for RWA tokens.</p>
+            <div class="tech-grid">
+                <div class="tech-item"><span class="tech-icon">⚡</span><h4 class="tech-name">Transfer Fee (2%)</h4><p>Auto-collect fees to reward pool</p></div>
+                <div class="tech-item"><span class="tech-icon">🔗</span><h4 class="tech-name">Transfer Hook</h4><p>Oracle price checks (Pyth, Switchboard)</p></div>
+                <div class="tech-item"><span class="tech-icon">🤖</span><h4 class="tech-name">Permanent Delegate</h4><p>Auto-distribute income</p></div>
+                <div class="tech-item"><span class="tech-icon">📝</span><h4 class="tech-name">Metadata</h4><p>RWA documentation link</p></div>
+            </div>
+            <div class="tech-address">
+                <p><strong>Contract:</strong> <code>ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq</code></p>
+                <p><strong>Pool:</strong> <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p>
+                <a href="https://solscan.io/token/ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq" target="_blank" class="btn btn-secondary" style="margin-top:12px;">View on Solana Explorer</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="roadmap" id="roadmap">
+        <div class="container">
+            <h2 class="section-title">Roadmap</h2>
+            <p class="section-sub">What's next?</p>
+            <div class="roadmap-timeline">
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 1</span><span class="roadmap-status done">✅ Done</span><p>Token creation, presale, liquidity on Meteora</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 2</span><span class="roadmap-status">Jul 2026</span><p>Daily payouts activation (Permanent Delegate)</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 3</span><span class="roadmap-status">Aug 2026</span><p>Solana Pay integration</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 4</span><span class="roadmap-status">Sep 2026</span><p>Commodities trading module</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 5</span><span class="roadmap-status">Oct 2026</span><p>CEX listing (MEXC / Gate.io)</p></div>
+                <div class="roadmap-item"><span class="roadmap-phase">Phase 6</span><span class="roadmap-status">Dec 2026</span><p>Cross-conversion with USDS &amp; EUSD</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">FAQ</h2>
+            <div class="faq-list">
+                <div class="faq-item"><button class="faq-question">Do I need to stake?</button><div class="faq-answer"><p>No. Just hold EURS in Phantom, Solflare, or Backpack. Rewards come automatically.</p></div></div>
+                <div class="faq-item"><button class="faq-question">How often are payouts?</button><div class="faq-answer"><p>Every 24 hours via Permanent Delegate.</p></div></div>
+                <div class="faq-item"><button class="faq-question">What is Proof of Funds (POF)?</button><div class="faq-answer"><p>You buy EURS (10% of the product price) and submit the Swap Hash. This proves you have the funds and are ready to proceed with the transaction.</p></div></div>
+                <div class="faq-item"><button class="faq-question">Where to buy EURS?</button><div class="faq-answer"><p>Meteora DAMM V2 pool: <code>7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z</code></p></div></div>
+                <div class="faq-item"><button class="faq-question">Is there risk?</button><div class="faq-answer"><p>Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="community">
+        <div class="container">
+            <h2 class="section-title">Join the <span class="highlight">Community</span></h2>
+            <div class="community-links">
+                <a href="#" target="_blank" class="community-link">🐦 X (Twitter)</a>
+                <a href="#" target="_blank" class="community-link">💬 Telegram</a>
+                <a href="https://github.com/blockchaingold/eurs" target="_blank" class="community-link">🐙 GitHub</a>
+                <a href="https://solscan.io/token/ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq" target="_blank" class="community-link">🔍 Solana Explorer</a>
+                <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="community-link">📊 Geckoterminal</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 EURS. Built on <a href="https://solana.com/" target="_blank">Solana Token-2022</a>.</p>
+            <p class="footer-disclaimer">Not financial advice. Always DYOR.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            'use strict';
+
+            (function() {
+                emailjs.init('p-mbGFGSojk7tFupL');
+            })();
+
+            // ---- ФОН ----
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h, particles = [];
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            for (let i = 0; i < 90; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 2.5 + 0.5,
+                    dx: (Math.random() - 0.5) * 0.5,
+                    dy: (Math.random() - 0.5) * 0.5,
+                    alpha: Math.random() * 0.5 + 0.2
+                });
+            }
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach(p => {
+                    p.x += p.dx;
+                    p.y += p.dy;
+                    if (p.x < 0 || p.x > w) p.dx *= -1;
+                    if (p.y < 0 || p.y > h) p.dy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212, 168, 67, ${p.alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(drawParticles);
+            }
+            drawParticles();
+
+            // ---- ПАРЯЩИЕ ТОКЕНЫ ----
+            const symbols = ['✦', '♦', '◈', '✧', '⛁', '💰', '💎', '✦'];
+            const container = document.getElementById('floatingTokens');
+            for (let i = 0; i < 18; i++) {
+                const el = document.createElement('span');
+                el.className = 'float-token';
+                el.textContent = symbols[i % symbols.length];
+                el.style.left = Math.random() * 95 + '%';
+                el.style.fontSize = (Math.random() * 2.4 + 1.2) + 'rem';
+                el.style.animationDuration = (Math.random() * 30 + 20) + 's';
+                el.style.animationDelay = (Math.random() * 25) + 's';
+                container.appendChild(el);
+            }
+
+            // ---- БУРГЕР ----
+            const burger = document.getElementById('burger');
+            const nav = document.getElementById('nav');
+            burger.addEventListener('click', () => nav.classList.toggle('open'));
+            document.querySelectorAll('.nav-list a').forEach(link => {
+                link.addEventListener('click', () => nav.classList.remove('open'));
+            });
+
+            // ---- FAQ ----
+            document.querySelectorAll('.faq-question').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const item = btn.parentElement;
+                    const isActive = item.classList.contains('active');
+                    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+                    if (!isActive) item.classList.add('active');
+                });
+            });
+
+            // ---- КАЛЬКУЛЯТОР ----
+            const calcInput = document.getElementById('calcInput');
+            const calcResult = document.getElementById('calcResult');
+
+            function updateCalc() {
+                const val = parseFloat(calcInput.value) || 0;
+                const year = val * 1.30;
+                const month = val * 1.025;
+                calcResult.textContent = `≈ $${year.toFixed(2)} after 1 year (≈ $${month.toFixed(2)} after 1 month)`;
+            }
+            calcInput.addEventListener('input', updateCalc);
+            updateCalc();
+
+            // ---- ИИ-ЧАТ ----
+            const chat = document.getElementById('aiChat');
+            const toggleBtn = document.getElementById('aiChatToggle');
+            const closeBtn = document.getElementById('aiCloseChat');
+            const minimizeBtn = document.getElementById('aiMinimize');
+            const header = document.getElementById('aiChatHeader');
+            const messages = document.getElementById('aiMessages');
+            const input = document.getElementById('aiInput');
+            const sendBtn = document.getElementById('aiSend');
+            const quickBtns = document.querySelectorAll('.ai-qbtn');
+
+            let isMinimized = false;
+            let isOpen = false;
+
+            toggleBtn.addEventListener('click', () => {
+                chat.classList.toggle('open');
+                isOpen = chat.classList.contains('open');
+                toggleBtn.classList.toggle('hidden', isOpen);
+                if (isOpen) input.focus();
+            });
+
+            closeBtn.addEventListener('click', () => {
+                chat.classList.remove('open');
+                isOpen = false;
+                toggleBtn.classList.remove('hidden');
+            });
+
+            minimizeBtn.addEventListener('click', () => {
+                isMinimized = !isMinimized;
+                chat.classList.toggle('minimized', isMinimized);
+                minimizeBtn.textContent = isMinimized ? '+' : '−';
+            });
+
+            header.addEventListener('click', (e) => {
+                if (e.target.closest('button')) return;
+                minimizeBtn.click();
+            });
+
+            function sendMessage(text) {
+                if (!text.trim()) return;
+                const userDiv = document.createElement('div');
+                userDiv.className = 'ai-msg-user';
+                userDiv.textContent = text;
+                messages.appendChild(userDiv);
+                input.value = '';
+
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'ai-msg-bot';
+                typingDiv.textContent = '⏳ ...';
+                typingDiv.id = 'typingIndicator';
+                messages.appendChild(typingDiv);
+                messages.scrollTop = messages.scrollHeight;
+
+                setTimeout(() => {
+                    const typing = document.getElementById('typingIndicator');
+                    if (typing) typing.remove();
+                    const reply = getAIResponse(text);
+                    const botDiv = document.createElement('div');
+                    botDiv.className = 'ai-msg-bot';
+                    botDiv.innerHTML = reply;
+                    messages.appendChild(botDiv);
+                    messages.scrollTop = messages.scrollHeight;
+                }, 400 + Math.random() * 400);
+            }
+
+            sendBtn.addEventListener('click', () => sendMessage(input.value));
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') sendMessage(input.value);
+            });
+
+            quickBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sendMessage(btn.dataset.q);
+                });
+            });
+
+            function getAIResponse(query) {
+                const q = query.toLowerCase();
+                if (q.includes('what') && q.includes('eurs')) {
+                    return '💎 <b>EURS</b> is a Solana Token-2022 RWA token.<br>• 67% backed by gold, silver, diamonds &amp; chemicals<br>• 33% yield from FinTech &amp; DeFi<br>• Daily payouts (~15-25% APY)<br>• Commodities trading module';
+                }
+                if (q.includes('pof') || q.includes('proof')) {
+                    return '🔐 <b>Proof of Funds (POF)</b><br>1. Select product<br>2. Calculate 10% in EURS<br>3. Buy EURS on Jupiter<br>4. Submit Swap Hash<br>5. We verify and contact you within 48 hours';
+                }
+                if (q.includes('commodities') || q.includes('list')) {
+                    return '💎 <b>Commodities:</b><br>Gold bars, silver bars, diamonds (1ct, 3ct, 5ct), platinum, palladium, rhodium, rough diamond parcels, colored diamonds.';
+                }
+                return '🤔 Try asking:<br>• "What is EURS?"<br>• "What is POF?"<br>• "List commodities"';
+            }
+
+            toggleBtn.classList.remove('hidden');
+
+            // ---- COMMODITIES DATA ----
+            const commoditiesData = [
+                { icon: '🥇', name: 'Gold Bar 1kg', desc: 'LBMA-certified 99.99% gold bar.', price: 85000 },
+                { icon: '🥇', name: 'Gold Bar 100g', desc: 'LBMA-certified 99.99% gold bar.', price: 8500 },
+                { icon: '🥈', name: 'Silver Bar 1kg', desc: '999 fine silver bar, LBMA-certified.', price: 950 },
+                { icon: '🥈', name: 'Silver Bar 100oz', desc: '999 fine silver bar, LBMA-certified.', price: 2700 },
+                { icon: '💎', name: 'Diamond 1ct', desc: 'GIA-certified, VVS1, D-color, round cut.', price: 12000 },
+                { icon: '💎', name: 'Diamond 3ct', desc: 'GIA-certified, VVS1, D-color, round cut.', price: 45000 },
+                { icon: '💎', name: 'Diamond 5ct', desc: 'GIA-certified, VVS1, D-color, round cut.', price: 95000 },
+                { icon: '💎', name: 'Ruby 2ct', desc: 'GIA-certified, Burmese, pigeon blood red.', price: 18000 },
+                { icon: '💎', name: 'Sapphire 3ct', desc: 'GIA-certified, Ceylon, cornflower blue.', price: 22000 },
+                { icon: '💎', name: 'Emerald 2ct', desc: 'GIA-certified, Colombian, vivid green.', price: 15000 },
+                { icon: '💎', name: 'Platinum Bar 1kg', desc: '999.5 fine platinum, LBMA-certified.', price: 32000 },
+                { icon: '💎', name: 'Palladium Bar 1kg', desc: '999.5 fine palladium, LBMA-certified.', price: 28000 },
+                { icon: '💎', name: 'Rhodium Bar 1kg', desc: '999.5 fine rhodium, LBMA-certified.', price: 45000 },
+                { icon: '💎', name: 'Rough Diamond Parcel', desc: 'Mixed quality, 100ct parcel.', price: 65000 },
+                { icon: '💎', name: 'Colored Diamond 1ct', desc: 'Fancy vivid pink, GIA-certified.', price: 85000 },
+            ];
+
+            // ---- МОДАЛКИ ----
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalBody = document.getElementById('modalBody');
+            const modalClose = document.getElementById('modalClose');
+
+            let currentProduct = null;
+            let currentStep = 'calculator';
+            let appData = {};
+            let currentIdx = 0;
+
+            function closeModal() {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                currentProduct = null;
+                currentStep = 'calculator';
+                appData = {};
+            }
+
+            modalClose.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) closeModal();
+            });
+
+            // ---- РЕНДЕР МОДАЛКИ ----
+            function renderModal(product, idx) {
+                if (!product) {
+                    alert('Error: Product not found.');
+                    return;
+                }
+
+                currentProduct = product;
+                currentIdx = idx;
+
+                const step = currentStep;
+                const price = product.price || 0;
+                const pofAmount = price * 0.10;
+                const eursAmount = pofAmount / 1.15;
+
+                let html = `<h2>${product.icon} ${product.name}</h2><span class="step-indicator">Step: ${step}</span><p style="color:var(--text-muted);margin-bottom:16px;">${product.desc}</p>`;
+
+                if (step === 'calculator') {
+                    html += `
+                        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:12px;background:rgba(212,168,67,0.08);padding:10px;border-radius:8px;">
+                            💡 <strong>Proof of Funds (POF)</strong><br>
+                            To proceed with this purchase, you need to prove your serious intent.
+                            You must reserve <strong>10% of the price in EURS</strong>.
+                            This is NOT a payment — it's proof that you have the funds.
+                        </p>
+                        <div class="result-box">
+                            <strong>Price:</strong> $${price.toLocaleString()}
+                            <br><strong>POF Required (10%):</strong> $${pofAmount.toLocaleString()} ≈ ${eursAmount.toFixed(2)} EURS
+                        </div>
+                        <button class="btn btn-success" onclick="goToBuy()" style="margin-top:16px;">Next: Buy EURS ➜</button>
+                    `;
+                    appData.pofAmount = pofAmount;
+                    appData.eursAmount = eursAmount;
+                    appData.price = price;
+                } else if (step === 'buy') {
+                    const contractId = 'EURS-' + Date.now().toString(36).toUpperCase();
+                    appData.contractId = contractId;
+
+                    const jupiterLink =
+                        `https://jup.ag/swap/USDC-EURS?amount=${Math.round(eursAmount * 100)}`;
+
+                    const eursContract = 'ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq';
+
+                    html += `
+                        <div class="result-box">
+                            ✅ POF Required (10%): $${pofAmount.toFixed(2)} ≈ ${eursAmount.toFixed(2)} EURS
+                            <br><span style="font-size:0.8rem;color:var(--text-muted);">Exchange rate: 1 EURS = 1.15 USDC</span>
+                            <br><br>
+                            <strong>📄 Contract ID:</strong> <span style="color:var(--gold);font-weight:700;font-size:1.1rem;">${contractId}</span>
+                        </div>
+                        <p style="font-size:0.9rem;color:var(--text-muted);margin:12px 0;background:rgba(212,168,67,0.08);padding:10px;border-radius:8px;">
+                            🔐 <strong>Proof of Funds (POF) — Step 2 of 4</strong><br>
+                            Buy EURS on Jupiter to prove you have the funds. 
+                            After the swap, copy the <strong>Swap Hash (transaction ID)</strong> and paste it below.
+                            This is NOT a payment — it's proof of your serious intent.
+                            <br><br>
+                            <strong>Contract ID:</strong> ${contractId} — use this reference in all communications.
+                        </p>
+                        <label>Buy EURS on Jupiter:</label>
+                        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:8px;">
+                            Click the button below to buy ~${eursAmount.toFixed(2)} EURS on Jupiter
+                        </p>
+                        <a href="${jupiterLink}" target="_blank" class="btn btn-buy" style="display:block;text-align:center;width:100%;margin-top:8px;">
+                            🚀 Buy EURS on Jupiter
+                        </a>
+                        <div style="margin-top:8px;font-size:0.8rem;color:var(--text-muted);background:rgba(255,255,255,0.04);padding:8px 12px;border-radius:6px;border:1px dashed var(--border);">
+                            📋 <strong>EURS Token Contract:</strong> <code style="background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:4px;font-size:0.75rem;word-break:break-all;">${eursContract}</code>
+                            <br><span style="font-size:0.7rem;">Use this address to verify the token on Solana Explorer</span>
+                        </div>
+                        <label style="margin-top:16px;">Swap Hash (transaction ID):</label>
+                        <input type="text" id="txHash" placeholder="Paste your swap hash here..." value="" />
+                        <button class="btn btn-primary" onclick="verifyPOF()">✅ Verify Proof of Funds (POF)</button>
+                        <div id="pofResult" style="margin-top:12px;display:none;padding:10px;background:rgba(46,125,50,0.2);border-radius:8px;color:#4caf50;">
+                            ✅ POF verified! Swap hash is valid.
+                        </div>
+                    `;
+                } else if (step === 'contacts') {
+                    html += `
+                        <div class="result-box" style="margin-bottom:16px;">
+                            ✅ Proof of Funds verified!
+                            <br>Contract ID: <span class="hash-box">${appData.contractId || 'N/A'}</span>
+                            <br>Swap Hash: <span class="hash-box">${appData.txHash || 'Not provided'}</span>
+                            <br>Reserved: ${appData.eursAmount?.toFixed(2) || '0.00'} EURS
+                        </div>
+                        <p style="font-size:0.9rem;color:var(--text-muted);margin:12px 0;background:rgba(212,168,67,0.08);padding:10px;border-radius:8px;">
+                            📋 <strong>Final Step — Your Contact Details</strong><br>
+                            Please provide your contact information. We will verify your POF and send you 
+                            the contract package within <strong>48 hours</strong>.
+                        </p>
+                        <label>Full Name *</label>
+                        <input type="text" id="contactName" placeholder="John Doe" />
+                        <label>Email *</label>
+                        <input type="email" id="contactEmail" placeholder="john@example.com" />
+                        <label>Telegram / WhatsApp</label>
+                        <input type="text" id="contactTelegram" placeholder="@username or +123456789" />
+                        <label>Company Name</label>
+                        <input type="text" id="contactCompany" placeholder="Your company" />
+                        <button class="btn btn-success" onclick="submitApplication()">Submit Application</button>
+                    `;
+                } else if (step === 'final') {
+                    const id = appData.contractId || 'EURS-' + Date.now().toString(36).toUpperCase();
+                    html += `
+                        <div class="result-box" style="border:2px solid var(--gold);">
+                            ✅ <b>Application #${id} Submitted!</b>
+                            <br><br>
+                            <span class="status-badge status-pending">⏳ Awaiting Verification</span>
+                            <br><br>
+                            <b>What happens next?</b><br>
+                            1. We will verify your Proof of Funds (Swap Hash)<br>
+                            2. We will contact you via email/telegram within <b>48 hours</b><br>
+                            3. We will send you the full contract package for signing<br>
+                            4. After signing, you pay the remaining amount<br>
+                            <br>
+                            <span style="font-size:0.8rem;color:var(--text-muted);">Application saved locally. You can view it in "My Applications".</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                    `;
+                    saveApplication(id, currentProduct.name, appData);
+                }
+
+                modalBody.innerHTML = html;
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                document.getElementById('modalContent').scrollTop = 0;
+            }
+
+            // ---- ГЛОБАЛЬНЫЕ ФУНКЦИИ ----
+            window.goToBuy = function() {
+                if (!appData.eursAmount) {
+                    const price = currentProduct?.price || 0;
+                    const pofAmount = price * 0.10;
+                    appData.pofAmount = pofAmount;
+                    appData.eursAmount = pofAmount / 1.15;
+                    appData.price = price;
+                }
+                currentStep = 'buy';
+                renderModal(currentProduct, currentIdx);
+            };
+
+            window.verifyPOF = function() {
+                const txHash = document.getElementById('txHash')?.value?.trim() || '';
+                if (txHash.length < 10) {
+                    alert('⚠️ Please enter a valid Swap Hash (at least 10 characters).');
+                    return;
+                }
+                appData.txHash = txHash;
+                const resultDiv = document.getElementById('pofResult');
+                if (resultDiv) {
+                    resultDiv.style.display = 'block';
+                    resultDiv.textContent = '✅ POF verified! Swap hash is valid.';
+                    setTimeout(() => {
+                        currentStep = 'contacts';
+                        renderModal(currentProduct, currentIdx);
+                    }, 1500);
+                }
+            };
+
+            window.submitApplication = function() {
+                const name = document.getElementById('contactName')?.value?.trim();
+                const email = document.getElementById('contactEmail')?.value?.trim();
+                if (!name || !email) {
+                    alert('Please fill in your name and email.');
+                    return;
+                }
+                appData.contactName = name;
+                appData.contactEmail = email;
+                appData.contactTelegram = document.getElementById('contactTelegram')?.value?.trim() || 'Not provided';
+                appData.contactCompany = document.getElementById('contactCompany')?.value?.trim() || 'Not provided';
+
+                const id = appData.contractId || 'EURS-' + Date.now().toString(36).toUpperCase();
+
+                const templateParams = {
+                    id: id,
+                    productName: currentProduct?.name || 'Commodity',
+                    productType: 'commodity',
+                    eursAmount: appData.eursAmount?.toFixed(2) || '0.00',
+                    date: new Date().toLocaleString(),
+                    contactName: appData.contactName,
+                    contactEmail: appData.contactEmail,
+                    contactTelegram: appData.contactTelegram,
+                    contactCompany: appData.contactCompany,
+                    txHash: appData.txHash || 'Not provided',
+                    contractId: id
+                };
+
+                emailjs.send(
+                    'service_567sck4',
+                    'template_wfeaqqq',
+                    templateParams
+                ).then(function(response) {
+                    console.log('✅ Email sent!', response);
+                    saveApplication(id, currentProduct?.name || 'Commodity', appData);
+                    currentStep = 'final';
+                    renderModal(currentProduct, currentIdx);
+                }, function(error) {
+                    console.error('❌ Email failed:', error);
+                    alert('⚠️ Failed to send email. Please try again.');
+                    saveApplication(id, currentProduct?.name || 'Commodity', appData);
+                    currentStep = 'final';
+                    renderModal(currentProduct, currentIdx);
+                });
+            };
+
+            // ---- СОХРАНЕНИЕ ИСТОРИИ ----
+            function saveApplication(id, productName, data) {
+                const history = JSON.parse(localStorage.getItem('eurs_applications') || '[]');
+                history.push({
+                    id: id,
+                    product: productName,
+                    type: 'commodity',
+                    date: new Date().toISOString(),
+                    status: 'pending',
+                    data: data
+                });
+                localStorage.setItem('eurs_applications', JSON.stringify(history));
+            }
+
+            window.showHistory = function() {
+                const history = JSON.parse(localStorage.getItem('eurs_applications') || '[]');
+                if (history.length === 0) {
+                    alert('📋 No applications yet. Apply for a commodity first!');
+                    return;
+                }
+                let msg = '📋 My Applications:\n\n';
+                history.forEach((app, i) => {
+                    const status = app.status === 'pending' ? '⏳ Pending' : '✅ Approved';
+                    msg += `${i+1}. #${app.id} — ${app.product} (${status})\n`;
+                    msg += `   ${new Date(app.date).toLocaleDateString()}\n`;
+                });
+                msg += '\nWe will contact you within 48 hours.';
+                alert(msg);
+            };
+
+            // ---- ГЕНЕРАЦИЯ КАРТОЧЕК ----
+            function initGrid() {
+                const grid = document.getElementById('commoditiesGrid');
+                if (!grid) {
+                    console.error('Commodities grid not found!');
+                    return;
+                }
+
+                grid.innerHTML = '';
+
+                commoditiesData.forEach((p, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <div class="product-icon">${p.icon}</div>
+                        <h4 class="product-name">${p.name}</h4>
+                        <p class="product-desc">${p.desc}</p>
+                        <div class="product-price">$${p.price.toLocaleString()}</div>
+                        <button class="btn btn-secondary btn-sm open-btn" data-idx="${index}">Open</button>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                document.querySelectorAll('.open-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const idx = parseInt(this.dataset.idx);
+                        const product = commoditiesData[idx];
+                        if (product) {
+                            currentProduct = product;
+                            currentIdx = idx;
+                            currentStep = 'calculator';
+                            appData = {};
+                            renderModal(product, idx);
+                        } else {
+                            console.error('Product not found for index:', idx);
+                            alert('Error: Product not found. Please try again.');
+                        }
+                    });
+                });
+
+                console.log('✅ Commodities grid initialized with ' + commoditiesData.length + ' products.');
+            }
+
+            initGrid();
+
+            // ---- ПЛАВНЫЙ СКРОЛЛ ----
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            console.log('💎 EURS — Commodities Trading');
+            console.log('Contract: ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq');
+            console.log('Commodities: ' + commoditiesData.length + ' products');
+            console.log('Applications saved in localStorage.');
+        });
+    </script>
+</body>
+              </html>
