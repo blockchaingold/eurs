@@ -11,7 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
     </script>
     <style>
-        /* Тот же CSS, что в commodities.html */
+        /* ============================================================
+           БАЗА
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -131,6 +133,9 @@
             color: var(--primary);
             border-color: var(--gold);
         }
+        /* ============================================================
+           АНИМАЦИИ
+           ============================================================ */
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -195,6 +200,9 @@
                 transform: translateX(-100%);
             }
         }
+        /* ============================================================
+           ШАПКА
+           ============================================================ */
         .header {
             background: rgba(10, 14, 23, 0.92);
             backdrop-filter: blur(12px);
@@ -281,6 +289,9 @@
             background: var(--text);
             border-radius: 2px;
         }
+        /* ============================================================
+           ГЕРОЙ
+           ============================================================ */
         .hero {
             padding: 140px 0 80px;
             position: relative;
@@ -329,6 +340,9 @@
             font-size: 0.85rem;
             color: var(--text-muted);
         }
+        /* ============================================================
+           БЛОКИ
+           ============================================================ */
         section {
             position: relative;
             z-index: 2;
@@ -582,6 +596,9 @@
             max-height: 300px;
             padding: 0 0 20px 0;
         }
+        /* ============================================================
+           PRODUCT GRID
+           ============================================================ */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -636,6 +653,9 @@
             font-size: 0.75rem;
             padding: 6px 16px;
         }
+        /* ============================================================
+           КОМЬЮНИТИ
+           ============================================================ */
         .community {
             background: var(--bg-dark);
         }
@@ -675,6 +695,9 @@
             margin-top: 8px;
             opacity: 0.6;
         }
+        /* ============================================================
+           МОДАЛКИ
+           ============================================================ */
         .modal .step-indicator {
             font-size: 0.8rem;
             color: var(--text-muted);
@@ -794,6 +817,9 @@
             margin-top: 16px;
             width: 100%;
         }
+        /* ============================================================
+           ИИ-ЧАТ
+           ============================================================ */
         .ai-chat {
             position: fixed;
             bottom: 100px;
@@ -983,6 +1009,9 @@
             margin: 30px 0 10px;
             flex-wrap: wrap;
         }
+        /* ============================================================
+           АДАПТИВ
+           ============================================================ */
         @media (max-width: 992px) {
             .structure-grid {
                 grid-template-columns: 1fr;
@@ -1274,15 +1303,16 @@
         </div>
     </section>
 
+    <!-- ===== COMMUNITY (GitHub заменён на Contact Us) ===== -->
     <section class="community">
         <div class="container">
             <h2 class="section-title" data-i18n="community_title">Join the <span class="highlight">Community</span></h2>
             <div class="community-links">
-                <a href="#" target="_blank" class="community-link">🐦 X (Twitter)</a>
-                <a href="#" target="_blank" class="community-link">💬 Telegram</a>
-                <a href="https://github.com/blockchaingold/eurs" target="_blank" class="community-link">🐙 GitHub</a>
-                <a href="https://solscan.io/token/ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq" target="_blank" class="community-link">🔍 Solana Explorer</a>
-                <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="community-link">📊 Geckoterminal</a>
+                <a href="#" target="_blank" class="community-link" data-i18n="community_twitter">🐦 X (Twitter)</a>
+                <a href="#" target="_blank" class="community-link" data-i18n="community_telegram">💬 Telegram</a>
+                <a href="mailto:bankeurc@gmail.com" class="community-link" data-i18n="community_contact">📧 Contact Us</a>
+                <a href="https://solscan.io/token/ER84itMUkkT1mDxnj6Fc37T9jCXA6qsA84hhLRU8i1Kq" target="_blank" class="community-link" data-i18n="community_explorer">🔍 Solana Explorer</a>
+                <a href="https://www.geckoterminal.com/solana/pools/7LYh3KjomLz2o7q8wcwzwStCbXnLrtgSf5Heuu1pc56Z" target="_blank" class="community-link" data-i18n="community_gecko">📊 Geckoterminal</a>
             </div>
         </div>
     </section>
@@ -1295,10 +1325,10 @@
     </footer>
 
     <script>
-        // Полностью аналогичный скрипт, как в commodities.html, но с vehiclesData
         document.addEventListener('DOMContentLoaded', function() {
             'use strict';
 
+            // ---- EMAILJS INIT ----
             (function() {
                 emailjs.init('p-mbGFGSojk7tFupL');
             })();
@@ -1370,6 +1400,11 @@
                         faq_q5: 'Is there risk?',
                         faq_a5: 'Like any crypto, EURS has volatility. But 67% is backed by real assets (gold, chemicals), reducing risk.',
                         community_title: 'Join the Community',
+                        community_twitter: '🐦 X (Twitter)',
+                        community_telegram: '💬 Telegram',
+                        community_contact: '📧 Contact Us',
+                        community_explorer: '🔍 Solana Explorer',
+                        community_gecko: '📊 Geckoterminal',
                         vehicles_title: 'Vehicles & Robotics Catalog',
                         vehicles_sub: 'Cars, motorcycles, aircraft, helicopters, drones, robots — 10% POF in EURS.',
                         my_apps: '📋 My Applications',
@@ -1445,6 +1480,11 @@
                         faq_q5: 'Есть ли риск?',
                         faq_a5: 'Как у любой криптовалюты — волатильность есть. Но 67% обеспечено реальными активами (золото, химия), что снижает риски.',
                         community_title: 'Присоединяйся к сообществу',
+                        community_twitter: '🐦 X (Twitter)',
+                        community_telegram: '💬 Telegram',
+                        community_contact: '📧 Связаться с нами',
+                        community_explorer: '🔍 Solana Explorer',
+                        community_gecko: '📊 Geckoterminal',
                         vehicles_title: 'Каталог транспорта и робототехники',
                         vehicles_sub: 'Авто, мото, самолёты, вертолёты, дроны, роботы — 10% POF в EURS.',
                         my_apps: '📋 Мои заявки',
@@ -1520,6 +1560,11 @@
                         faq_q5: '¿Hay riesgo?',
                         faq_a5: 'Como cualquier cripto, EURS tiene volatilidad. Pero el 67% está respaldado por activos reales (oro, químicos), lo que reduce el riesgo.',
                         community_title: 'Únete a la comunidad',
+                        community_twitter: '🐦 X (Twitter)',
+                        community_telegram: '💬 Telegram',
+                        community_contact: '📧 Contáctanos',
+                        community_explorer: '🔍 Solana Explorer',
+                        community_gecko: '📊 Geckoterminal',
                         vehicles_title: 'Catálogo de vehículos y robótica',
                         vehicles_sub: 'Autos, motos, aviones, helicópteros, drones, robots — 10% POF en EURS.',
                         my_apps: '📋 Mis solicitudes',
@@ -1595,6 +1640,11 @@
                         faq_q5: 'Y a-t-il un risque?',
                         faq_a5: 'Comme toute cryptomonnaie, EURS est volatile. Mais 67% est adossé à des actifs réels (or, chimie), ce qui réduit le risque.',
                         community_title: 'Rejoignez la communauté',
+                        community_twitter: '🐦 X (Twitter)',
+                        community_telegram: '💬 Telegram',
+                        community_contact: '📧 Contactez-nous',
+                        community_explorer: '🔍 Solana Explorer',
+                        community_gecko: '📊 Geckoterminal',
                         vehicles_title: 'Catalogue des véhicules et robotique',
                         vehicles_sub: 'Voitures, motos, avions, hélicoptères, drones, robots — 10% POF en EURS.',
                         my_apps: '📋 Mes demandes',
@@ -1670,6 +1720,11 @@
                         faq_q5: 'Gibt es ein Risiko?',
                         faq_a5: 'Wie jede Kryptowährung hat EURS Volatilität. Aber 67% sind durch reale Vermögenswerte (Gold, Chemie) gedeckt, was das Risiko reduziert.',
                         community_title: 'Tritt der Community bei',
+                        community_twitter: '🐦 X (Twitter)',
+                        community_telegram: '💬 Telegram',
+                        community_contact: '📧 Kontaktiere uns',
+                        community_explorer: '🔍 Solana Explorer',
+                        community_gecko: '📊 Geckoterminal',
                         vehicles_title: 'Fahrzeug- & Robotik-Katalog',
                         vehicles_sub: 'Autos, Motorräder, Flugzeuge, Hubschrauber, Drohnen, Roboter — 10% POF in EURS.',
                         my_apps: '📋 Meine Anträge',
@@ -1745,6 +1800,11 @@
                         faq_q5: '有风险吗？',
                         faq_a5: '与任何加密货币一样，EURS 有波动性。但67%由真实资产（黄金、化学品）支撑，降低了风险。',
                         community_title: '加入社区',
+                        community_twitter: '🐦 X (Twitter)',
+                        community_telegram: '💬 Telegram',
+                        community_contact: '📧 联系我们',
+                        community_explorer: '🔍 Solana Explorer',
+                        community_gecko: '📊 Geckoterminal',
                         vehicles_title: '交通与机器人目录',
                         vehicles_sub: '汽车、摩托车、飞机、直升机、无人机、机器人 — 10% POF 以 EURS 支付。',
                         my_apps: '📋 我的申请',
@@ -1820,6 +1880,11 @@
                         faq_q5: 'リスクはありますか？',
                         faq_a5: '他の暗号資産と同様に変動性がありますが、67%が実物資産（金、化学）で裏付けられており、リスクを低減しています。',
                         community_title: 'コミュニティに参加',
+                        community_twitter: '🐦 X (Twitter)',
+                        community_telegram: '💬 Telegram',
+                        community_contact: '📧 お問い合わせ',
+                        community_explorer: '🔍 Solana Explorer',
+                        community_gecko: '📊 Geckoterminal',
                         vehicles_title: '乗り物とロボティクスカタログ',
                         vehicles_sub: '自動車、オートバイ、飛行機、ヘリコプター、ドローン、ロボット — 10% POF を EURS で。',
                         my_apps: '📋 申請一覧',
@@ -1895,6 +1960,11 @@
                         faq_q5: 'هل هناك خطر؟',
                         faq_a5: 'مثل أي عملة رقمية، EURS متقلب. لكن 67% مدعوم بأصول حقيقية (ذهب، كيمياء)، مما يقلل المخاطر.',
                         community_title: 'انضم إلى المجتمع',
+                        community_twitter: '🐦 X (Twitter)',
+                        community_telegram: '💬 Telegram',
+                        community_contact: '📧 اتصل بنا',
+                        community_explorer: '🔍 Solana Explorer',
+                        community_gecko: '📊 Geckoterminal',
                         vehicles_title: 'كتالوج المركبات والروبوتات',
                         vehicles_sub: 'سيارات، دراجات نارية، طائرات، مروحيات، طائرات بدون طيار، روبوتات — 10% POF في EURS.',
                         my_apps: '📋 طلباتي',
@@ -1944,7 +2014,7 @@
             })();
 
             // ---- ФОН, БУРГЕР, FAQ, КАЛЬКУЛЯТОР, ИИ-ЧАТ ----
-            // (полностью аналогично commodities.html)
+            // (полностью аналогично предыдущим страницам)
 
             // ---- VEHICLES DATA WITH IMAGES ----
             const vehiclesData = [
